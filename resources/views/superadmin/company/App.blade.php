@@ -29,6 +29,11 @@
                     <label class="form-label">Tipo de Negócio</label>
                     <input type="text" value="{{$company->companybusiness}}" name="type" class="form-control" placeholder="Insira o tipo de negócio...">
                 </div>
+
+                <div class="form-group">
+                    <label class="form-label">Token API</label>
+                    <input type="text" name="apitoken" class="form-control" placeholder="Insira o token...">
+                </div>
             
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Cadastrar">

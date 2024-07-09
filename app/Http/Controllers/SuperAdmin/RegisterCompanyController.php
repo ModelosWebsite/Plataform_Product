@@ -31,6 +31,7 @@ class RegisterCompanyController extends Controller
             $company->companynif = $validatedData['nif'];
             $company->companybusiness = $validatedData['type'];
             $company->companyhashtoken = $tokenCompany;
+            $company->companytokenapi = $request->apitoken;
             $company->save();
 
             $user = new User();
@@ -67,6 +68,7 @@ class RegisterCompanyController extends Controller
             $company->companynif = $request->nif;
             $company->companybusiness = $request->type;
             $company->companyhashtoken = $tokenCompany;
+            $company->companytokenapi = $request->apitoken;
             $company->update();
 
             DB::commit();
