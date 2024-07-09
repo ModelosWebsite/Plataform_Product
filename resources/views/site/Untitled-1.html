@@ -1,0 +1,88 @@
+                                        <div class="card">
+                                          <div class="card-header" id="headingTwo">
+                                            <h2 class="mb-0">
+                                              <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#politica" aria-expanded="false" aria-controls="collapseTwo">
+                                                Cadastrar Politica de Privacidade e Termos e Condições.
+                                              </button>
+                                            </h2>
+                                          </div>
+                                          <div id="politica" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                            <div class="card-body">          
+                                                <div class="col-xl-6">
+                                                         <form action="{{route("admin.conditions.create")}}" method="post">
+                                                             @csrf
+                                                             <div class="">
+                                                                 <div class="form-group">
+                                                                     <label class="form-label">Escreva a sua Politica de privacidade</label>
+                                                                     <textarea name="privacy" class="form-control" placeholder="Insira uma descrição...."></textarea>
+                                                                 </div>
+                                
+                                                                 <div class="form-group">
+                                                                     <label class="form-label">Escreva o seu Termo de Condições</label>
+                                                                     <textarea name="condition" class="form-control" placeholder="Insira uma descrição...."></textarea>
+                                                                 </div>
+                                                             </div>
+                                                             <style>
+                                                                 textarea{
+                                                                     width: 35rem;
+                                                                     height: 100px;
+                                                                     margin: 10px;
+                                                                 }
+                                                             </style>
+                            
+                                                         <div class="form-group">
+                                                             <input type="submit" class="btn btn-primary" value="Cadastrar">
+                                                        </div>
+                                                     </form>
+                                                </div>
+
+                                            <style>
+                                                .conteudo {
+                                                    max-height: 200px;
+                                                    overflow: hidden;
+                                                  }
+                                                  .conteudo.expandido {
+                                                    max-height: none;
+                                                  }
+                                            </style>
+                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                                                <div class="col-xl-12 d-flex">    
+                                                    <div class="form-group conteudo" id="">
+                                                        <h3>Politica de Privacidade</h3>
+                                                        <div class=" p-3">
+                                                            <p>{{isset($termos->privacy) ? $termos->privacy : ""}}</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group conteudo" id="conteudo">
+                                                        <h3>Termos e Condições</h3>
+                                                        <div class="p-3">   
+                                                            <p>{{isset($termos->condition) ? $termos->condition : ""}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex mx-5">
+                                                    <button id="botaoLerMais" class="btn btn-primary">Ler Mais</button>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" data-toggle="modal" data-target="#conditions">Editar</button>
+                                                        @include("sbadmin.conditions.modal")
+                                                    </div>
+                                                </div>
+
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $('#botaoLerMais').click(function() {
+                                                        $('.conteudo').toggleClass('expandido');
+                                                        if ($('.conteudo').hasClass('expandido')) {
+                                                            $('#botaoLerMais').text('Menos');
+                                                        } else {
+                                                            $('#botaoLerMais').text('Ler Mais');
+                                                        }
+                                                        });
+                                                    });
+                                                </script>
+
+                                            </div>
+                                          </div>
+                                        </div>

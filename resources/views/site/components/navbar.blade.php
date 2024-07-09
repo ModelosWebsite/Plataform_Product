@@ -1,0 +1,33 @@
+  <!-- Header -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container-fluid px-3 px-md-3 px-lg-4 d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center me-auto me-lg-0">
+        {{-- <img src="{{asset("site/assets/img/logo.png")}}" alt="" style="font-size: 2rem;"> --}}
+         <h1>{{$companyName->companyname}}<span>.</span></h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#hero">Principal</a></li>
+          <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#about">Sobre</a></li>
+          @if ($shopping && $shopping->pacote === "Shopping" && $shopping->status === "premium")
+              <li><a  href="{{route("plataforma.produto.shopping", ["company" => $companyName->companyhashtoken])}}">Loja</a></li>
+          @endif
+          <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#contact">Contacto</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header>
+  <!-- End Header -->
+
+  <style>
+    
+    .mobile-nav-active{
+      background-color: #000;
+    }
+  </style>
