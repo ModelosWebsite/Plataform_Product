@@ -34,7 +34,10 @@
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
     <div id="preloader"></div>
-  
+
+    <a title="Google Analytics Alternative" href="https://clicky.com/101458542"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+    <script async data-id="101458542" src="//static.getclicky.com/js"></script>
+
     <!-- Vendor JS Files -->
     <script src="{{asset("site/vendor/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
     <script src="{{asset("site/vendor/aos/aos.js")}}"></script>
@@ -47,4 +50,4 @@
     <script src="{{asset("site/js/main.js")}}"></script>
   
   </body>
-  </html>
+</html>
