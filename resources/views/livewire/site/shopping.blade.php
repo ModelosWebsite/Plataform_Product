@@ -126,14 +126,15 @@
             </li>
             @if (isset($categories) && count($categories) > 0)
                 @foreach ($categories as $item)
-                    <li>
-                        <button 
-                            class="category {{ $category == $item['reference'] ? 'active' : '' }}" 
-                            wire:click="getItems('{{ $item['reference'] }}')" 
-                            aria-label="Show category {{ $item['Categoria'] }}">
-                            {{ $item['Categoria'] }}
-                        </button>
-                    </li>
+                @if (isset($item['reference']))
+                <li>
+                    <button 
+                        class="category {{ $category == $item['reference'] ? 'active' : '' }}" 
+                        wire:click="getItems('{{ $item['reference'] }}')">
+                        {{ $item['Categoria'] }}
+                    </button>
+                </li>
+                @endif    
                 @endforeach
             @endif
         </ul>

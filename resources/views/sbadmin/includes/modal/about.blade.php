@@ -4,7 +4,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Dados Pessoais e Historicos</h4>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
         </div>
         <div class="modal-body">
             <div class="">
