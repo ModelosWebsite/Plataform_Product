@@ -25,6 +25,17 @@
   <!-- Template Main CSS File -->
   <link href="{{asset("site/css/main.css")}}" rel="stylesheet">
 
+  <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:5054711,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
 </head>
 
 <body>
@@ -35,8 +46,6 @@
   
     <div id="preloader"></div>
 
-    <a title="Google Analytics Alternative" href="https://clicky.com/101458542"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
-    <script async data-id="101458542" src="//static.getclicky.com/js"></script>
 
     <!-- Vendor JS Files -->
     <script src="{{asset("site/vendor/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
