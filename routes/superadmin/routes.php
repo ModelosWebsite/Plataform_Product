@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\SuperAdmin\{DocumentationController, PacoteController, RegisterCompanyController};
+use App\Http\Controllers\SuperAdmin\{DocumentationController, PacoteController, RegisterCompanyController, VisitorController};
 use App\Http\Controllers\SuperAdmin\{SuperAdminController, TermosController, UserController};
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +35,9 @@ Route::middleware("auth")->prefix("/super/admin")->group(function()
     Route::controller(DocumentationController::class)->group(function(){
         Route::get("/documentação/incial", "index")->name("super.admin.documentation.index");
         Route::post("/documentação/criar", "store")->name("super.admin.documentation.store");
+    });
+
+    Route::controller(VisitorController::class)->group(function(){
+        Route::get("/metrics/incial", "index")->name("super.admin.visitor.index");
     });
 });

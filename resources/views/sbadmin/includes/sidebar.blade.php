@@ -26,7 +26,8 @@
             <span>Elementos Premium</span>
         </a>
     </li>
-
+    
+    @if ($shopping && $shopping->pacote === "Shopping" && $shopping->status === "premium")
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{(Route::current()->getName() == "shoppind.list.deliveries") ? "bg-white" : ""}}">
             <a class="nav-link {{(Route::current()->getName() == "shoppind.list.deliveries") ? "text-primary" : ""}}" href="{{route("shoppind.list.deliveries")}}">
@@ -34,6 +35,7 @@
                 <span>Controle Encomendas</span>
             </a>
         </li>
+    @endif
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{(Route::current()->getName() == "plataform.product.admin.delivery.status") ? "bg-white" : ""}}">

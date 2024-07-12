@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Company\SendEmail;
-use App\Models\{About, Color, company, CompanyTerm, contact, Detail, Element, Fundo, hero, infowhy, pacote, Produt, Termo, Termpb_has_Company, TermsCompany};
+use App\Models\{About, Color, company, CompanyTerm, contact, Detail, Element, Fundo, hero, infowhy, pacote, Produt, Termo, Termpb_has_Company, TermsCompany, visitor};
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Jenssegers\Agent\Agent;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SiteController extends Controller
@@ -44,13 +45,15 @@ class SiteController extends Controller
 
             $termos = TermsCompany::where("company_id", isset($data->id) ? $data->id : "")->first();
             
-            // $api = Http::timeout(5)->post(
-            //     "https://karamba.ao/api/anuncios",
-            //     ["key" => "wRYBszkOguGJDioyqwxcKEliVptArhIPsNLwqrLAomsUGnLoho"]
-            // );
+            $api = Http::timeout(5)->post(
+                 "https://karamba.ao/api/anuncios",
+                 ["key" => "wRYBszkOguGJDioyqwxcKEliVptArhIPsNLwqrLAomsUGnLoho"]
+            );
 
-            // $apiArray = $api->json();
+            $apiArray = $api->json();
 
+            $this->getVisitor($companyName);
+            
             return view("site.pages.home",
             [
                 "hero" => $hero,
@@ -67,7 +70,7 @@ class SiteController extends Controller
                 "WhatsApp" => $WhatsApp,
                 "companies" => $companies,
                 "termos" => $termos,
-                //"apiArray" => $apiArray,
+                "apiArray" => $apiArray,
                 "contacts" => $contacts,
                 "companyName" => $companyName,
                 "color" => $this->colors($company),
@@ -182,5 +185,34 @@ class SiteController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back();
         }
+    }
+
+    public function getVisitor($companyName)
+    {
+        // Capturar informações da requisição
+        $userAgent = request()->header('User-Agent');
+
+        // Usar a biblioteca Jenssegers/Agent para analisar o user agent
+        $agent = new Agent();
+        $agent->setUserAgent($userAgent);
+
+        //salvar os dados no banco
+        $visitors = new visitor();
+
+        $visitors->ip = request()->ip();
+        $visitors->browser = $agent->browser();
+        $visitors->system = $agent->platform();
+        $visitors->device = $agent->device();
+        
+        if ($agent->isDesktop()) {
+            $visitors->typedevice = "Computador";
+        }if ($agent->isPhone()) {
+            $visitors->typedevice = "Telefone";
+        }if ($agent->isTablet()) {
+            $visitors->typedevice = "Tablet";
+        }
+        
+        $visitors->company = $companyName->companyname;
+        $visitors->save();
     }
 }

@@ -57,6 +57,14 @@
         </a>
     </li>
 
+    <!-- Nav Item - Pacotes Premium -->
+    <li class="nav-item {{(Route::current()->getName() == "super.admin.visitor.index") ? "bg-white" : ""}}">
+        <a class="nav-link {{(Route::current()->getName() == "super.admin.visitor.index") ? "text-primary" : ""}}" href="{{route("super.admin.visitor.index")}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Metricas</span>
+        </a>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{route("plataform.product.logout")}}">
             <i class="fa fa-fw fa-tachometer-alt"></i>
