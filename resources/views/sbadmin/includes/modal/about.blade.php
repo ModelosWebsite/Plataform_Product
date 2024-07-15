@@ -4,14 +4,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Dados Pessoais e Historicos</h4>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-            <span>&times;</span>
-          </button>
+            <span class="btn-close" data-dismiss="modal" aria-label="Close">&times;</span>
         </div>
         <div class="modal-body">
             <div class="">
-                <form action="{{route("plataform.product.admin.about.update", $item->id)}}" method="post">
+                <form action="{{route("plataform.product.admin.about.update")}}" method="post">
                     @csrf
+                    <input type="hidden" name="id" value="{{$item->id}}">
                     <div class="">
                         <div class="form-group">
                             <label class="form-label">Descrição:</label>

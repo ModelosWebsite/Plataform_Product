@@ -36,14 +36,14 @@ class AboutController extends Controller
         }
     }
 
-    public function actualizarAbout(Request $request, $id)
+    public function actualizarAbout(Request $request)
     {
         try {
-            About::where(["id" => $id])->update([
+            About::where(["id" => $request->id])->update([
                 "p1" => $request->p1,
                 "p2" => $request->p2,
-                "id" => $request->id,
             ]);
+
             return redirect()->back()->with("success", "Sobre Actualizado");
         } catch (\Throwable $th) {
             //throw $th;
