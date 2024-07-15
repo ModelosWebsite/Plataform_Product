@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Color;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
@@ -12,7 +13,9 @@ class ColorController extends Controller
         //Alteração de cores nos websites
         public function index(){
             $colors = Color::all();
-            return view("sbadmin.color", compact("colors"));
+            $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+            return view("sbadmin.color", compact("colors", "shopping"));
         }
 
         public function storecolor(Request $request){

@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Detail;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class DetailController extends Controller
 {
         //Infromações sobre os detalhes
         public function index(){
+            $shopping = pacote::where("pacote", "Shopping")
+            ->where("company_id", auth()->user()->company_id)->first();
             $infos = Detail::where("company_id", auth()->user()->company_id)->get();
-            return view("sbadmin.skill", compact("infos"));
+            return view("sbadmin.skill", compact("infos", "shopping"));
         }
     
         public function storeDetail(Request $request){

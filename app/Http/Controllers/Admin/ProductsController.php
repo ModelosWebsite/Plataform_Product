@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\pacote;
 use App\Models\Produt;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -13,7 +14,9 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Produt::where("company_id", auth()->user()->company_id)->get();
-        return view("sbadmin.products.app", compact("products"));
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+        return view("sbadmin.products.app", compact("products", "shopping"));
     }
 
     public function storeProduct(Request $request)

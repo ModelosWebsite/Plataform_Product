@@ -19,7 +19,11 @@
                                     <tr>
                                         <td class="product__cart__item">
                                             <div class="product__cart__item__pic">
-                                                <img style="width: 80px" src="{{ asset("notfound.png") }}" class="img-fluid" alt="">
+                                                @if ($item->attributes->image != null)
+                                                    <img style="width: 80px" src="https://kytutes.com/storage/{{$item->attributes->image}}" class="img-fluid product-thumbnail">
+                                                @else 
+                                                    <img style="width: 80px" src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
+                                                @endif
                                             </div>
                                             <div class="product__cart__item__text">
                                                 <h6>{{ $item->name }}</h6>

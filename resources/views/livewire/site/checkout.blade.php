@@ -4,7 +4,9 @@
       <div class="modal-content">
         <div class="modal-header" style="background: var(--color); color:#fff;">
           <h5 class="modal-title" id="exampleModalLabel">FINALIZAR ENCOMENDA</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <span style="font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">
+            &times;
+          </span>
         </div>
         <div class="modal-body">
           <div>

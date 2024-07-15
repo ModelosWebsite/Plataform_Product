@@ -1,115 +1,8 @@
 <div class="mt-4 mb-4">
-  <style>
-      /** FORMATION SCROLLBAR DA ÁREA DE MENU */
-    .container-scroll {
-       background: #ddd;
-       max-width: 900px;
-       border-radius: 30px;
-       overflow: hidden;
-       position: relative;
-     }
-   
-     .container-scroll i {
-       width: 40px;
-       height: 40px;
-       cursor: pointer;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       color: #333;
-       border-radius: 50%;
-       pointer-events: auto;
-     }
-   
-     .container-scroll i:hover {
-       background: var(--color);
-       color: #fff;
-     }
-   
-     .container-scroll ul {
-       display: flex;
-       gap: 16px;
-       padding: 12px 24px;
-       margin: 0;
-       list-style: none;
-       overflow-x: scroll;
-       -ms-overflow-style: none;
-       scrollbar-width: none;
-       scroll-behavior: smooth;
-     }
-   
-     .container-scroll ul.dragging {
-       scroll-behavior: auto;
-     }
-   
-     .container-scroll ul::-webkit-scrollbar {
-       display: none;
-     }
-   
-     .container-scroll button {
-       color: #333;
-       font-weight: 500;
-       text-decoration: none;
-       background: #fff;
-       padding: 4px 24px;
-       display: inline-block;
-       border-radius: 30px;
-       user-select: none;
-       white-space: nowrap;
-       transition: ease-in-out;
-       border: none;
-     }
-   
-     .container-scroll button:hover,
-     .container-scroll button.active {
-       background: var(--color);
-       color: #fff;
-     }
-   
-     .iconChevron-left,
-     .iconChevron-right {
-       position: absolute;
-       height: 100%;
-       width: 100px;
-       top: 0;
-       display: none;
-       align-items: center;
-       padding: 0 10px;
-       pointer-events: none;
-     }
-   
-     .iconChevron-left.active,
-     .iconChevron-right.active {
-       display: flex;
-     } 
-   
-     .iconChevron-right {
-       right: 0;
-       background: linear-gradient(to left, #ddd 50%, transparent);
-       justify-content: flex-end;
-     }
-   
-     .iconChevron-left {
-       background: linear-gradient(to right, #ddd 50%, transparent);
-     }
+  @include("livewire.site.components.style")
 
-     .cartcout {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        bottom: 40px;
-        right: 40px;
-        background-color: #fafafa;
-        color: #FFF;
-        border-radius: 50px;
-        text-align: center;
-        font-size: 30px;
-        box-shadow: 1px 1px 2px #888;
-        z-index: 1000;
-      }
-   </style>
-  
   <div class="container">
+          
       <div class="d-flex justify-content-center">
         <div class="container-scroll">
           <div class="iconChevron-left">
@@ -119,26 +12,24 @@
                   </svg>
               </i>
           </div>
-        
+          
           <ul>
-            <li>
-                <button class="category {{ $category == null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button>
-            </li>
-            @if (isset($categories) && count($categories) > 0)
-                @foreach ($categories as $item)
-                @if (isset($item['reference']))
-                <li>
-                    <button 
-                        class="category {{ $category == $item['reference'] ? 'active' : '' }}" 
-                        wire:click="getItems('{{ $item['reference'] }}')">
-                        {{ $item['Categoria'] }}
-                    </button>
-                </li>
-                @endif    
-                @endforeach
-            @endif
-        </ul>
-        
+              <li>
+                  <button class="category {{ $category == null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button>
+              </li>
+              @if (isset($categories) && count($categories) > 0)
+                  @foreach ($categories as $item)
+                      <li>
+                          <button 
+                              class="category {{ $category == $item['category'] ? 'active' : '' }}" 
+                              wire:click="getItems('{{ $item['category'] }}')">
+                              {{ $item['category'] }}
+                          </button>
+                      </li>
+                  @endforeach
+              @endif
+          </ul>
+          
           <div class="iconChevron-right active">
               <i class="">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
@@ -149,32 +40,37 @@
         </div>
       </div>
   </div>
-  
-  <div class="container px-3 px-md-3 px-lg-4 tab-content mt-5">
-      <div class="row gy-5">
-            @if (isset($getCollectionsItens) and $getCollectionsItens->count() > 0)
-                @foreach($getCollectionsItens as $item)
-                    <div class="col-lg-4 menu-item text-center align-items-center mt-2 mb-2">
-                        <img class="mb-3" style="width: 8rem; height:8rem;" src="{{ asset($item['image'] ?? 'notfound.png') }}" class="menu-img img-fluid" alt="{{ $item['name'] ?? 'Service Image' }}">
-                        <h4 style="font-size: 1.2rem;">{{ $item['name'] ?? '' }}</h4>
-                        <p class="price">
-                            {{ number_format($item['price'] ?? 0, 2, ',', '.') }} kz 
-                        </p>
-                        <a wire:click="addToCart('{{$item['name'] ?? ''}}')" class="btn btn-primary text-white">
-                            Adicionar
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
-                                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
-                            </svg>
-                        </a>
-                    </div>
-                @endforeach
-            @else
-                <div class="rounded col-md-12 d-flex justify-content-center align-items-center flex-column mt-5" style="height: 20rem; border: 1px dashed #000;">
-                    <h5 class="text-muted text-center text-uppercase">A consulta não retornou nenhum resultado</h5>
-                </div>
-            @endif
+
+
+  <div class="untree_co-section product-section before-footer-section" style="margin-top: 3rem;">
+    <div class="container">
+        <div class="row">
+          @if (isset($getCollectionsItens) and $getCollectionsItens->count() > 0)
+            @foreach($getCollectionsItens as $item)
+              <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="#">
+                  @if ($item['image'] != null)
+                    <img src="https://kytutes.com/storage/{{$item['image']}}" class="img-fluid product-thumbnail">
+                  @else 
+                    <img src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
+                  @endif
+                  <h3 class="product-title">{{ $item['name'] ?? '' }}</h3>
+                  <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, ',', '.') }} kz</strong>
+
+                  <span class="icon-cross" wire:click="addToCart('{{$item['name'] ?? ''}}')">
+                    <img src="{{asset("cross.svg")}}" class="img-fluid">
+                  </span>
+                </a>
+              </div> 
+            @endforeach
+          @else
+              <div class="rounded col-md-12 d-flex justify-content-center align-items-center flex-column mt-5" style="height: 20rem; border: 1px dashed #000;">
+                  <h5 class="text-muted text-center text-uppercase">A consulta não retornou nenhum resultado</h5>
+              </div>
+          @endif
       </div>
     </div>
+  </div>
 
   {{-- Javascript --}}
   <script>

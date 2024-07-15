@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -29,9 +30,11 @@ class StatusDeliveryController extends Controller
         } else {
             $itensColletions = collect();
         }
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
 
         return view("sbadmin.shooping.status.app",
-            compact("itensColletions") 
+            compact("itensColletions", "shopping") 
         );
     }
 }

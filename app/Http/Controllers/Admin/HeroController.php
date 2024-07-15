@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\hero;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class HeroController extends Controller
@@ -12,8 +13,10 @@ class HeroController extends Controller
     public function heroview()
     {
         $hero = hero::where("company_id", auth()->user()->company_id)->get();
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
         return view("sbadmin.hero",
-            compact("hero")
+            compact("hero", "shopping")
         );
     }
 

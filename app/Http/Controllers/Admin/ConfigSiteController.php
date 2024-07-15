@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\company;
 use App\Models\Documentation;
-use App\Models\Termo;
+use App\Models\pacote;
 use App\Models\Termpb;
 use App\Models\Termpb_has_Company;
 use App\Models\TermsCompany;
@@ -17,9 +17,11 @@ class ConfigSiteController extends Controller
         $config = Documentation::where("panel", "PAINEL DO ADMINISTRADOR")
         ->where("section", "CONFIGURAÇÕES")->get();
         $company_id = auth()->user()->company_id;
-        $termos = Termo::where("company_id", isset($company_id) ? $company_id : "")->first();
+        $termos = TermsCompany::where("company_id", isset($company_id) ? $company_id : "")->first();
         $statusSite = company::where("id", $company_id)->first();
-        return view("site.Config", compact("statusSite", "termos", "config"));
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+        return view("site.Config", compact("statusSite", "termos", "config", "shopping"));
     }
 
     //Create - save terms and privacity

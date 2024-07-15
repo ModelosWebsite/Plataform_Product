@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\infowhy;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -11,7 +12,9 @@ class QuestionController extends Controller
         //Imformações das caracteristicas do site...
         public function index(){
             $infos = infowhy::where("company_id", auth()->user()->company_id)->get();
-            return view("sbadmin.projects", compact("infos"));
+            $shopping = pacote::where("pacote", "Shopping")
+            ->where("company_id", auth()->user()->company_id)->first();
+            return view("sbadmin.projects", compact("infos", "shopping"));
         }
     
         public function questionUpdate(Request $request, $id){

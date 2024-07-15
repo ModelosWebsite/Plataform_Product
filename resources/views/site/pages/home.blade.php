@@ -62,7 +62,7 @@
         </div>
       </div>
       <div>
-        {{-- <div class="container-fluid px-3 px-md-3 px-lg-4">
+        <div class="container-fluid px-3 px-md-3 px-lg-4">
           <div class="position-relative">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -81,12 +81,11 @@
               </div>
             </div>
           </div>
-        </div> --}}
+        </div>
       </div>
     </div>
   </div>
 </section>
-
   <!-- End About Section -->
     <!-- Main -->
     <main id="main">
@@ -199,7 +198,7 @@
      End Menu Section -->
 
 
-  {{-- <div class="container-fluid px-3 px-md-3 px-lg-4">
+  <div class="container-fluid px-3 px-md-3 px-lg-4">
       <div class="position-relative">
           <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -218,7 +217,7 @@
               </div>
           </div>
       </div>
-  </div> --}}
+  </div>
 
   @include("site.components.contact")
   @include("site.components.footer")

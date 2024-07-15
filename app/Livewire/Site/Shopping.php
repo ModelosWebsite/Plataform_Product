@@ -98,6 +98,10 @@ class Shopping extends Component
                 'name' => $product[0]["name"],
                 'price' => $product[0]["price"],
                 'quantity' => 1,
+                'attributes' => array(
+                    'image' => $product[0]["image"],
+
+                )
             ));
 
             $this->alert('success', 'SUCESSO', [

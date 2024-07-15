@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\company;
-use App\Models\Termo;
+use App\Models\pacote;
 use App\Models\Termpb;
 use App\Models\Termpb_has_Company;
 use App\Models\TermsCompany;
@@ -15,8 +15,10 @@ class ConditionsController extends Controller
     //chamar formulario
     public function conditionsView(){
         $company_id = auth()->user()->company_id;
-        $termos = Termo::where("company_id", $company_id)->get();
-        return view("sbadmin.conditions.main", compact("termos"));
+        $termos = TermsCompany::where("company_id", $company_id)->get();
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+        return view("sbadmin.conditions.main", compact("termos", "shopping"));
     }
 
     //Cadastrar as conditions

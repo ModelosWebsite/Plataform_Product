@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\pacote;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,9 @@ class ProfileController extends Controller
     //
     public function index(){
         $profile = User::where("company_id", auth()->user()->company_id)->get();
-        return view("sbadmin.profile.index", compact("profile"));
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+        return view("sbadmin.profile.index", compact("profile", "shopping"));
     }
 
     public function updateProfile(Request $request){

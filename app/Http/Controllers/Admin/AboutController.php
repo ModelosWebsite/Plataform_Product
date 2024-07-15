@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\About;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -12,8 +13,10 @@ class AboutController extends Controller
     public function index()
     {
         $data = About::where("company_id", auth()->user()->company_id)->get();
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
         return view("sbadmin.about",
-            compact("data")
+            compact("data", "shopping")
         );
     }
 

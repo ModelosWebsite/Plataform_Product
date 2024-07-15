@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Fundo;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 
 class BackgroudImageController extends Controller
@@ -11,7 +12,9 @@ class BackgroudImageController extends Controller
         //imagens de funddo
         public function index(){
             $fundo = Fundo::where("company_id", auth()->user()->company_id)->get();
-            return view("sbadmin.fundo", compact("fundo"));
+            $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
+            return view("sbadmin.fundo", compact("fundo", "shopping"));
         }
     
         public function imagebackgroundstore(Request $request)

@@ -45,7 +45,7 @@ class SiteController extends Controller
 
             $termos = TermsCompany::where("company_id", isset($data->id) ? $data->id : "")->first();
             
-            $api = Http::timeout(5)->post(
+            $api = Http::post(
                  "https://karamba.ao/api/anuncios",
                  ["key" => "wRYBszkOguGJDioyqwxcKEliVptArhIPsNLwqrLAomsUGnLoho"]
             );

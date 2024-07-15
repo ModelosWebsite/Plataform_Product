@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\contact;
+use App\Models\pacote;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -13,8 +14,10 @@ class FooterController extends Controller
     public function index()
     {
         $footer = contact::where("company_id", auth()->user()->company_id)->get();
+        $shopping = pacote::where("pacote", "Shopping")
+        ->where("company_id", auth()->user()->company_id)->first();
         return view("sbadmin.footer",
-            compact("footer")
+            compact("footer", "shopping")
         );
     }
 
