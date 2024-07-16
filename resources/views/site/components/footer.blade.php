@@ -56,7 +56,10 @@
             Politicas de Privacidade |  
           </a>
           <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#conditions">
-            Termos e Condições  
+            Termos e Condições  |
+          </a>
+          <a href="{{route("plataform.product.login.view")}}" class="text-white">
+            Login
           </a>
         </div>
       </div>

@@ -25,21 +25,21 @@ class Shoppingcart extends Component
 
     protected $listeners = ["updateQuantity"];
 
-
-    public function mount()
-    {
-        $this->cartContent = CartFacade::getContent();
-        $this->getTotal = CartFacade::getTotal();
-        $this->getSubTotal = CartFacade::getSubTotal();
-        $this->getTotalQuantity = CartFacade::getTotalQuantity();
-        $this->finalCompra = $this->getSubTotal + $this->localizacao;
-        $this->taxapb = ($this->finalCompra * 14) / 100;
-        $this->totalFinal = $this->finalCompra + $this->taxapb;
-    }
-
     public function render()
     {
-        return view('livewire.site.shoppingcart');
+        try {
+            $this->cartContent = CartFacade::getContent();
+            $this->getTotal = CartFacade::getTotal();
+            $this->getSubTotal = CartFacade::getSubTotal();
+            $this->getTotalQuantity = CartFacade::getTotalQuantity();
+            $this->finalCompra = $this->getSubTotal + $this->localizacao;
+            $this->taxapb = ($this->finalCompra * 14) / 100;
+            $this->totalFinal = $this->finalCompra + $this->taxapb;
+            
+            return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
+        } catch (\Throwable $th) {
+            
+        }
     }
 
     public function getCompany()
@@ -165,5 +165,21 @@ class Shoppingcart extends Component
         CartFacade::update($id, [
             'quantity' => 1,
         ]);
+    }
+
+    public function getAllLocations()
+    {
+        try {
+            $response = Http::withHeaders($this->getHeaders())
+            ->get("https://kytutes.com/api/locations");
+            return Collect(json_decode($response, true));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    
+    public function selectLocation($price)
+    {
+        $this->localizacao = $price;
     }
 }

@@ -7,5 +7,5 @@ Route::controller(loginController::class)->group(function()
 {
     Route::get("/login/view", "loginview")->name("plataform.product.login.view");
     Route::post("/login/enter", "login")->name("plataform.product.login");
-    Route::get("/site/sair", "logout")->name("plataform.product.logout");
+    Route::get("/terminar/sessão", "logout")->name("plataform.product.logout");
 });

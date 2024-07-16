@@ -251,3 +251,36 @@
         background-color: #0056b3;
     }
 </style>
+
+<script>
+    document.getElementById('getLocationButton').addEventListener('click', () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            document.getElementById('location').innerText = "Geolocalização não é suportada por este navegador.";
+        }
+    });
+
+    function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        document.getElementById('location').innerText = `Latitude: ${latitude} <br> , Longitude: ${longitude}`;
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                document.getElementById('location').innerText = "Usuário negou a solicitação de Geolocalização.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                document.getElementById('location').innerText = "As informações de localização não estão disponíveis.";
+                break;
+            case error.TIMEOUT:
+                document.getElementById('location').innerText = "A solicitação para obter a localização expirou.";
+                break;
+            case error.UNKNOWN_ERROR:
+                document.getElementById('location').innerText = "Ocorreu um erro desconhecido.";
+                break;
+        }
+    }
+</script>

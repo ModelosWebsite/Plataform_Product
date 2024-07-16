@@ -81,10 +81,22 @@
                                 <li>Taxa PB <span>{{ number_format($taxapb, 2, ',', '.') }} Kz</span> </li>
                                 <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, ',', '.')}} kz</span></li>
                             </ul>
+                            @if (isset($locations) and $locations->count() > 0)
+                                @foreach ($locations as $key => $item)
+                                    <div class="form-check">
+                                        <input wire:click="selectLocation({{ $item['price'] }})" class="form-check-input checked"
+                                            type="radio" id="flexRadioDefault{{ $key + 1 }}" name="location" value="{{ $item['price'] }}">
+                                        <label class="form-check-label" for="flexRadioDefault{{ $key + 1 }}" style="cursor: pointer">
+                                            {{ $item['location'] }} - {{ $item['price'] }} kz
+                                        </label>
+                                    </div>
+                                @endforeach
+                            @endif
                             
                             <button type="button" class="primary-btn btn btn-primary mt-2"
                                 style="background: var(--color); color:#fff; border: none;" data-bs-toggle="modal"
-                                data-bs-target="#checkout">Finalizar Compra</button>
+                                data-bs-target="#checkout"
+                                id="getLocationButton">Finalizar Compra</button>
                              @include("livewire.site.checkout")
                         </div>
                     </div>
