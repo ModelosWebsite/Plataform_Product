@@ -19,13 +19,15 @@
               </li>
               @if (isset($categories) && count($categories) > 0)
                   @foreach ($categories as $item)
-                      <li>
+                      @if ($item['category'] != "Pratos" && $item['category'] != "Bebidas" && $item['category'] != "Prato do Dia")
+                        <li>
                           <button 
                               class="category {{ $category == $item['category'] ? 'active' : '' }}" 
                               wire:click="getItems('{{ $item['category'] }}')">
                               {{ $item['category'] }}
                           </button>
-                      </li>
+                       </li>
+                      @endif
                   @endforeach
               @endif
           </ul>
