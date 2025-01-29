@@ -11,9 +11,7 @@
         <ul>
           <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#hero">Principal</a></li>
           <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#about">Sobre</a></li>
-          @if ($shopping && $shopping->pacote === "Shopping" && $shopping->status === "premium")
-              <li><a  href="{{route("plataforma.produto.shopping", ["company" => $companyName->companyhashtoken])}}">Loja</a></li>
-          @endif
+          <li><a  href="{{route("plataforma.produto.shopping", ["company" => $companyName->companyhashtoken])}}">Loja</a></li>
           <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#contact">Contacto</a></li>
         </ul>
       </nav><!-- .navbar -->

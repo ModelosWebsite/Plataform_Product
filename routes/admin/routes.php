@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\{AboutController, BackgroudImageController, ColorController, ConfigSiteController, DeliveryController, ElementController, HabilidadeController};
 use App\Http\Controllers\Admin\{DetailController, FooterController, HeroController, ConditionsController, ShoopingController};
 use App\Http\Controllers\Admin\{HomeController, PortalPbCOntroller, ProductsController, ProfileController, QuestionControll, QuestionController, StatusDeliveryController};
+use App\Livewire\Definition\DefinitionGeneral;
 use App\Livewire\Site\DeliveryStatusComponent;
 use App\Livewire\StatusDelivery;
 use Illuminate\Support\Facades\Route;
@@ -125,6 +126,6 @@ Route::middleware("auth")->prefix("/painel/admin")->group(function()
         Route::get("/encomendas/lista", "index")->name("shoppind.list.deliveries");
     });
 
-
     Route::get("/encomenda/estado/{id}", DeliveryStatusComponent::class)->name("delivery.status");
+    Route::get("/definicao/geral/", DefinitionGeneral::class)->name("definition.general");
 });

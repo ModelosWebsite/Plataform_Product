@@ -33,27 +33,33 @@
                                 <div class="container-fluid tab-content" data-aos="fade-up" data-aos-delay="300">
             
                                     <div class="row gy-5">
-                                    @foreach($data as $item)          
-                                    <div class="col-lg-4 menu-item text-center align-items-center mt-2 mb-2">
-                                      @if ($item['imagem'] != null)
-                                        <img src="https://kytutes.com/storage/{{$item['imagem']}}" class="menu-img img-fluid" alt="">
-                                      @else 
-                                        <img src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
-                                      @endif
-                                      <h4 style="font-size: 1.2rem;">{{$item['nome']}}</h4>
-                        
-                                      <p class="price">
-                                        kz {{number_format($item['preco'], 2,'.',',')}} 
-                                      </p>
-                        
-                                      <a href="{{route("loja.add.cart", $item['reference'])}}" class="btn btn-primary">
-                                          Adicionar
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
-                                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
-                                          </svg> 
-                                      </a>                  
-                                    </div>
-                                    @endforeach
+                                        @if ($data && isset($data) && count($data) > 0)
+                                            @foreach($data as $item)          
+                                                @if (isset($item))
+                                                    <div class="col-lg-4 menu-item text-center align-items-center mt-2 mb-2">
+                                                        @if (isset($item['image']) != null)
+                                                            <img src="https://kytutes.com/storage/{{$item['image']}}" class="menu-img img-fluid" alt="">
+                                                        @else 
+                                                            <img src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
+                                                        @endif
+                                                        <h4 style="font-size: 1.2rem;">{{$item['name']}}</h4>
+                                            
+                                                        <p class="price">
+                                                            kz {{number_format($item['price'], 2,'.',',')}} 
+                                                        </p>
+                                            
+                                                        <a href="{{route("loja.add.cart", $item['reference'])}}" class="btn btn-primary">
+                                                            Adicionar
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                                                                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+                                                            </svg> 
+                                                        </a>                  
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            
+                                        @endif
                                   </div>
                                 </div>
                             </div>

@@ -56,33 +56,38 @@ class Shopping extends Component
         }
     }
 
-   //Pegar os Itens pertencentes a categoria selecionada
-   public function getItems($category)
-   {
-       try {
-           if ($category) {
-               $this->category = $category;
-               //Chamada a API
-               $response = Http::withHeaders($this->getHeaders())
-               ->get("https://kytutes.com/api/items?category=$category");   
-               return collect(json_decode($response,true));
-           }else{
-               $this->category = $category;
+    // Pegar os Itens pertencentes à categoria selecionada
+    public function getItems($category)
+    {
+        try {
+            $this->category = $category;
 
-               $response = Http::withHeaders($this->getHeaders())
-               ->get("https://kytutes.com/api/items");
-               return collect(json_decode($response,true));   
-           }
-       } catch (\Throwable $th) {
-           $this->alert('error', 'ERRO', [
-               'toast'=>false,
-               'position'=>'center',
-               'showConfirmButton' => true,
-               'confirmButtonText' => 'OK',
-               'text'=>'Falha ao realizar operação'
-           ]);
-       }
-   }
+            // Define a URL com ou sem a categoria
+            $url = $category 
+                ? "https://kytutes.com/api/items?category=$category"
+                : "https://kytutes.com/api/items";
+            
+            // Chamada à API
+            $response = Http::withHeaders($this->getHeaders())->get($url);
+
+            // Verifica se a resposta foi bem-sucedida antes de processá-la
+            if ($response->successful()) {
+                return collect($response->json());
+            } else {
+                throw new \Exception("Erro na solicitação: {$response->status()}");
+            }
+
+        } catch (\Throwable $th) {
+            // Mostra um alerta com uma mensagem de erro personalizada
+            $this->alert('error', 'ERRO', [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'text' => 'Falha ao realizar operação: ' . $th->getMessage(),
+            ]);
+        }
+    }
 
     //adicionar no carrinho
     public function addToCart($itemid)

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class SiteController extends Controller
 {
@@ -78,8 +77,7 @@ class SiteController extends Controller
                 "fundo" => $this->fundo($company),
                 "start" => $this->start($company)
             ]);
-        }else
-        {
+        }else{
             return view("disable.App");
         }
     }

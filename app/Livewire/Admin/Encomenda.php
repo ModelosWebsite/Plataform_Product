@@ -22,6 +22,15 @@ class Encomenda extends Component
         return view('livewire.admin.encomenda');
     }
 
+    public function headers(){
+        $this->company = company::where("id", auth()->user()->company_id)->first();
+        return[
+            "Accept" => "application/json",
+            "Content-Type" => "application/json",
+            "Authorization" => "{$this->company->companytokenapi}",
+        ];
+    }
+
     public function mount()
     {
         try {

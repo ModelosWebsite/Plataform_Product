@@ -41,10 +41,18 @@
                             <input name="password" type="password" id="typePasswordX" class="form-control form-control-lg" required/>
                             <label class="form-label" for="typePasswordX">Password</label>
                         </div>
+                        
                         <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>  
+
                    </form>
                   </div>
                 </div>
+
+                <div class="card-footer text-center ">
+                  <a href="{{route("auth.reset.password")}}" class="text-white" >Recuperar senha</a> <br>
+                  <a href="{{route('site.subscription')}}" class="text-white">Criar Website</a>
+                </div>
+
               </div>
             </div>
           </div>
