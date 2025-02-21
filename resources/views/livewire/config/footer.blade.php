@@ -2,25 +2,25 @@
     <h3>Rodapé</h3>
     <hr>
     <div class="form-group">
-        <label class="form-label">Telefone</label>
+        <h5 class="form-label">Telefone</h5>
         <input type="text" class="form-control" wire:model.defer="telefone" {{ $isEditing ? '' : 'disabled' }} placeholder="Insira o seu contacto..">
         @error('telefone') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
-        <label class="form-label">Email</label>
+        <h5 class="form-label">Email</h5>
         <input type="email" class="form-control" wire:model.defer="email" {{ $isEditing ? '' : 'disabled' }} placeholder="Insira o seu email..">
         @error('email') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
-        <label class="form-label">Endereço</label>
+        <h5 class="form-label">Endereço</h5>
         <input type="text" class="form-control" wire:model.defer="endereco" {{ $isEditing ? '' : 'disabled' }} placeholder="Insira o seu endereço..">
         @error('endereco') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
-        <label class="form-label">Destaque</label>
+        <h5 class="form-label">Destaque</h5>
         <input type="text" class="form-control" wire:model.defer="atendimento" {{ $isEditing ? '' : 'disabled' }} placeholder="Insira uma frase em destaque..">
         @error('atendimento') <span class="text-danger">{{ $message }}</span> @enderror
     </div>

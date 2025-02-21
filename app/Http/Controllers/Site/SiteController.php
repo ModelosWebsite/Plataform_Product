@@ -43,13 +43,6 @@ class SiteController extends Controller
             $companies = Termpb_has_Company::where("company_id", isset($data->id) ? $data->id : "")->with('termsPBs')->first();
 
             $termos = TermsCompany::where("company_id", isset($data->id) ? $data->id : "")->first();
-            
-            $api = Http::post(
-                 "https://karamba.ao/api/anuncios",
-                 ["key" => "wRYBszkOguGJDioyqwxcKEliVptArhIPsNLwqrLAomsUGnLoho"]
-            );
-
-            $apiArray = $api->json();
 
             $this->getVisitor($companyName);
             
@@ -69,7 +62,6 @@ class SiteController extends Controller
                 "WhatsApp" => $WhatsApp,
                 "companies" => $companies,
                 "termos" => $termos,
-                "apiArray" => $apiArray,
                 "contacts" => $contacts,
                 "companyName" => $companyName,
                 "color" => $this->colors($company),

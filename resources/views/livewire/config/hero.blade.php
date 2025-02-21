@@ -15,18 +15,9 @@
                             <div class="col-md-5">
                                 <table class="tab">
                                     <tr class="tablinks active" onclick="openTab(event, 'hero')">
-                                        <td><img src="{{ asset('wireframe/images/Hero.jpg') }}" width="400" height="100" alt=""></td>
+                                        <td><img srcset="{{ asset("wireframe/home.png") }}" alt=""></td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#" class="tablinks" onclick="openTab(event, 'competencias')">
-                                                <img src="{{ asset('wireframe/images/Competencias.png') }}" width="200" height="100" />
-                                            </a>
-                                            <a href="#" class="tablinks" onclick="openTab(event, 'about')">
-                                                <img src="{{ asset('wireframe/images/Sobre-mim.png') }}" width="200" height="100" />
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    
                                     <tr class="tablinks" onclick="openTab(event, 'service')">
                                         <td><img src="{{ asset('wireframe/images/service.png') }}" width="400" height="100" alt=""></td>
                                     </tr>

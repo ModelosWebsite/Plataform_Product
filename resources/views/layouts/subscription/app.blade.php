@@ -6,6 +6,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>@yield("title")</title>
+  <link rel="stylesheet" href="{{asset("css/loading.css")}}">
+
 
   <!-- Vendor CSS Files -->
   <link href="{{asset("site/bootstrap.min.css")}}" rel="stylesheet">

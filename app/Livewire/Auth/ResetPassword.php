@@ -20,78 +20,75 @@ class ResetPassword extends Component
     }
 
     public function resetPassword()
-    {
-        if (empty($this->email)) {
+{
+    if (empty($this->email)) {
+        $this->alert('warning', 'AVISO', [
+            'toast' => false,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'OK',
+            'text' => 'Por favor, insira um endereço de email válido.'
+        ]);
+        return;
+    }
+
+    DB::beginTransaction();
+    try {
+        $userFinded = User::where('email', '=', $this->email)->first();
+
+        if (!$userFinded) {
             $this->alert('warning', 'AVISO', [
                 'toast' => false,
                 'position' => 'center',
                 'showConfirmButton' => true,
                 'confirmButtonText' => 'OK',
-                'text' => 'Por favor, insira um endereço de email válido.'
+                'text' => 'Não existe uma conta associada a este email.'
             ]);
             return;
         }
 
-        DB::beginTransaction();
-        try {
-            $userFinded = User::where('email', '=', $this->email)->first();
+        $newPasswordRandom = rand(1000000, 5000000);
+        $userFinded->password = Hash::make($newPasswordRandom);
+        $userFinded->save();
 
-            if ($userFinded) {
-                $newPasswordRandom = rand(1000000, 5000000);
-                $incriptPassword = Hash::make($newPasswordRandom);
+        dd($newPasswordRandom);
 
-                $userFinded->password = $incriptPassword;
-                $userFinded->save();
+        if ($userFinded != null) {
+            Mail::to($this->email)->send(new reset($newPasswordRandom));
 
-                // Try sending the email
-                try {
-                    Mail::to($this->email)->send(new reset($newPasswordRandom));
-
-                    $this->alert('success', 'SUCESSO', [
-                        'toast' => false,
-                        'position' => 'center',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'OK',
-                        'time' => 5000,
-                        'text' => 'Verifique seu email, foi enviado a sua nova senha de acesso.'
-                    ]);
-
-                    $this->email = '';
-
-                } catch (\Throwable $emailError) {
-                    dd($emailError->getMessage());
-                    DB::rollBack();
-                    $this->alert('error', 'ERRO', [
-                        'toast' => false,
-                        'position' => 'center',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'OK',
-                        'text' => 'Falha ao enviar o email com a nova senha. Tente novamente.'
-                    ]);
-                    return;
-                }
-            } else {
-                $this->alert('warning', 'AVISO', [
-                    'toast' => false,
-                    'position' => 'center',
-                    'showConfirmButton' => true,
-                    'confirmButtonText' => 'OK',
-                    'text' => 'Não existe uma conta associada a este email.'
-                ]);
-            }
+            $this->alert('success', 'SUCESSO', [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'time' => 5000,
+                'text' => 'Verifique seu email, foi enviada sua nova senha de acesso.'
+            ]);
 
             DB::commit();
-
-        } catch (\Throwable $th) {
+        } else {
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',
                 'showConfirmButton' => true,
                 'confirmButtonText' => 'OK',
-                'text' => 'Falha ao realizar operação. Erro: ' . $th->getMessage()
+                'text' => 'Falha ao enviar o email com a nova senha. Tente novamente.'
             ]);
         }
+        
+    } catch (\Throwable $th) {
+        //dd($th->getMessage());
+        DB::rollBack();
+        $this->alert('error', 'ERRO', [
+            'toast' => false,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'OK',
+            'text' => 'Falha ao realizar operação. Erro: ' . $th->getMessage()
+        ]);
     }
+}
+
 
 }

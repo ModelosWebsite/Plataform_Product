@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group">
-            <label for="level" class="form-label">Quantidade</label>
+            <h5 for="level" class="form-label">Quantidade</h5>
             <input type="text" wire:model="level" id="level" name="level" class="form-control" placeholder="Insira o número correspondente..." required>
             @error('level') <!-- Exibe erro caso haja validação -->
                 <span class="text-danger">{{ $message }}</span>

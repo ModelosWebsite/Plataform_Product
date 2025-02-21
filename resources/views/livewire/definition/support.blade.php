@@ -5,29 +5,22 @@
         <div class="col-md-5">
             <table class="tab">
                 <tr class="tablinks active" onclick="openTab(event, 'hero')">
-                    <td><img src="{{ asset('wireframe/images/Hero.jpg') }}" width="400" height="100" alt=""></td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" class="tablinks" onclick="openTab(event, 'competencias')">
-                            <img src="{{ asset('wireframe/images/Competencias.png') }}" width="200" height="100" />
-                        </a>
-                        <a href="#" class="tablinks" onclick="openTab(event, 'about')">
-                            <img src="{{ asset('wireframe/images/Sobre-mim.png') }}" width="200" height="100" />
-                        </a>
-                    </td>
+                    <td><img src="{{ asset("wireframe/home.png") }}" width="400" height="100" alt=""></td>
                 </tr>
                 <tr class="tablinks" onclick="openTab(event, 'service')">
-                    <td><img src="{{ asset('wireframe/images/service.png') }}" width="400" height="100" alt=""></td>
+                    <td><img src="{{ asset('wireframe/about.png') }}" width="400" height="100" alt=""></td>
                 </tr>
                 <tr class="tablinks" onclick="openTab(event, 'components')">
-                    <td><img src="{{ asset('wireframe/images/Componentes.png') }}" width="400" height="100" alt=""></td>
+                    <td><img src="{{ asset('wireframe/value.png') }}" width="400" height="100" alt=""></td>
                 </tr>
                 <tr class="tablinks" onclick="openTab(event, 'works')">
-                    <td><img src="{{ asset('wireframe/images/Trabalhos.png') }}" width="400" height="100" alt=""></td>
+                    <td><img src="{{ asset('wireframe/prove.png') }}" width="400" height="100" alt=""></td>
                 </tr>
                 <tr class="tablinks" onclick="openTab(event, 'footer')">
-                    <td><img src="{{ asset('wireframe/images/footer.png') }}" width="400" height="100" alt=""></td>
+                    <td><img src="{{ asset('wireframe/contact.png') }}" width="400" height="100" alt=""></td>
+                </tr>
+                <tr class="tablinks" onclick="openTab(event, 'competencias')">
+                    <td><img src="{{ asset('wireframe/footer.png') }}" width="400" height="100" /></td>
                 </tr>
             </table>
         </div>

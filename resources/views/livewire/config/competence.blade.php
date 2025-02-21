@@ -9,13 +9,13 @@
         <input type="hidden" wire:model="habilityId">
 
         <div class="form-group">
-            <label class="form-label">Habilidade</label>
+            <h5 class="form-label">Habilidade</h5>
             <input type="text" wire:model="hability" class="form-control" placeholder="Insira a habilidade..." required>
             @error('hability') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
 
         <div class="form-group">
-            <label class="form-label">Percentagem</label>
+            <h5 class="form-label">Percentagem</h5>
             <input type="number" wire:model="level" name="level" class="form-control" placeholder="Insira o número correspondente..." required min="0" max="100">
             @error('level') <span class="text-danger">{{ $message }}</span> @enderror
         </div>

@@ -5,13 +5,13 @@
     <!-- Formulário para Cadastrar ou Editar Serviços -->
     <form wire:submit.prevent="{{ $editMode ? 'updateService' : 'storeService' }}">
         <div class="form-group">
-            <label class="form-label">Nome do serviço</label>
+            <h5 class="form-label">Nome do serviço</h5>
             <input type="text" class="form-control" wire:model="title" name="title" placeholder="Insira o nome de um serviço...">
             @error('title') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
 
         <div class="form-group">
-            <label class="form-label">Descrição:</label>
+            <h5 class="form-label">Descrição:</h5>
             <input type="text" class="form-control" wire:model="description" name="description" placeholder="Descreva o seu serviço...">
             @error('description') <span class="text-danger">{{ $message }}</span> @enderror
         </div>

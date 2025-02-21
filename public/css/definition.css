@@ -186,3 +186,192 @@ input:checked + label {
 .tablinks.active img {
   border: 2px solid #007bff; /* Adiciona uma borda para a aba ativa */
 }
+
+@media screen and (max-width: 650px) {
+  label {
+    font-size: 0;
+  }
+
+  label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 400px) {
+  label {
+    padding: 15px;
+  }
+}
+
+/* checkbox-rect */
+.checkbox-rect input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-rect input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  font: 14px/20px "Open Sans", Arial, sans-serif;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .toggle-pill-color input[type="checkbox"] + label {
+    width: 7em;
+  }
+  .toggle-pill-color input[type="checkbox"] + label:before {
+    width: 1em;
+    height: 1em;
+    left: 0.2em;
+  }
+  .toggle-pill-color input[type="checkbox"]:checked + label:before {
+    left: 5.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle-pill-color input[type="checkbox"] + label {
+    width: 6em;
+  }
+  .toggle-pill-color input[type="checkbox"] + label:before {
+    width: 0.9em;
+    height: 0.9em;
+    left: 0.15em;
+  }
+  .toggle-pill-color input[type="checkbox"]:checked + label:before {
+    left: 4.8em;
+  }
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  label {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  main {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .toggle-pill-color input[type="checkbox"] + label {
+    width: 7em;
+  }
+
+  .toggle-pill-color input[type="checkbox"]:checked + label:before {
+    left: 5.5em;
+  }
+}
+
+@media (max-width: 576px) {
+  label {
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .toggle-pill-color input[type="checkbox"] + label {
+    width: 6em;
+  }
+
+  .toggle-pill-color input[type="checkbox"]:checked + label:before {
+    left: 4.5em;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+
+  label {
+    font-size: 0;
+  }
+
+  label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  main {
+    padding: 10px;
+  }
+}
+
+    /* Estilizar o container */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 130px;
+      height: 34px;
+    }
+
+    /* Esconde o checkbox padrão */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* Estilo do slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 0 10px; /* Espaçamento interno */
+      background-color: #ae001d;
+    }
+
+    /* Texto inicial (desmarcado) */
+    .slider::before {
+      content: "INATIVO";
+    }
+
+    /* Texto quando marcado */
+    input:checked + .slider::before {
+      content: "ATIVO";
+    }
+
+    /* O círculo dentro do slider */
+    .slider:after {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    /* Estilo quando o checkbox está marcado */
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+
+    input:checked + .slider:after {
+      transform: translateX(98px);
+    }

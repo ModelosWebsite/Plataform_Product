@@ -10,103 +10,68 @@ use Livewire\Component;
 
 class Inicial extends Component
 {
-    public $title,$databout, $description, $image, $hero;
+    public $title,$databout, $description, $image, $hero = [];
     
     use LivewireAlert;
     use WithFileUploads;
 
     public function render()
     {
-        $this->mount();
+        // $this->mount();
         return view('livewire.config.inicial');
     }
 
-    public function loadHeroData($itemId)
-    {
-        $item = hero::find($itemId);
-        $this->title = $item->title;
-        $this->description = $item->description;
-        $this->image = $item->image;
-    }
+    // public function loadHeroData($itemId)
+    // {
+    //     $item = hero::find($itemId);
+    //     $this->title = $item->title;
+    //     $this->description = $item->description;
+    //     $this->image = $item->image;
+    // }
 
-    public function mount()
-    {
-        $this->hero = hero::where("company_id", auth()->user()->company->id)->get();
-        $this->databout = Documentation::where("panel", "PAINEL DO ADMINISTRADOR")->where("section", "SOBRE")->get();
-    }
+    // public function mount()
+    // {
+    //     $this->hero = hero::where("company_id", auth()->user()->company->id)->get();
+    //     $this->databout = Documentation::where("panel", "PAINEL DO ADMINISTRADOR")->where("section", "SOBRE")->get();
+    // }
 
-    public function registerdatas()
+    public function heroSave()
     {
-        try {
+        try {      
             $data = new hero();
-            
-            //manipulacao de arquivo;
-            if ($this->image != null and !is_string($this->image)) {
-                $filaName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos",$filaName);
+
+            // Manipulação de arquivo
+            if ($this->image != null && !is_string($this->image)) {
+                $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
+                $this->image->storeAs("arquivos/hero", $fileName, 'public');
+                $data->image = "arquivos/hero/" . $fileName;
             }
 
             $data->title = $this->title;
             $data->description = $this->description;
-            $data->company_id = auth()->user()->company->id;
-            $data->img = $filaName;
-
+            $data->company_id = auth()->user()->company_id;
+        
             $data->save();
             $this->mount();
-            
+                
             $this->alert('success', 'SUCESSO', [
-                'toast'=>false,
-                'position'=>'center',
+                'toast' => false,
+                'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text'=>'Informações Inseridas'
+                'text' => 'Informações do Hero Registradas'
             ]);
 
         } catch (\Throwable $th) {
+            logger()->error($th->getMessage());
             $this->alert('error', 'ERRO', [
-                'toast'=>false,
-                'position'=>'center',
+                'toast' => false,
+                'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text'=>'Falha na operação'
+                'text' => 'Falha na operação'
             ]);
         }
     }
 
-    public function updateHero($getId)
-    {
-        try {
-            $data = hero::find($getId);
-
-            //manipulacao de arquivo;
-            if ($this->image != null and !is_string($this->image)) {
-                $fileName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos",$fileName);
-            }
-
-            $data->title = $this->title;
-            $data->description = $this->description;
-            $data->img = $fileName;
-
-            $data->update();
-            $this->mount();
-            
-            $this->alert('success', 'SUCESSO', [
-                'toast'=>false,
-                'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-                'text'=>'Informações Actualizadas'
-            ]);
-
-        } catch (\Throwable $th) {
-            $this->alert('error', 'ERRO', [
-                'toast'=>false,
-                'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-                'text'=>'Falha na operação'
-            ]);
-        }
-    }
 }

@@ -4,12 +4,12 @@
     <form wire:submit.prevent="storeOrUpdateProject" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label class="form-label">Nome do Projecto:</label>
+            <h5 class="form-label">Nome do Projecto:</h5>
             <input type="text" class="form-control" wire:model="title" name="title" placeholder="Insira o nome do projecto...">
         </div>
 
         <div class="form-group">
-            <label class="form-label">Fotografia</label>
+            <h5 class="form-label">Fotografia</h5>
             <input type="file" wire:model="image" name="image" class="form-control">
         </div>
 

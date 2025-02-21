@@ -3,7 +3,7 @@
         <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
             
             <div class="form-group">
-                <label class="form-label">Carregar Imagem</label>
+                <h5 class="form-label">Carregar Imagem</h5>
                 <input type="file" wire:model="image" name="image" class="form-control" placeholder="Insira a informação...">
                 @if ($fundoId && $currentImage)
                     <img src="{{ Storage::url("arquivos/background/$currentImage") }}" style="width: 10rem; height: 5rem;" alt="Imagem Atual">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Secção</label>
+                <h5 class="form-label">Secção</h5>
                 <select wire:model="type" name="tipo" class="form-control">
                     <option selected disabled>Selecione uma secção para esta imagem</option>
                     <option value="Hero">Inicial</option>
