@@ -12,6 +12,7 @@ class About extends Model
     protected $primaryKey = "id";
     protected $fillable = [
         "p1",
-        "p2"
+        "p2",
+        "company_id"
     ];
 }

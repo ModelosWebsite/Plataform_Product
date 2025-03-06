@@ -45,7 +45,7 @@ class Adjust extends Component
         $item = company::find(auth()->user()->company_id);
         
         // Atualiza o estado baseado no valor do checkbox
-        $item->status = $this->statusSite->status === 'enable' ? 'disable' : 'enable';
+        $item->status = $this->statusSite->status === 'active' ? 'inactive' : 'active';
         $item->update();
 
         $this->statusSite = company::where("id", auth()->user()->company_id)->first();

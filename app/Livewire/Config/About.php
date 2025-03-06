@@ -9,7 +9,7 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class About extends Component
 {
-    public $getAbout, $nome, $perfil, $p1, $p2, $itemId;
+    public $getAbout, $p1, $p2, $itemId;
     public $editMode = false;
     use WithFileUploads;
     use LivewireAlert;
@@ -22,16 +22,9 @@ class About extends Component
     public function storeAbout()
     {
         try {
-            $this->validate([
-                'nome' => 'required',
-                'perfil' => 'required',
-                'p1' => 'required',
-                'p2' => 'required',
-            ]);
+            $this->validate(['p1' => 'required','p2' => 'required']);
     
             ModelsAbout::create([
-                'nome' => $this->nome,
-                'perfil' => $this->perfil,
                 'p1' => $this->p1,
                 'p2' => $this->p2,
                 'company_id' => auth()->user()->company_id
@@ -61,10 +54,8 @@ class About extends Component
 
     public function editAbout($id)
     {
-        $about = ModelsAbout::findOrFail($id);
+        $about = ModelsAbout::find($id);
         $this->itemId = $about->id;
-        $this->nome = $about->nome;
-        $this->perfil = $about->perfil;
         $this->p1 = $about->p1;
         $this->p2 = $about->p2;
         $this->editMode = true;
@@ -74,16 +65,12 @@ class About extends Component
     {
         try {
             $this->validate([
-                'nome' => 'required',
-                'perfil' => 'required',
                 'p1' => 'required',
                 'p2' => 'required',
             ]);
     
-            $about = ModelsAbout::findOrFail($this->itemId);
+            $about = ModelsAbout::find($this->itemId);
             $about->update([
-                'nome' => $this->nome,
-                'perfil' => $this->perfil,
                 'p1' => $this->p1,
                 'p2' => $this->p2,
             ]);
@@ -119,8 +106,6 @@ class About extends Component
 
     public function resetFields()
     {
-        $this->nome = '';
-        $this->perfil = '';
         $this->p1 = '';
         $this->p2 = '';
         $this->editMode = false;

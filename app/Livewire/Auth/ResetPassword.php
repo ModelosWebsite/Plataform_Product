@@ -51,8 +51,6 @@ class ResetPassword extends Component
         $userFinded->password = Hash::make($newPasswordRandom);
         $userFinded->save();
 
-        dd($newPasswordRandom);
-
         if ($userFinded != null) {
             Mail::to($this->email)->send(new reset($newPasswordRandom));
 
@@ -78,7 +76,6 @@ class ResetPassword extends Component
         }
         
     } catch (\Throwable $th) {
-        //dd($th->getMessage());
         DB::rollBack();
         $this->alert('error', 'ERRO', [
             'toast' => false,
@@ -89,6 +86,4 @@ class ResetPassword extends Component
         ]);
     }
 }
-
-
 }

@@ -1,5 +1,5 @@
 <div>
-    <h3>Componentes</h3>
+    <h4>Prova Social</h4>
     <hr>
     <!-- Formulário -->
     <form wire:submit.prevent="storeOrUpdateComponent">
@@ -44,7 +44,7 @@
             <tbody>
                 @forelse ($getComponents as $item)
                     <tr wire:key="component-{{ $item->id }}">
-                        <td>{{ $item->elements }}</td>
+                        <td>{{ $item->element }}</td>
                         <td>{{ $item->level }}</td>
                         <td>
                             <button class="btn btn-primary" wire:click="editComponent({{ $item->id }})">Editar</button>

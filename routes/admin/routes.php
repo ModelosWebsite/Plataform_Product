@@ -3,6 +3,11 @@
 use App\Http\Controllers\Admin\{AboutController, BackgroudImageController, ColorController, ConfigSiteController, DeliveryController, ElementController, HabilidadeController};
 use App\Http\Controllers\Admin\{DetailController, FooterController, HeroController, ConditionsController, ShoopingController};
 use App\Http\Controllers\Admin\{HomeController, PortalPbCOntroller, ProductsController, ProfileController, QuestionControll, QuestionController, StatusDeliveryController};
+use App\Livewire\Admin\Category;
+use App\Livewire\Admin\GeneralShopping;
+use App\Livewire\Admin\Itens;
+use App\Livewire\Admin\VerifyDelivery;
+use App\Livewire\Config\Hero;
 use App\Livewire\Definition\DefinitionGeneral;
 use App\Livewire\Site\DeliveryStatusComponent;
 use App\Livewire\StatusDelivery;
@@ -126,6 +131,14 @@ Route::middleware("auth")->prefix("/painel/admin")->group(function()
         Route::get("/encomendas/lista", "index")->name("shoppind.list.deliveries");
     });
 
+    //configurações
     Route::get("/encomenda/estado/{id}", DeliveryStatusComponent::class)->name("delivery.status");
     Route::get("/definicao/geral/", DefinitionGeneral::class)->name("definition.general");
+    Route::get("config/", Hero::class)->name("admin.management.config");
+
+    //movimentação da loja
+    Route::get("/categorias", Category::class)->name("admin.shopping.category");
+    Route::get("/itens", Itens::class)->name("admin.shopping.itens");
+    Route::get("/verificar", VerifyDelivery::class)->name("admin.verify.delivery");
+    Route::get("/loja", GeneralShopping::class)->name("admin.general.shopping");
 });

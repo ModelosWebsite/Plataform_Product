@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class infowhy extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title', 'description', 'company_id'];
 }

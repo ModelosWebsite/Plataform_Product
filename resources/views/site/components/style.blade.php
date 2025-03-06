@@ -2,9 +2,9 @@
     :root{
         --color: {{$color->codigo ?? ""}};
         --letra: {{$color->letra ?? ""}};
-        --aboutg: url({{ isset($fundoAbout->image) ? asset("storage/".$fundoAbout->image) : 'none' }});
-        --aboutp: url({{ isset($fundo->image) ? asset("storage/".$fundo->image) : 'none' }});
-        --start: url({{ isset($start->image) ? asset("storage/".$start->image) : 'none' }});
+        --aboutg: url({{ isset($fundoAbout->image) ? Storage::url("arquivos/background/".$fundoAbout->image) : 'none' }});
+        --aboutp: url({{ isset($fundo->image) ? Storage::url("arquivos/background/".$fundo->image) : 'none' }});
+        --start: url({{ isset($start->image) ? Storage::url("arquivos/background/".$start->image): 'none' }});
     }
     .scroll-top{
         background: var(--color);
@@ -57,7 +57,7 @@
         color: var(--letra);
     }
 
-    main .about .container-fluid .about-img {
+    #about-img {
         background-size: cover; 
         background-position: center;
         background-image: var(--aboutg);

@@ -13,66 +13,52 @@ use Jenssegers\Agent\Agent;
 
 class SiteController extends Controller
 {
-    //exibir a pagina inicial
     public function index($company)
     {
         $data = $this->getCompany($company);
-        if ($data && $data->status === 'enable') 
-        {
-            $hero = hero::where("company_id", $data->id)->get();
-            $products = Produt::where("company_id", $data->id)->get();
-            $info = infowhy::where("company_id", $data->id)->get();
-            $details = Detail::where("company_id", $data->id)->get();
-            $about = About::where("company_id", $data->id)->get();
-            $contacts = contact::where("company_id", $data->id)->get(); 
-            $companyName = company::where("companyhashtoken", $company)->first();
-            $product = Element::where("company_id", $data->id)->
-            where("element", "Produtos")->first();
-            $experiencia = Element::where("company_id", $data->id)->
-            where("element", "Experiência")->first();
-            $parceiros = Element::where("company_id", $data->id)->
-            where("element", "Parceiros")->first();
-            $clients = Element::where("company_id", $data->id)->
-            where("element", "Clientes")->first();
-            $shopping = pacote::where("company_id", isset($data->id) ? $data->id : "")
-            ->where("pacote", "Shopping")->first();
-            $WhatsApp = pacote::where("company_id", isset($data->id) ? $data->id : "")
-            ->where("pacote", "WhatsApp")->first();
-            $phonenumber = contact::where("company_id", isset($data->id) ? $data->id : "")->first();
-            
-            $companies = Termpb_has_Company::where("company_id", isset($data->id) ? $data->id : "")->with('termsPBs')->first();
-
-            $termos = TermsCompany::where("company_id", isset($data->id) ? $data->id : "")->first();
-
-            $this->getVisitor($companyName);
-            
-            return view("site.pages.home",
-            [
-                "hero" => $hero,
-                "info" => $info,
-                "about" =>$about,
-                "details" => $details,
-                "products" => $products,
-                "experiencia" => $experiencia,
-                "parceiros" => $parceiros,
-                "product" => $product,
-                "clients" => $clients,
-                "shopping" => $shopping,
-                "phonenumber" => $phonenumber,
-                "WhatsApp" => $WhatsApp,
-                "companies" => $companies,
-                "termos" => $termos,
-                "contacts" => $contacts,
-                "companyName" => $companyName,
-                "color" => $this->colors($company),
-                "fundoAbout" => $this->fundoAbout($company),
-                "fundo" => $this->fundo($company),
-                "start" => $this->start($company)
-            ]);
-        }else{
+        
+        if (!$data || $data->status !== 'active') {
             return view("disable.App");
         }
+        
+        $companyId = $data->id;
+        
+        $elements = ["Produtos", "Experiência", "Parceiros", "Clientes"];
+        $elementData = Element::where("company_id", $companyId)
+        ->whereIn("element", $elements)->get()->keyBy("element");
+        
+        $packages = ["Shopping", "WhatsApp"];
+        $packageData = pacote::where("company_id", $companyId)
+        ->whereIn("pacote", $packages)->get()->keyBy("pacote");
+        
+        $companyName = company::where("companyhashtoken", $company)->first();
+        $this->getVisitor($companyName);
+        
+        return view("site.pages.home", [
+            "hero" => hero::where("company_id", $companyId)->get(),
+            "products" => Produt::where("company_id", $companyId)->get(),
+            "info" => infowhy::where("company_id", $companyId)->get(),
+            "details" => Detail::where("company_id", $companyId)->get(),
+            "about" => About::where("company_id", $companyId)->get(),
+            "contacts" => contact::where("company_id", $companyId)->get(),
+            "product" => $elementData["Produtos"] ?? null,
+            "experiencia" => $elementData["Experiência"] ?? null,
+            "parceiros" => $elementData["Parceiros"] ?? null,
+            "clients" => $elementData["Clientes"] ?? null,
+            "shopping" => $packageData["Shopping"] ?? null,
+            "WhatsApp" => $packageData["WhatsApp"] ?? null,
+            "phonenumber" => contact::where("company_id", $companyId)->first(),
+            "companies" => Termpb_has_Company::where("company_id", $companyId)->with('termsPBs')->first(),
+            "termos" => TermsCompany::where("company_id", $companyId)->first(),
+            "companyName" => $companyName,
+            "color" => $this->colors($company),
+            "fundoAbout" => $this->fundoAbout($company),
+            "fundo" => $this->fundo($company),
+            "start" => $this->start($company)
+        ]);
+        
     }
+
 
     public function start($company)
     {

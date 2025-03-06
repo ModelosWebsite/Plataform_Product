@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-group">
-        <h5 class="form-label">Destaque</h5>
+        <h5 class="form-label">Horario de Atendimento</h5>
         <input type="text" class="form-control" wire:model.defer="atendimento" {{ $isEditing ? '' : 'disabled' }} placeholder="Insira uma frase em destaque..">
         @error('atendimento') <span class="text-danger">{{ $message }}</span> @enderror
     </div>

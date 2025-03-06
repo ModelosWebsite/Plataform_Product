@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
             <div class="">
-                <form action="{{route("anuncio.management.update")}}" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{ $item->id ?? ""}}">
                     <div class="form-group">

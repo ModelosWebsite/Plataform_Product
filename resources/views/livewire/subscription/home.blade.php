@@ -6,7 +6,7 @@
             <h4 class="card-title">Crie aqui o seu Website Clássico</h4>
         </div>
         
-        <div class="card-body mt-5">
+        <div class="card-body mt-5 mt-lg-0">
             <form wire:submit.prevent="createAccountSite">
 
                 <div class="row">

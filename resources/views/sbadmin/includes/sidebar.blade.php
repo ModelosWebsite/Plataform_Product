@@ -52,11 +52,10 @@
     </li>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Route::current()->getName() == 'shoppind.list.deliveries' ? 'bg-white' : '' }}">
-        <a class="nav-link {{ Route::current()->getName() == 'shoppind.list.deliveries' ? 'text-primary' : '' }}"
-            href="{{ route('shoppind.list.deliveries') }}">
+    <li class="nav-item {{(Route::current()->getName() == "admin.general.shopping") ? "bg-white" : ""}}">
+        <a class="nav-link {{(Route::current()->getName() == "admin.general.shopping") ? "text-primary" : ""}}" href="{{route("admin.general.shopping")}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Controle Encomendas</span>
+            <span>loja Produtos</span>
         </a>
     </li>
 

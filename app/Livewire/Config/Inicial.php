@@ -10,60 +10,66 @@ use Livewire\Component;
 
 class Inicial extends Component
 {
-    public $title,$databout, $description, $image, $hero = [];
+    public $title,$hero_id, $img,$databout, $description, $image, $hero = [];
     
     use LivewireAlert;
     use WithFileUploads;
 
     public function render()
     {
-        // $this->mount();
+        $this->mount();
         return view('livewire.config.inicial');
     }
 
-    // public function loadHeroData($itemId)
-    // {
-    //     $item = hero::find($itemId);
-    //     $this->title = $item->title;
-    //     $this->description = $item->description;
-    //     $this->image = $item->image;
-    // }
+    public function loadHeroData($itemId)
+    {
+        $item = hero::find($itemId);
+        $this->title = $item->title;
+        $this->description = $item->description;
+        $this->img = $item->img;
+    }
 
-    // public function mount()
-    // {
-    //     $this->hero = hero::where("company_id", auth()->user()->company->id)->get();
-    //     $this->databout = Documentation::where("panel", "PAINEL DO ADMINISTRADOR")->where("section", "SOBRE")->get();
-    // }
+    public function mount()
+    {
+        $this->hero = hero::where("company_id", auth()->user()->company->id)->get();
+        $this->databout = Documentation::where("panel", "PAINEL DO ADMINISTRADOR")->where("section", "SOBRE")->get();
+    }
 
     public function heroSave()
     {
-        try {      
-            $data = new hero();
+        try {
+            // Se existir um ID, atualiza o registro; caso contrário, cria um novo
+            $data = $this->hero_id ? hero::find($this->hero_id) : new hero();
 
-            // Manipulação de arquivo
-            if ($this->image != null && !is_string($this->image)) {
+            // Manipulação de imagem
+            if ($this->image && !is_string($this->image)) {
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
-                $this->image->storeAs("arquivos/hero", $fileName, 'public');
-                $data->image = "arquivos/hero/" . $fileName;
+                $this->image->storeAs("public/arquivos/hero", $fileName);
+            } elseif (!$this->hero_id) {
+                $data->img = $this->img;
             }
-
+            
             $data->title = $this->title;
             $data->description = $this->description;
+            $data->img = $fileName;
             $data->company_id = auth()->user()->company_id;
-        
+
             $data->save();
             $this->mount();
-                
+
             $this->alert('success', 'SUCESSO', [
                 'toast' => false,
                 'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text' => 'Informações do Hero Registradas'
+                'text' => $this->hero_id ? 'Informações do Hero Atualizadas' : 'Informações do Hero Registradas'
             ]);
 
+            // Reseta o ID após o salvamento
+            $this->hero_id = null;
+
         } catch (\Throwable $th) {
-            logger()->error($th->getMessage());
+            dd($th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',

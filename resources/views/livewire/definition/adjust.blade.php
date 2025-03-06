@@ -6,7 +6,7 @@
                 <div>
                     <div class="item">
                         <label class="switch">
-                            <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'enable' ? 'checked' : '' }}>
+                            <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}>
                             <span class="slider"></span>
                         </label>
                     </div>                

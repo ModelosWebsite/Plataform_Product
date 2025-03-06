@@ -30,7 +30,7 @@ class Home extends Component
         'municipality' => 'required|string|max:255',
         'address' => 'required|string|max:255',
         'phone' => 'required|regex:/^\d{9,15}$/',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         'mylocation' => 'required|string|max:255',
     ];
     
@@ -54,7 +54,6 @@ class Home extends Component
         'image.required' => 'O envio de uma imagem é obrigatório.',
         'image.image' => 'O arquivo enviado deve ser uma imagem.',
         'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
-        'image.max' => 'A imagem não pode ser maior do que 10MB.',
         'mylocation.required' => 'O campo Localização é obrigatório.',
     ];
     
@@ -74,8 +73,8 @@ class Home extends Component
             // Manipulação da imagem
             $fileName = null;
             if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
-                $fileName = uniqid() . "." . $this->image->getClientOriginalExtension();
-                $path = $this->image->storeAs("public/company", $fileName);
+                $fileName = uniqid(). "." . $this->image->getClientOriginalExtension();
+                $path = $this->image->storeAs("public/arquivos/company", $fileName);
             }
 
             // Criação de token único para a empresa
@@ -100,19 +99,19 @@ class Home extends Component
             $user->save();
 
             // Informações para a API kytutes
-            $infoCompany = [
-                "name" => $this->name . " " . $this->lastname,
-                "nif" => $this->companynif,
-                "phone" => $this->phone,
-                "email" => $this->email,
-                "province" => $this->province,
-                "municipality" => $this->municipality,
-                "address" => $this->address,
-                "image" => $fileName,
-                "password" => $this->password,
-                "myLocation" => $this->mylocation,
-                "isAxp" => 0
-            ];
+            // $infoCompany = [
+            //     "name" => $this->name . " " . $this->lastname,
+            //     "nif" => $this->companynif,
+            //     "phone" => $this->phone,
+            //     "email" => $this->email,
+            //     "province" => $this->province,
+            //     "municipality" => $this->municipality,
+            //     "address" => $this->address,
+            //     "image" => $fileName,
+            //     "password" => $this->password,
+            //     "myLocation" => $this->mylocation,
+            //     "isAxp" => 0
+            // ];
 
             // Informações para a API Xzero
             $infoXzero = [
@@ -129,19 +128,19 @@ class Home extends Component
                 "companycountry" => "AOA"
             ];
 
-            // Chamada às APIs externas
-            // $response = Http::withHeaders($this->getHeaders())
-            // ->post("https://kytutes.com/api/create/company", $infoCompany)
-            // ->json();
+            //Chamada às APIs externas
+            //$response = Http::withHeaders($this->getHeaders())
+            //->post("https://test.kytutes.com/api/create/company", $infoCompany)
+            //->json();
 
-            // $xzeroResponse = Http::withHeaders($this->getHeaders())
-            // ->post("https://xzero.ao/api/create/account", $infoXzero)
-            // ->json();
+            $xzeroResponse = Http::withHeaders($this->getHeaders())
+            ->post("https://test.xzero.ao/api/create/account", $infoXzero)
+            ->json();
 
-            // Atualizar tokens da empresa
-            // $company->companytokenapi = $response['token'] ?? null;
-            // $company->token_xzero = $xzeroResponse['apiToken'] ?? null;
-            // $company->update();
+            //Atualizar tokens da empresa
+            //$company->companytokenapi = $response['token'] ?? null;
+            $company->token_xzero = $xzeroResponse['apiToken'] ?? null;
+            $company->update();
 
             // Disparar evento Registered
             event(new Registered($user));

@@ -1,66 +1,51 @@
-<div>
-    <h3>Sobre Mim</h3>
-    <hr>
-
-    <form wire:submit.prevent="{{ $editMode ? 'updateAbout' : 'storeAbout' }}">
-        <div class="form-group">
-            <h5 class="form-label">Nome:</h5>
-            <input type="text" class="form-control" wire:model="nome" name="nome" placeholder="Insira o seu nome...">
-            @error('nome') <span class="text-danger">{{ $message }}</span> @enderror
+<div class="container">
+    <h3 class="mb-3">Sobre a empresa</h3>
+    @if($getAbout->isNotEmpty() && !$editMode)
+        <div class="row">
+            @foreach ($getAbout as $item)
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow-sm border-0 rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Descrição:</h5>
+                            <p class="card-text text-muted">{{ $item->p1 }}</p>
+                            
+                            <h5 class="card-title">Descrição 1:</h5>
+                            <p class="card-text text-muted">{{ $item->p2 }}</p>
+                            
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button class="btn btn-outline-primary" wire:click="editAbout({{ $item->id }})">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-outline-danger" wire:click="deleteAbout({{ $item->id }})">
+                                    <i class="fas fa-trash"></i> Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
-
-        <div class="form-group">
-            <h5 class="form-label">Profissão:</h5>
-            <input type="text" class="form-control" wire:model="perfil" name="perfil" placeholder="Insira a sua profissão...">
-            @error('perfil') <span class="text-danger">{{ $message }}</span> @enderror
+    @else
+        <div class="card shadow-sm border-0 rounded p-4">
+            <form wire:submit.prevent="{{ $editMode ? 'updateAbout' : 'storeAbout' }}">
+                <div class="mb-3">
+                    <span class="form-label">Descrição:</span>
+                    <textarea name="p1" wire:model="p1" class="form-control" rows="4" placeholder="Insira uma breve descrição..."></textarea>
+                    @error('p1') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
+                
+                <div class="mb-3">
+                    <span class="form-label">Descrição 1:</span>
+                    <textarea name="p2" wire:model="p2" class="form-control" rows="4" placeholder="Insira uma segunda descrição..."></textarea>
+                    @error('p2') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {{ $editMode ? 'Atualizar' : 'Cadastrar' }}
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div>
-            <div class="form-group">
-                <h5 class="form-label">Descrição:</h5>
-                <textarea name="p1" wire:model="p1" class="form-control" cols="30" rows="4" placeholder="Insira uma breve descrição..."></textarea>
-                @error('p1') <span class="text-danger">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="form-group">
-                <h5 class="form-label">Descrição 1:</h5>
-                <textarea name="p2" wire:model="p2" class="form-control" cols="30" rows="4" placeholder="Insira uma segunda descrição..."></textarea>
-                @error('p2') <span class="text-danger">{{ $message }}</span> @enderror
-            </div>
-        </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">{{ $editMode ? 'Atualizar' : 'Cadastrar' }}</button>
-        </div>
-    </form>
-
-    <!-- Lista de registros já cadastrados -->
-    @if($getAbout->isNotEmpty())
-        <hr>
-        @foreach ($getAbout as $item)
-            <div class="form-group">
-                <h5 class="form-label">Nome: </h5>
-                <h5>{{ $item->nome }}</h5>
-            </div>
-
-            <div class="form-group">
-                <h5 class="form-label">Perfil: </h5>
-                <h5>{{ $item->perfil }}</h5>
-            </div>
-
-            <div class="form-group">
-                <h5 class="form-label">Descrição: </h5>
-                <p>{{ $item->p1 }}</p>
-            </div>
-
-            <div class="form-group">
-                <p>{{ $item->p2 }}</p>
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-primary" wire:click="editAbout({{ $item->id }})">Editar</button>
-                <button class="btn btn-danger" wire:click="deleteAbout({{ $item->id }})">Excluir</button>
-            </div>
-        @endforeach
     @endif
 </div>

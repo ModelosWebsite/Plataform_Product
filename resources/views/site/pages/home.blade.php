@@ -9,22 +9,21 @@
     @endif
 
     <!-- Hero Section -->
-    <section id="hero" class="hero d-flex align-items-center section-bg">
+    <section id="hero" class="hero d-flex align-items-center section-bg vh-100">
         <div class="container-fluid px-3 px-md-3 px-lg-4">
             @foreach ($hero as $item)
                 <div class="row justify-content-between gy-5">
-                    <div
-                        class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                    <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
                         <h2 data-aos="fade-up">
                             {{ $item->title ?? 'Default Title' }}
                         </h2>
                         <p data-aos="fade-up" data-aos-delay="100">
                             {{ $item->description ?? 'Default Description' }}
                         </p>
-
                     </div>
+
                     <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-                        <img src="{{ asset('/image/' . $item->img) ?? 'Default Image' }}" class="img-fluid" alt=""
+                        <img src="{{ Storage::url("arquivos/hero/".$item->img) }}" class="img-fluid" alt=""
                             data-aos="zoom-out" data-aos-delay="300">
                     </div>
                 </div>
@@ -39,14 +38,10 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <div class="col-sm-12 section-header d-flex justify-content-md-start justify-content-sm-center">
-                        <p>Quem Somos</p>
+                        <p><span style="color: var(--color);">Quem Somos</span></p>
                     </div>
                     <div class="row gy-4">
-                        <div class="col-lg-7 position-relative about-img"
-                            style="background-image: url({{ isset($fundoAbout->image) ? asset('storage/' . $fundoAbout->image) : 'none' }}); background-repeat: no-repeat;  background-size: cover;"
-                            id="about-img" data-aos="fade-up" data-aos-delay="150">
-
-                        </div>
+                        <div class="col-lg-7 position-relative about-img" id="about-img"></div>
                         <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
                             @foreach ($about as $item)
                                 <div class="content ps-0 ps-lg-5">
@@ -54,8 +49,7 @@
  
                                     <p>{{ $item->p2 ?? '' }}</p>
                                     <div class="position-relative mt-4">
-                                        <img src="{{ isset($fundo->image) ? "/storage/$fundo->image" : '' }}"
-                                            class="img-fluid" alt="">
+                                        <img src="{{ isset($fundo->image) ? Storage::url("arquivos/background/".$fundo->image) : '' }}" class="img-fluid" alt="">
                                     </div>
                                 </div>
                             @endforeach

@@ -34,7 +34,7 @@
 
                                     <div class="form-group">
                                         <label class="form-label">Secção</label>
-                                        <select class="form-control" name="tipo">~
+                                        <select class="form-control" wire:model="tipo">
                                             <option disabled selected> Selecione a secção</option>
                                             <option value="Start">Inicio</option>
                                             <option value="AboutMain">Sobre Principal</option>

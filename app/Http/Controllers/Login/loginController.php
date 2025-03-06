@@ -22,7 +22,11 @@ class loginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (Auth::user()-> role == "Administrador") {
-                return redirect()->route("plataform.product.admin.index");
+                if (Auth::user()->email_verified_at != null) {
+                    return redirect()->route("plataform.product.admin.index");
+                }else{
+                    return redirect()->route("site.verify.email");
+                }
             }if (Auth::user()-> role == "SuperAdmin") {
                 return redirect()->route("super.admin.index");
             }

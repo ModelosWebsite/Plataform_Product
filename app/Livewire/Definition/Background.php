@@ -44,12 +44,22 @@ class Background extends Component
 
             $fundo->tipo = $this->type;
 
-            // Manipulação de arquivo
-            if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
-                $fileName = uniqid() . "." . $this->image->getClientOriginalExtension();
+            // // Manipulação de arquivo
+            // if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
+            //     $fileName = uniqid().".".$this->image->getClientOriginalExtension();
+            //     $this->image->storeAs("arquivos/background", $fileName);
+            //     $fundo->image = $fileName;
+            // }
+
+            // Manipulação de imagem
+            if ($this->image && !is_string($this->image)) {
+                $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
                 $this->image->storeAs("public/arquivos/background", $fileName);
                 $fundo->image = $fileName;
+            } elseif (!$this->hero_id) {
+                $fundo->image = $this->img;
             }
+
 
             $fundo->save();
             $this->resetform();
@@ -64,6 +74,7 @@ class Background extends Component
             ]);
 
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',

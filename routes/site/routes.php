@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Site\SiteController;
 use App\Livewire\Site\Deliverystatus;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,3 +16,15 @@ Route::controller(SiteController::class)->group(function()
 });
 
 Route::get("/encomeda/estado/{id}", Deliverystatus::class)->name("plataforma.produto.delivery.status");
+
+Route::get('/email/verify/{id}/{hash}', function () {
+    $auth = Request("id");
+    if ($auth != null) {
+        $user = User::find($auth);
+        Auth::login($user);
+        $user->email_verified_at = now();
+        $user->save();
+        return redirect()->route("plataform.product.admin.index",
+        ["id"=>auth()->user()->id]);
+    }
+})->name('verification.verify');

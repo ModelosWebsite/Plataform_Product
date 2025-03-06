@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-evenly">
+<div class="d-flex justify-content-evenly row">
     <div class="col-xl-6">
         <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
             
@@ -12,13 +12,11 @@
 
             <div class="form-group">
                 <h5 class="form-label">Secção</h5>
-                <select wire:model="type" name="tipo" class="form-control">
+                <select wire:model="type" class="form-control">
                     <option selected disabled>Selecione uma secção para esta imagem</option>
-                    <option value="Hero">Inicial</option>
-                    <option value="Start">Start</option>
-                    <option value="Footer">Rodapé</option>
-                    <option value="Shopping">Loja</option>
-                    <option value="ShoppingCart">Carrinho</option>
+                    <option value="Start">Inicio</option>
+                    <option value="AboutMain">Sobre Principal</option>
+                    <option value="AboutSecund">Sobre Segundaria</option>
                 </select>
             </div>
 
@@ -30,9 +28,11 @@
 
     <div class="col-xl-6 d-flex justify-content-evenly flex-wrap">
         @foreach ($fundo as $item)  
-            <div class="p-2">
-                <img src="{{ Storage::url("arquivos/background/$item->image") }}" style="width: 7rem; height: 7rem; border-radius:50%;" alt="">
-                <button class="btn btn-primary mt-3" wire:click="load({{ $item->id }})">Editar</button>
+            <div class="card p-1 border-0 rounded-full">
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{{ Storage::url("arquivos/background/$item->image") }}" style="width: 7rem; height: 7rem; border-radius:50%;" alt="">
+                    <button class="btn btn-primary mt-3" wire:click="load({{ $item->id }})">Editar</button>
+                </div>
             </div>
         @endforeach
     </div>
