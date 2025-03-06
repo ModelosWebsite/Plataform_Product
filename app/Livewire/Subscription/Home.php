@@ -85,7 +85,7 @@ class Home extends Component
             $company->companyname = $this->name;
             $company->companyemail = $this->email;
             $company->companynif = $this->companynif;
-            $company->companybusiness = "Artes";
+            $company->companybusiness = "Negócio Geral";
             $company->companyhashtoken = $tokenCompany;
             $company->save();
 
@@ -99,19 +99,19 @@ class Home extends Component
             $user->save();
 
             // Informações para a API kytutes
-            // $infoCompany = [
-            //     "name" => $this->name . " " . $this->lastname,
-            //     "nif" => $this->companynif,
-            //     "phone" => $this->phone,
-            //     "email" => $this->email,
-            //     "province" => $this->province,
-            //     "municipality" => $this->municipality,
-            //     "address" => $this->address,
-            //     "image" => $fileName,
-            //     "password" => $this->password,
-            //     "myLocation" => $this->mylocation,
-            //     "isAxp" => 0
-            // ];
+            $infoCompany = [
+                "name" => $this->name . " " . $this->lastname,
+                "nif" => $this->companynif,
+                "phone" => $this->phone,
+                "email" => $this->email,
+                "province" => $this->province,
+                "municipality" => $this->municipality,
+                "address" => $this->address,
+                "image" => $fileName,
+                "password" => $this->password,
+                "myLocation" => $this->mylocation,
+                "isAxp" => 0
+            ];
 
             // Informações para a API Xzero
             $infoXzero = [
@@ -129,16 +129,16 @@ class Home extends Component
             ];
 
             //Chamada às APIs externas
-            //$response = Http::withHeaders($this->getHeaders())
-            //->post("https://test.kytutes.com/api/create/company", $infoCompany)
-            //->json();
+            $response = Http::withHeaders($this->getHeaders())
+            ->post("https://test.kytutes.com/api/create/company", $infoCompany)
+            ->json();
 
             $xzeroResponse = Http::withHeaders($this->getHeaders())
             ->post("https://test.xzero.ao/api/create/account", $infoXzero)
             ->json();
 
             //Atualizar tokens da empresa
-            //$company->companytokenapi = $response['token'] ?? null;
+            $company->companytokenapi = $response['token'] ?? null;
             $company->token_xzero = $xzeroResponse['apiToken'] ?? null;
             $company->update();
 
@@ -151,6 +151,7 @@ class Home extends Component
 
             return redirect()->route("site.status.account");
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,

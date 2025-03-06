@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("companybusiness");
             $table->string("companyhashtoken");
             $table->string("companytokenapi")->nullable();
+            $table->string("token_xzero")->nullable();
             $table->enum("status", ["active","inactive"])->default("inactive");
             $table->timestamps();
         });
