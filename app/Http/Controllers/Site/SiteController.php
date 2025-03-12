@@ -59,7 +59,6 @@ class SiteController extends Controller
         
     }
 
-
     public function start($company)
     {
         $data = company::where("companyhashtoken", $company)->first();
@@ -133,8 +132,8 @@ class SiteController extends Controller
         try {
             if (CartFacade::getContent()->count() > 0) {
                 $shopping = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id: "")
-            ->where("pacote", "Shopping")->first();
-            $WhatsApp = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")
+                ->where("pacote", "Shopping")->first();
+                $WhatsApp = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")
             ->where("pacote", "WhatsApp")->first();
             $phonenumber = contact::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")->first();
             $companyName = $this->getCompany($company);
@@ -144,13 +143,12 @@ class SiteController extends Controller
                 "shopping" => $shopping,
                 "WhatsApp" => $WhatsApp,
                 "phonenumber" => $phonenumber,
-                "color" => $this->colors($company),
-            ]);
+                "color" => $this->colors($company)]);
             } else {
                 return redirect()->back()->with("info", "Carrinho Vazio");
             }  
         } catch (\Throwable $th) {
-            //throw $th;
+            
         }
     }
 

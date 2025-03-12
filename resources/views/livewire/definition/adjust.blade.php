@@ -2,7 +2,7 @@
     <div class="row g-4">
         <div class="col-md-6">
             <div class="form-group mb-4">
-                <h4>Habilitar site</h4>
+                <h5>Habilitar site</h5>
                 <div>
                     <div class="item">
                         <label class="switch">
@@ -14,27 +14,32 @@
             </div>
     
             <div class="form-group">
-                <h4>Termos PB</h4>
+                <h5>Termos PB</h5>
                 <div>
                     <div class="item">
                         <label class="switch">
                             <input type="checkbox" wire:change="termoStatus" {{ isset($this->terms) && $this->terms->accept === 'yes' ? 'checked' : '' }}>
                             <span class="slider"></span>
                         </label>
+
                         @if (isset($terms) && isset($terms->accept) && $terms->accept === 'yes')
+
                         @else
-                            <div class="mb-2">
+                            <div class="mt-2 d-flex">
                                 <button data-toggle="modal" data-target="#termsCompany" class=" btn btn-primary bg-white text-primary">Cadastrar meus termos</button> <br>                           
-                                <button data-toggle="modal" data-target="#readMyTerms" class=" btn btn-primary bg-white text-primary" wire:click="loadTerms()">Ler termos</button> <br>
+                                <button data-toggle="modal" data-target="#readMyTerms" class=" btn btn-primary bg-white text-primary mx-3" wire:click="loadTerms()">Ler meus termos</button>
                             </div>
                         @endif
-                        <button data-toggle="modal" data-target="#read" class="btn btn-primary bg-white text-primary">Ler termos PB</button> <br>
+                        <br class="mb-3">
+                        <button data-toggle="modal" data-target="#read" class="btn btn-primary bg-white text-primary">Ler termos da Pacheco Barroso</button> <br>
+
                         <svg data-toggle="modal" data-target="#exampleModal" style="color: #fff; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
                         </svg>
+
                         @include("site.create")
-                        
-                        
+                        @include("modals.read")
+                        @include("modals.readmyterms") 
                     </div>
                 </div>
             </div>

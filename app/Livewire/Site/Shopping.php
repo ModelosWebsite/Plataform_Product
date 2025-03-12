@@ -64,8 +64,8 @@ class Shopping extends Component
 
             // Define a URL com ou sem a categoria
             $url = $category 
-                ? "https://kytutes.com/api/items?category=$category"
-                : "https://kytutes.com/api/items";
+                ? "https://test.kytutes.com/api/items?category=$category"
+                : "https://test.kytutes.com/api/items";
             
             // Chamada à API
             $response = Http::withHeaders($this->getHeaders())->get($url);
@@ -73,10 +73,7 @@ class Shopping extends Component
             // Verifica se a resposta foi bem-sucedida antes de processá-la
             if ($response->successful()) {
                 return collect($response->json());
-            } else {
-                throw new \Exception("Erro na solicitação: {$response->status()}");
-            }
-
+            } 
         } catch (\Throwable $th) {
             // Mostra um alerta com uma mensagem de erro personalizada
             $this->alert('error', 'ERRO', [

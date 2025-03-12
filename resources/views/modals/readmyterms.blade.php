@@ -10,12 +10,12 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <p for="privacity" class="form-label">Políticas de Privacidade</p>
-                            <textarea wire:model="privacity" id="privacity" class="form-control" rows="500"></textarea>
+                            <textarea wire:model="privacity" id="privacity" class="form-control" rows="200"></textarea>
                             @error('privacity') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-lg-6">
                             <p for="term" class="form-label">Termos e Condições</p>
-                            <textarea wire:model="term" id="term" class="form-control" rows="500"></textarea>
+                            <textarea wire:model="term" id="term" class="form-control" rows="200"></textarea>
                             @error('term') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>

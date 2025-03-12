@@ -24,6 +24,7 @@ class Inicial extends Component
     public function loadHeroData($itemId)
     {
         $item = hero::find($itemId);
+        $this->hero_id = $item->id;
         $this->title = $item->title;
         $this->description = $item->description;
         $this->img = $item->img;
@@ -44,14 +45,14 @@ class Inicial extends Component
             // Manipulação de imagem
             if ($this->image && !is_string($this->image)) {
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos/hero", $fileName);
-            } elseif (!$this->hero_id) {
+                $this->image->storeAs("arquivos/hero", $fileName);
+                $data->img = $fileName;
+            } else {
                 $data->img = $this->img;
             }
             
             $data->title = $this->title;
             $data->description = $this->description;
-            $data->img = $fileName;
             $data->company_id = auth()->user()->company_id;
 
             $data->save();
@@ -69,7 +70,6 @@ class Inicial extends Component
             $this->hero_id = null;
 
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',

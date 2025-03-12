@@ -27,10 +27,6 @@
                         @endif
                     </li>
                 @endforeach
-            @else
-                <li>
-                    <p>Não há categorias disponíveis.</p>
-                </li>
             @endif
         </ul>
         

@@ -18,7 +18,7 @@
     <div class="col-lg-4 col-md-6 mb-3">
         <div class="small-box card p-3 {{(auth()->user()->company->status == "active") ? "bg-primary" : "bg-danger"}}">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <a style="text-decoration: none;" href="" class="text-white text-center">
+                <a style="text-decoration: none;" href="{{route("admin.general.shopping")}}" class="text-white text-center">
                     @if (auth()->user()->company->status == "active")
                         <h5>A sua loja está disponivel, acesse a sua loja clicando aqui</h5>
                     @else

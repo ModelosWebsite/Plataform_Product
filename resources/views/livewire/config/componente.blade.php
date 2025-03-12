@@ -9,7 +9,7 @@
                 <option value="Trabalhos">Trabalhos Concluídos</option>
                 <option value="Experiência">Anos de Experiência</option>
                 <option value="Clientes">Total de Clientes</option>
-                <option value="Premios">Prêmios</option>
+                <option value="Parceiros">Parceiros</option>
             </select>
         </div>
 

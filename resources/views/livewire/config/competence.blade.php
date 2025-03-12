@@ -23,13 +23,11 @@
             <div class="form-group">
                 <h5 class="form-label">Titulo</h5>
                 <input type="text" wire:model="title" class="form-control" placeholder="Insira a habilidade..." required>
-                @error('hability') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="form-group">
                 <h5 class="form-label">Descrição</h5>
                 <textarea wire:model="description" cols="30" rows="10" class="form-control"></textarea>
-                @error('level') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="form-group">
@@ -37,5 +35,4 @@
             </div>
         </form>
     @endif
-    
 </div>

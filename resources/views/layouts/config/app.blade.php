@@ -22,11 +22,11 @@
     <link href="{{asset("Sbadmin/css/sb-admin-2.min.css")}}" rel="stylesheet">
 </head>
 <body id="page-top">
-    @include("sbadmin.help.App")
     
     <!-- Page Wrapper -->
     <div id="wrapper">
         @include("sbadmin.includes.sidebar")
+        @include("sbadmin.help.App")
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include("sbadmin.includes.topbar")

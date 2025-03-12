@@ -37,16 +37,10 @@
                     <span>Definições Gerais</span>
                 </a>
 
-                <a class="collapse-item" href="#" data-toggle="modal" data-target="#help">
+                <a class="collapse-item" href="#" data-toggle="modal" data-target="#helpGoogle">
                     <i class="fa fa-fw fa-cog"></i>
                     <span>Ajuda</span>
                 </a>
-                {{-- 
-                    <a class="collapse-item {{Route::current()->getName() == "plataform.product.admin.background.profile.user" ? "text-primary" : ""}}" href="{{route("plataform.product.admin.background.profile.user")}}">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Perfil</span>
-                    </a> --}}
-
             </div>
         </div>
     </li>
