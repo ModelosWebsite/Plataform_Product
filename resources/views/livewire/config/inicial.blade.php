@@ -55,12 +55,6 @@
                     <button type="submit" class="btn btn-primary">
                         {{ $hero_id ? 'Atualizar' : 'Cadastrar' }}
                     </button>
-                    
-                    @if ($hero_id)
-                        <button type="button" class="btn btn-secondary" wire:click="clearForm">
-                            Cancelar
-                        </button>
-                    @endif
                 </div>
             </form>
         @endif
