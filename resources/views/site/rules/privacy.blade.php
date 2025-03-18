@@ -1,9 +1,9 @@
 <!-- Modal -->
 <div class="modal fade" id="privacity" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="exampleModalLabel">Politicas da Entidade {{$companyName->companyname}}, NIF: {{$companyName->companynif}}</h4>
+          <h6 class="modal-title" id="exampleModalLabel">Politicas da Entidade {{$companyName->companyname}}, NIF: {{$companyName->companynif}}</h6>
           <button style="font-size: 30px" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
