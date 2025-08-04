@@ -14,18 +14,18 @@
           <li><a  href="{{route("plataforma.produto.shopping", ["company" => $companyName->companyhashtoken])}}">Loja</a></li>
           <li><a  href="{{route("plataforma.produto.index", ["company" => $companyName->companyhashtoken])}}#contact">Contacto</a></li>
         </ul>
-      </nav><!-- .navbar -->
+      </nav>
+      <!-- .navbar -->
 
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list text-white"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x text-white"></i>
 
     </div>
   </header>
   <!-- End Header -->
 
   <style>
-    
     .mobile-nav-active{
-      background-color: #000;
+      background-color: #FFF;
     }
   </style>

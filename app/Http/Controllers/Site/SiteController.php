@@ -7,7 +7,7 @@ use App\Mail\Company\SendEmail;
 use App\Models\{About, Color, company, CompanyTerm, contact, Detail, Element, Fundo, hero, infowhy, pacote, Produt, Termo, Termpb_has_Company, TermsCompany, visitor};
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\{Http, Log, Cache};
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 
@@ -15,6 +15,10 @@ class SiteController extends Controller
 {
     public function index($company)
     {
+        session()->forget("companyhashtoken");
+        Cache()->forget("company_token");
+        
+
         $data = $this->getCompany($company);
         
         if (!$data || $data->status !== 'active') {
@@ -32,6 +36,9 @@ class SiteController extends Controller
         ->whereIn("pacote", $packages)->get()->keyBy("pacote");
         
         $companyName = company::where("companyhashtoken", $company)->first();
+        session()->put('companyhashtoken', $companyName->companyhashtoken);
+        Cache::put('invoiceToken', $companyName->companyhashtoken);
+        Log::info("Cache", [Cache::get('invoiceToken')]);
         $this->getVisitor($companyName);
         
         return view("site.pages.home", [
@@ -56,7 +63,6 @@ class SiteController extends Controller
             "fundo" => $this->fundo($company),
             "start" => $this->start($company)
         ]);
-        
     }
 
     public function start($company)

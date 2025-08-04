@@ -18,4 +18,12 @@ class company extends Model
     {
         return $this->hasMany(pacote::class);
     }
+
+    protected $fillable = [
+        'companyname',
+        'companyemail',
+        'companynif',
+        'companybusiness',
+        'companyhashtoken',
+    ];
 }

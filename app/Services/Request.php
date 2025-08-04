@@ -57,7 +57,7 @@ class Request{
             return Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            ])->post('http://192.168.100.130:8000/api/company/show', [
+            ])->post('https://fortcodedev.com/api/company/show', [
                 "TaxPayer" => $taxPayer,
             ])->json();
         } catch (\Throwable $th) {

@@ -143,6 +143,6 @@
         </section>
         <!-- End Stats Counter Section -->
 
-        @include('site.components.contact')
-        @include('site.components.footer')
-    @endsection
+    @include('site.components.contact')
+    @include('site.components.footer')
+@endsection

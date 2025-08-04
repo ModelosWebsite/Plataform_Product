@@ -64,8 +64,8 @@ class Shopping extends Component
 
             // Define a URL com ou sem a categoria
             $url = $category 
-                ? "https://test.kytutes.com/api/items?category=$category"
-                : "https://test.kytutes.com/api/items";
+                ? "https://kytutes.com/api/items?category=$category"
+                : "https://kytutes.com/api/items";
             
             // Chamada à API
             $response = Http::withHeaders($this->getHeaders())->get($url);

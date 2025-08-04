@@ -51,7 +51,7 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <img src="https://kytutes.com/storage/{{$item['image']}}" class="img-fluid product-thumbnail">
+                                    <img src="{{$item['image']}}" class="img-fluid product-thumbnail">
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
                                 @endif
@@ -73,8 +73,8 @@
         </div>
       </div>
     </div>
-  {{-- Codigo CSS --}}
 
+  {{-- Codigo CSS --}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <x-livewire-alert::scripts />
 </div>

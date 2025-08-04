@@ -59,6 +59,7 @@ class Home extends Component
     
     public function render()
     {
+        
         return view('livewire.subscription.home',
         ['locationMap' => $this->getAllLocations()]
         )->layout("layouts.subscription.app");

@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div wire:ignore.self class="modal fade" id="checkout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header" style="background: var(--color); color:#fff;">
           <h5 class="modal-title" id="exampleModalLabel">FINALIZAR ENCOMENDA</h5>
@@ -11,26 +11,46 @@
         <div class="modal-body">
           <div>
             <div class="accordion" id="accordionExample">
+              @if($paymentType === 'Referência')
                 <div class="card">
                   <div class="card-header" style="background: var(--color);" id="headingOne">
                     <h2 class="mb-0">
                       <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Coordenadas Bancarias
+                        Pagamento Por Referência
                       </button>
                     </h2>
                   </div>
-              
+
                   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="card-body">
-                      <h6>Nº CONTA: 196976838100 01 | IBAN:AO06 0040 0000 9697 6838 10171</h6>
+                      <h6 class="text-capitalize">Entidade: Pacheco Barroso  |  Nº da Entidade: 10181</h6>
+                      <h6 class="text-capitalize">Número de Referência: {{ $referenceNumber }}</h6>
                     </div>
                   </div>
                 </div>
-              </div>
+              @else
+                <div class="card">
+                  <div class="card-header" style="background: var(--color);" id="headingTwo">
+                    <h2 class="mb-0">
+                      <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        Pagamento Por Transferência
+                      </button>
+                    </h2>
+                  </div>
+
+                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="card-body">
+                      <h6 class="text-capitalize">Banco: {{ $bankAccount->bank_name }}  |  IBAN: {{ $bankAccount->bank_account }}</h6>
+                      <h6 class="text-capitalize">Titular: {{ $bankAccount->bank_holder }}</h6>
+                    </div>
+                  </div>
+                </div>
+              @endif
+            </div>
           </div>
 
           <form >
-            <div class="mt-3">
+            <div class="mt-2">
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="name">Nome <span class="text-danger">*</span></label>
@@ -78,18 +98,6 @@
                 <div class="form-group col-md-4">
                   <label for="">Telefone Alternativo</label>
                   <input type="text" name="otherPhone" id="otherPhone" class="form-control" placeholder="999-999-999" wire:model="otherPhone">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="paymenttype">Forma de Pagamento <span class="text-danger">*</span></label>
-                  <select disabled="" name="paymenttype" id="" class="form-control" wire:model="paimenttype">
-                    <option value="Transferência" selected="">Transferência </option>
-                  </select>
-                  <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
-                </div>
-    
-                <div class="form-group col-md-4">
-                  <label for="image">Recibo de Pagamento <span class="text-danger">*</span></label>
-                  <input id="receipt" type="file" class="form-control w-100" name="receipt" wire:model="receipt">
                 </div>
                 
                 <div class="form-group col-md-4">

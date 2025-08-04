@@ -33,16 +33,16 @@
                    <form action="{{route("plataform.product.login")}}" method="post">
                         @csrf
                         <div class="form-outline form-white mb-4">
-                            <input name="email" type="email" id="typeEmailX" class="form-control form-control-lg" required/>
-                            <label class="form-label" for="typeEmailX">Email</label>
+                          <label class="form-label" for="typeEmailX">Email</label>
+                            <input name="email" type="email" id="typeEmailX" class="form-control" required/>
                         </div>
         
                         <div class="form-outline form-white mb-4">
-                            <input name="password" type="password" id="typePasswordX" class="form-control form-control-lg" required/>
-                            <label class="form-label" for="typePasswordX">Password</label>
+                          <label class="form-label" for="typePasswordX">Password</label>
+                            <input name="password" type="password" id="typePasswordX" class="form-control" required/>
                         </div>
                         
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>  
+                        <button class="btn btn-outline-light px-5" type="submit">Login</button>  
 
                    </form>
                   </div>

@@ -194,6 +194,8 @@
     }
     
     .cart__total ul {
+        padding: 0;
+        margin: 0;
         margin-bottom: 25px;
     }
     

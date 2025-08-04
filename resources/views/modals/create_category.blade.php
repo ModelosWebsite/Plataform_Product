@@ -1,11 +1,4 @@
-<div wire:ignore.self 
-class="modal fade" 
-id="addcategory{{ $editMode && isset($category['reference']) ? $category['reference'] : '' }}" 
-tabindex="-1" 
-role="dialog" 
-aria-labelledby="exampleModalLabel" 
-aria-hidden="true">
-
+<div wire:ignore.self class="modal fade" id="addcategory{{ $editMode && isset($category['reference']) ? $category['reference'] : '' }}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">

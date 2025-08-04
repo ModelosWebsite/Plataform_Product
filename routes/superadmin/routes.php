@@ -41,3 +41,4 @@ Route::middleware("auth")->prefix("/super/admin")->group(function()
         Route::get("/metrics/incial", "index")->name("super.admin.visitor.index");
     });
 });
+

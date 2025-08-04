@@ -75,28 +75,17 @@
                         <div class="cart__total">
                             <div class="line">
                                 <h6>Total do Carrinho</h6>
+                                <ul>
+                                    <li>Subtotal <span id="subtotal">{{ number_format(abs($getSubTotal), 2, ',', '.') }} Kz</span></li>
+                                    <li>Taxa PB <span>{{ number_format($taxapb, 2, ',', '.') }} Kz</span> </li>
+                                    <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, ',', '.')}} kz</span></li>
+                                </ul>
                             </div>
-                            <ul>
-                                <li>Subtotal <span id="subtotal">{{ number_format(abs($getSubTotal), 2, ',', '.') }} Kz</span></li>
-                                <li>Taxa PB <span>{{ number_format($taxapb, 2, ',', '.') }} Kz</span> </li>
-                                <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, ',', '.')}} kz</span></li>
-                            </ul>
-                            @if (isset($locations) and $locations->count() > 0)
-                                @foreach ($locations as $key => $item)
-                                    <div class="form-check">
-                                        <input wire:click="selectLocation({{ $item['price'] }})" class="form-check-input checked"
-                                            type="radio" id="flexRadioDefault{{ $key + 1 }}" name="location" value="{{ $item['price'] }}">
-                                        <label class="form-check-label" for="flexRadioDefault{{ $key + 1 }}" style="cursor: pointer">
-                                            {{ $item['location'] }} - {{ $item['price'] }} kz
-                                        </label>
-                                    </div>
-                                @endforeach
-                            @endif
                             
                             <button type="button" class="primary-btn btn btn-primary mt-2"
                                 style="background: var(--color); color:#fff; border: none;" data-bs-toggle="modal"
-                                data-bs-target="#checkout"
-                                id="getLocationButton">Finalizar Compra</button>
+                                data-bs-target="#checkout" id="getLocationButton">Finalizar Compra
+                            </button>
                              @include("livewire.site.checkout")
                         </div>
                     </div>
@@ -105,7 +94,25 @@
         </section>
         @include("site.pages.style")
     </main>
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
 </div>
+
+{{-- //get location latitude in longitude in client --}}
+<script>
+    const button = document.getElementById('getLocationBtn');
+    const output = document.getElementById('output');
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            @this.call('setLocation', latitude, longitude);
+        },
+        (error) => {
+            console.error('Erro ao obter localização:', error.message);
+            output.innerText = "Não foi possível obter a localização.";
+        }
+    );
+</script>

@@ -53,31 +53,6 @@
         </a>
     </li>
 
-    <!-- Nav Item - Pages Collapse Definições -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePremium"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Elementos Premium</span>
-        </a>
-
-        <div id="collapsePremium" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Route::current()->getName() == 'plataform.product.admin.loja.online' ? 'text-primary' : '' }}"
-                    href="{{ route('plataform.product.admin.loja.online') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Adicionar</span>
-                </a>
-
-                <a class="collapse-item {{ Route::current()->getName() == 'plataform.product.admin.delivery.status' ? 'text-primary' : '' }}"
-                    href="{{ route('plataform.product.admin.delivery.status') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Verificar meu Pedido</span>
-                </a>
-            </div>
-        </div>
-    </li>
-
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ Route::current()->getName() == 'plataform.product.logout' ? 'bg-white' : '' }}">
         <a class="nav-link {{ Route::current()->getName() == 'plataform.product.logout' ? 'text-primary' : '' }}"

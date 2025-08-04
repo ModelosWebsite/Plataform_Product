@@ -14,12 +14,14 @@ class loginController extends Controller
     }
 
     public function login(Request $request){
+       
         $credentials = $this->validate($request, [
             "email" => ["required"],
             "password" => ["required"]
         ]);
 
         if (Auth::attempt($credentials)) {
+          
             $request->session()->regenerate();
             if (Auth::user()-> role == "Administrador") {
                 if (Auth::user()->email_verified_at != null) {
@@ -31,6 +33,7 @@ class loginController extends Controller
                 return redirect()->route("super.admin.index");
             }
         }else{
+          
             return redirect()->back()->with('error', 'Credenciais Incorretas');
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Site;
 
-use App\Models\company;
+use App\Models\{company, Payment, BankAccount};
 use Livewire\Component;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Support\Facades\Http;
@@ -20,10 +20,10 @@ class Shoppingcart extends Component
 
     //propriedades de checkout
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
-    $email, $deliveryPrice =0, $paymentType ="Trasnferencia",  $taxPayer,$receipt,$otherAddress;
-    public $company;
+    $email, $deliveryPrice =0,  $taxPayer,$otherAddress;
+    public $company, $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount;
 
-    protected $listeners = ["updateQuantity"];
+    protected $listeners = ["updateQuantity", "setLocation"];
 
     public function render()
     {
@@ -34,12 +34,25 @@ class Shoppingcart extends Component
             $this->getTotalQuantity = CartFacade::getTotalQuantity();
             $this->finalCompra = $this->getSubTotal + $this->localizacao;
             $this->taxapb = ($this->finalCompra * 14) / 100;
-            $this->totalFinal = $this->finalCompra + $this->taxapb;
-            
+            if ($this->getCompany()->payment_type == "Referência") {
+                $this->totalFinal = $this->finalCompra + $this->taxapb;
+            }else {
+                $this->totalFinal = $this->finalCompra;
+                $this->taxapb = 0;
+            }
+            $this->referenceNumber = rand(100000000, 999999999);
+            $this->paymentType = $this->getCompany()->payment_type;
+            $this->bankAccount = $this->bankAccountDetails();
+
             return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
         } catch (\Throwable $th) {
             
         }
+    }
+
+    public function bankAccountDetails()
+    {
+        return BankAccount::where('company_id', $this->getCompany()->id)->first();
     }
 
     public function getCompany()
@@ -80,15 +93,7 @@ class Shoppingcart extends Component
         
     public function checkout()
     {
-        try {
-            //manipulacao de arquivo;
-            $filaName = null;
-            if ($this->receipt != null and !is_string($this->receipt)) {
-                $filaName = md5($this->receipt->getClientOriginalName())
-                        .".".$this->receipt->getClientOriginalExtension();
-                $this->receipt->storeAs("public/recibos",$filaName);
-            }
-            
+        try {    
             //Acesso a API com um token
             $items = [];
             if (count(CartFacade::getContent()) > 0) {
@@ -113,20 +118,40 @@ class Shoppingcart extends Component
                 "otherPhone" => $this->otherPhone,
                 "email" => $this->email,
                 "taxPayer" => $this->taxPayer,
-                "receipt" => $filaName,
-                "paymentType" => $this->paymentType,
+                "paymentType" => "Referência",
+                "latitude" => $this->latitude,
+                "longitude" => $this->longitude,
                 "items" => $items,
             ];
             
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/deliveries",$data);
+            ->post("https://kytutes.com/api/deliveries",$data)->json();
     
-            $result  = collect(json_decode($response, true));
-                
-            if ($result) {
-                session()->put("idDelivery", $result['reference']);
+            $infoReference = [
+                'amount' => $this->totalFinal,
+                'referenceCode' => $this->referenceNumber,
+            ];
+
+            //$responsePayment = Http::post('https://fortcodedev.com/api/payment/website', $infoReference)->json();
+
+            if ($response) {
+            // if ($responsePayment != null) {
+                Payment::create([
+                    'reference' => $this->referenceNumber,
+                    'value' => $this->totalFinal,
+                    'status' => "pendente",
+                    'typeservice' => "Pagamento de Encomenda",
+                    'company_id' => $this->getCompany()->id
+                ]);
             }
+
+            CartFacade::clear();
+            $this->reset([
+                'name', 'lastname', 'province', 'municipality', 'street', 
+                'phone', 'otherPhone', 'email', 'taxPayer', 'otherAddress',
+                'latitude', 'longitude'
+            ]);
     
             $this->alert('success', 'SUCESSO', [
                 'toast'=>false,
@@ -134,13 +159,16 @@ class Shoppingcart extends Component
                 'timer'=>1000,
                 'text'=>'Encomenda Finalizada'
             ]);
-                
-            return redirect()->route("plataforma.produto.delivery.status",[
-                $result['reference']
-            ]);
 
         } catch (\Throwable $th) {
-            $this->alert("error", "Falha na encomenda");
+            $this->alert("error", 
+            [
+                'toast'=>false,
+                'position'=>'center',
+                'timer'=>1000,
+                "Falha na encomenda"
+            ]
+        );
         }
     }
     
@@ -170,9 +198,8 @@ class Shoppingcart extends Component
     public function getAllLocations()
     {
         try {
-            $response = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/locations");
-            return Collect(json_decode($response, true));
+            return Http::withHeaders($this->getHeaders())
+            ->get("https://kytutes.com/api/locations")->json();
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -181,5 +208,16 @@ class Shoppingcart extends Component
     public function selectLocation($price)
     {
         $this->localizacao = $price;
+    }
+
+    public function setLocation($latitude, $longitude)
+    {
+        try {
+            $this->latitude = $latitude;
+            $this->longitude = $longitude;
+            \Log::info("Geolocalização: $latitude, Longitude: $longitude");
+        } catch (\Throwable $th) {
+            return [];
+        }
     }
 }

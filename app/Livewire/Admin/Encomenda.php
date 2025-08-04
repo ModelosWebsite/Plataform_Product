@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\company;
+use App\Models\Company;
 use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -10,169 +10,109 @@ use Livewire\Component;
 class Encomenda extends Component
 {
     use LivewireAlert;
-    public $company, $deliveries, $response, $id,
-    $itens, $delivery, $item, $newStatus;
-    
+
+    public $company;
+    public $deliveries = [];
+    public $itens = [];
+
     protected $listeners = [
-        'changeStatus'=>'changeStatus'
+        'changeStatus' => 'changeStatus'
     ];
+
+    public function mount()
+    {
+        $this->company = Company::find(auth()->user()->company_id);
+
+        try {
+            $this->deliveries = $this->apiRequest("deliveries");
+        } catch (\Throwable $th) {
+        }
+    }
 
     public function render()
     {
         return view('livewire.admin.encomenda');
     }
 
-    public function mount()
+    private function apiHeaders(): array
     {
-        try {
-            $this->company = company::where("id", auth()->user()->company_id)->first();
-            
-            $headers = [
-                "Accept" => "application/json",
-                "Content-Type" => "application/json",
-                "Authorization" => "{$this->company->companytokenapi}",
-            ];
-    
-            //Chamada a API
-            $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries");
-
-            $this->deliveries = collect(json_decode($response));
-
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        return [
+            "Accept" => "application/json",
+            "Content-Type" => "application/json",
+            "Authorization" => "Bearer {$this->company->companytokenapi}"
+        ];
     }
 
-    public function updateStatus($id, $newStatus)
+    private function apiRequest(string $endpoint, string $method = 'GET', array $payload = [])
+    {
+        $url = "https://kytutes.com/api/$endpoint";
+        $response = Http::withHeaders($this->apiHeaders());
+
+        return match (strtoupper($method)) {
+            'GET'    => $response->get($url)->json(),
+            'POST'   => $response->post($url, $payload)->json(),
+            'PUT'    => $response->put($url, $payload)->json(),
+            default  => throw new \Exception("Método HTTP inválido")
+        };
+    }
+
+    public function updateStatus($reference, $newStatus)
     {
         try {
-            $headers = [
-                "Accept" => "application/json",
-                "Content-Type" => "application/json",
-                "Authorization" => "{$this->company->companytokenapi}",
-            ];
+            $deliveryData = $this->apiRequest("deliveries?reference={$reference}");
+            $delivery = collect($deliveryData);
 
-            // Chamada à API para obter a entrega
-            $response = Http::withHeaders($headers)
-                ->get("https://kytutes.com/api/deliveries?reference=$id");
-
-            $delivery = collect(json_decode($response, true));
-
-            if ($delivery->isEmpty()) {
-                $this->alert('error', 'ERRO', [
-                    'toast' => false,
-                    'position' => 'center',
-                    'showConfirmButton' => true,
-                    'confirmButtonText' => 'OK',
-                    'text' => 'Entrega não encontrada'
-                ]);
-                return;
-            }
-
-            // Itera sobre as entregas para atualizar o status
             foreach ($delivery as $item) {
-                $estado = $item['delivery']['status'];
-
-                // Verifica se o status atual é 'PENDENTE' antes de atualizar
-                if ($estado == 'PENDENTE') {
-                    // Atualiza o status
-                    $item['delivery']['status'] = $newStatus;
-
-                    // Chamada à API para atualizar o status
-                    $updateResponse = Http::withHeaders($headers)
-                        ->put("https://kytutes.com/api/deliveries?reference=$id", [
+                if ($item['delivery']['status'] === 'PENDENTE') {
+                    $updateResponse = Http::withHeaders($this->apiHeaders())
+                        ->put("https://kytutes.com/api/deliveries?reference={$reference}", [
                             'switch' => $newStatus
                         ]);
-                        
 
                     if ($updateResponse->successful()) {
-                        $this->alert('success', 
-                        'Estado atualizado', [
-                            'toast' => false,
-                            'position' => 'center',
-                            'showConfirmButton' => false,
-                            'confirmButtonText' => 'OK',
-                        ]);
+                        $this->alert('success', 'Estado atualizado com sucesso');
                     } else {
-                        $this->alert('error', 'ERRO', [
-                            'toast' => false,
-                            'position' => 'center',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'OK',
-                            'text' => 'Falha ao atualizar status'
-                        ]);
+                        $this->alert('error', 'Falha ao atualizar o estado');
                     }
                 }
             }
-
         } catch (\Throwable $th) {
-            $this->alert('error', 'ERRO', [
+            $this->alert('error', 'Erro ao atualizar estado', [
+                'text' => $th->getMessage(),
                 'toast' => false,
-                'position' => 'center',
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'OK',
-                'text' => 'Falha ao realizar operação: ' . $th->getMessage()
+                'position' => 'center'
             ]);
         }
     }
 
-    public function download($id)
+    public function download($reference)
     {
         try {
-            $headers = [
-                "Accept" => "application/json",
-                "Content-Type" => "application/json",
-                "Authorization" => "{$this->company->companytokenapi}",
-            ];
-    
-            //Chamada a API
-            $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
-            
-            $datas = collect(json_decode($response, true));
+            $deliveryData = $this->apiRequest("deliveries?reference={$reference}");
+            $delivery = collect($deliveryData)->first();
 
-            foreach ($datas as $item) {
-                $receipt = $item['delivery']['receipt'];
+            $receipt = $delivery['delivery']['receipt'] ?? null;
+
+            if (!$receipt) {
+                throw new \Exception("Recibo não encontrado.");
             }
 
-            $this->alert('info', '', [
-                'toast'=>false,
-                'position'=>'center',
-                'timer'=>1000,
-                'timerProgressBar'=> true,
-                'text'=>'A PROCESSAR DOWNLOAD...'
-            ]);
-            
-            return response()->download(storage_path('app/public/recibos/' . $receipt));
+            $this->alert('info', 'A processar download...', ['timer' => 1000]);
 
+            return response()->download(storage_path("app/public/recibos/{$receipt}"));
         } catch (\Throwable $th) {
-            $this->alert('error', 'ERRO', [
-                'toast'=>false,
-                'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-                'text'=>'Falha ao realizar operação' . $th->getMessage()
-            ]);
+            $this->alert('error', 'Erro ao realizar download', ['text' => $th->getMessage()]);
         }
     }
 
-    public function deliveryItens($id)
+    public function deliveryItens($reference)
     {
         try {
-            $headers = [
-                "Accept" => "application/json",
-                "Content-Type" => "application/json",
-                "Authorization" => "{$this->company->companytokenapi}",
-            ];
-    
-            //Chamada a API
-            $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
-            
-            $this->itens = collect(json_decode($response));
+            $this->itens = collect($this->apiRequest("deliveries?reference={$reference}"));
         } catch (\Throwable $th) {
-            //throw $th;
+            $this->alert('error', 'Erro ao carregar itens da entrega', [
+                'text' => $th->getMessage()
+            ]);
         }
     }
 }
