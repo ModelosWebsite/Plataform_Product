@@ -24,7 +24,7 @@
                                 <label for="tab5">Minha Conta</label>
                                 
                                 <input id="tab6" type="radio" name="tabs">
-                                <label for="tab6">Pagamento</label>
+                                <label for="tab6">Pagamento/Entrega</label>
 
                                 <section id="content1">@livewire("definition.support")</section>
                                 <section id="content2">@livewire("definition.color") </section>

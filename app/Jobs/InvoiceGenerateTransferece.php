@@ -102,8 +102,8 @@ class InvoiceGenerateTransferece implements ShouldQueue
                             $invoicePb = Http::withHeaders([
                                 'Accept' => 'application/json',
                                 'Content-Type' => 'application/json',
-                                'Authorization' => 'Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0',
-                                //'Authorization' => $clientPb["APIKEY"],
+                                //'Authorization' => 'Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0',
+                                'Authorization' => "Bearer {$clientPb["APIKEY"]}",
                             ])->post('https://fortcodedev.com/api/invoice/create', [
                                 "isBackoffice" => "0",
                                 "type" => "FR",
@@ -142,8 +142,8 @@ class InvoiceGenerateTransferece implements ShouldQueue
                                 $logisticPartnerInvoice = Http::withHeaders([
                                     'Accept' => 'application/json',
                                     'Content-Type' => 'application/json',
-                                    'Authorization' => "Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0",
-                                    //'Authorization' => "Bearer {$logisticPartner["APIKEY"]}",
+                                    //'Authorization' => "Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0",
+                                    'Authorization' => "Bearer {$logisticPartner["APIKEY"]}",
                                 ])->post('https://fortcodedev.com/api/invoice/create', [
                                     "isBackoffice" => "0",
                                     "type" => "FR",

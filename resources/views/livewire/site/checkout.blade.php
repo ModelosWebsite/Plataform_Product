@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header" style="background: var(--color); color:#fff;">
-          <h5 class="modal-title" id="exampleModalLabel">FINALIZAR ENCOMENDA</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Finalizar Encomenda</h5>
           <span style="font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">
             &times;
           </span>
@@ -105,6 +105,13 @@
                   <input type="text" name="otherAddress" id="otherAddress" class="form-control" placeholder="Digite..." wire:model="otherAddress">
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
+
+                @if($paymentType === 'Transferência')
+                  <div class="form-group col-md-4 shadow-sm">
+                    <label for="image">Recibo de Pagamento <span class="text-danger">*</span></label>
+                    <input id="receipt" type="file" class="form-control w-100" name="receipt" wire:model="receipt">
+                  </div>
+                @endif
               </div>
              
               </div>

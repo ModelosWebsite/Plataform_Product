@@ -25,5 +25,7 @@ class company extends Model
         'companynif',
         'companybusiness',
         'companyhashtoken',
+        'delivery_method',
+        'payment_type',
     ];
 }

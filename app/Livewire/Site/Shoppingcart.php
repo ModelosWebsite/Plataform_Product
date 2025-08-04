@@ -16,14 +16,22 @@ class Shoppingcart extends Component
 
     public $number = 0, $localizacao, $cartContent, $getTotal, $getSubTotal,
     $getTotalQuantity, $location, $cupon, $taxapb = 0, $finalCompra,
-    $totalFinal = 0, $code, $delveryId;
+    $totalFinal = 0, $code, $delveryId, $receipt, $deliveryType;
 
     //propriedades de checkout
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
-    $email, $deliveryPrice =0,  $taxPayer,$otherAddress;
+    $email, $deliveryPrice =0,  $taxPayer,$otherAddress,$deliveryUrl;
     public $company, $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount;
 
     protected $listeners = ["updateQuantity", "setLocation"];
+
+    public function mount()
+    {
+        $this->paymentType = $this->getCompany()->payment_type;
+        $this->deliveryType = $this->getCompany()->delivery_method;
+        //$this->deliveryUrl = (env("APP_ENV") == "local") ? "http://192.168.100.29:8000/api/deliveries" : "https://kytutes.com/api/deliveries";
+        $this->deliveryUrl = env("LINK_KITUTES") . "/deliveries";
+    }
 
     public function render()
     {
@@ -41,7 +49,6 @@ class Shoppingcart extends Component
                 $this->taxapb = 0;
             }
             $this->referenceNumber = rand(100000000, 999999999);
-            $this->paymentType = $this->getCompany()->payment_type;
             $this->bankAccount = $this->bankAccountDetails();
 
             return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
@@ -75,7 +82,7 @@ class Shoppingcart extends Component
     {   
        try {
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/cupons",[
+            ->post(env("LINK_KITUTES") . "/cupons",[
                 "code"=>$this->code,
                 "total"=>$this->totalFinal,
             ]);
@@ -93,12 +100,21 @@ class Shoppingcart extends Component
         
     public function checkout()
     {
-        try {    
+        try {  
+            if($this->getCompany()->payment_type == "Transferência") {
+                $filaName = null;
+                if ($this->receipt != null and !is_string($this->receipt)) {
+                    $filaName = md5($this->receipt->getClientOriginalName())
+                            .".".$this->receipt->getClientOriginalExtension();
+                    $this->receipt->storeAs("public/recibos",$filaName);
+                }  
+            }
             //Acesso a API com um token
             $items = [];
             if (count(CartFacade::getContent()) > 0) {
                 foreach(CartFacade::getContent() as $key => $item) {
                     array_push($items,[
+                        "id"=>$item->id,
                         "name"=>$item->name,
                         "price"=>$item->price,
                         "quantity"=>$item->quantity,
@@ -119,6 +135,7 @@ class Shoppingcart extends Component
                 "email" => $this->email,
                 "taxPayer" => $this->taxPayer,
                 "paymentType" => "Referência",
+                "receipt" => $filaName ?? null,
                 "latitude" => $this->latitude,
                 "longitude" => $this->longitude,
                 "items" => $items,
@@ -126,17 +143,18 @@ class Shoppingcart extends Component
             
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/deliveries",$data)->json();
+            ->post($this->deliveryUrl,$data)->json();
     
             $infoReference = [
                 'amount' => $this->totalFinal,
                 'referenceCode' => $this->referenceNumber,
             ];
 
+            //$responsePayment = Http::post('http://192.168.100.29:8000/api/payment/website', $infoReference)->json();
             //$responsePayment = Http::post('https://fortcodedev.com/api/payment/website', $infoReference)->json();
 
             if ($response) {
-            // if ($responsePayment != null) {
+            //if ($responsePayment != null) {
                 Payment::create([
                     'reference' => $this->referenceNumber,
                     'value' => $this->totalFinal,
@@ -161,7 +179,7 @@ class Shoppingcart extends Component
             ]);
 
         } catch (\Throwable $th) {
-            $this->alert("error", 
+            $this->alert("info", 
             [
                 'toast'=>false,
                 'position'=>'center',
@@ -190,18 +208,41 @@ class Shoppingcart extends Component
     
     public function updateQuantity($id, $quantity)
     {
-        CartFacade::update($id, [
-            'quantity' => 1,
-        ]);
+        $idCart = CartFacade::get($id);
+
+        $getItemCart = Http::withHeaders($this->getHeaders())
+        ->get(env("LINK_KITUTES") . "/items?description=$idCart->name");
+
+        $product = Collect(json_decode($getItemCart,true));
+
+        if ((int)$quantity > $product[0]["quantity"]) {
+          $this->alert('info', 'Informação', [
+            'toast'=>false,
+            'position'=>'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'OK',
+            'text'=>'Quantidade indisponível'
+          ]);
+          $quantity = $product[0]["quantity"];
+          $this->render();
+          return;
+        }else{
+              CartFacade::update($id, [
+                'quantity' => 1,
+            ]);
+        }
     }
+
+ 
 
     public function getAllLocations()
     {
         try {
-            return Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/locations")->json();
+            $response = Http::withHeaders($this->getHeaders())
+            ->get("https://kytutes.com/api/locations");
+            return Collect(json_decode($response, true));
         } catch (\Throwable $th) {
-            //throw $th;
+            //throw $th;Collect(json_decode($response, true))
         }
     }
     

@@ -9,7 +9,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ConfigPayment extends Component
 {
-    public $company, $method, $bank_name, $bank_account, $bank_holder;
+    public $company, $method, $bank_name, $bank_account, $bank_holder, $delivery_method;
     use LivewireAlert;
 
     public function mount()
@@ -22,6 +22,18 @@ class ConfigPayment extends Component
     {
         try {
             $this->company->payment_type = $this->method;
+            $this->company->save();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+
+    public function updateDeliveryMethod()
+    {
+        try {
+            $this->company->delivery_method = $this->delivery_method;
             $this->company->save();
 
         } catch (\Throwable $th) {

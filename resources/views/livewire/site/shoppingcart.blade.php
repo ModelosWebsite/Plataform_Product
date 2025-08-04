@@ -1,4 +1,4 @@
-<div>
+<div >
     <main id="main" style="margin-top: 2rem;">
         <section class="shopping-cart spad">
             <div class="container-fluid px-3 px-md-3 px-lg-4">
@@ -81,6 +81,20 @@
                                     <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, ',', '.')}} kz</span></li>
                                 </ul>
                             </div>
+
+                            @if($deliveryType === 'Entregadores PB')
+                                @if (isset($locations) and $locations->count() > 0)
+                                    @foreach ($locations as $key => $item)
+                                        <div class="form-check">
+                                            <input wire:click="selectLocation({{ $item['price'] }})" class="form-check-input checked"
+                                                type="radio" id="flexRadioDefault{{ $key + 1 }}" name="location" value="{{ $item['price'] }}">
+                                            <label class="form-check-label" for="flexRadioDefault{{ $key + 1 }}" style="cursor: pointer">
+                                                {{ $item['location'] }} - {{ $item['price'] }} kz
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            @endif
                             
                             <button type="button" class="primary-btn btn btn-primary mt-2"
                                 style="background: var(--color); color:#fff; border: none;" data-bs-toggle="modal"

@@ -17,7 +17,6 @@ class SiteController extends Controller
     {
         session()->forget("companyhashtoken");
         Cache()->forget("company_token");
-        
 
         $data = $this->getCompany($company);
         
@@ -169,30 +168,34 @@ class SiteController extends Controller
 
     public function getVisitor($companyName)
     {
-        // Capturar informações da requisição
-        $userAgent = request()->header('User-Agent');
+        try {
+            // Capturar informações da requisição
+            $userAgent = request()->header('User-Agent');
 
-        // Usar a biblioteca Jenssegers/Agent para analisar o user agent
-        $agent = new Agent();
-        $agent->setUserAgent($userAgent);
+            // Usar a biblioteca Jenssegers/Agent para analisar o user agent
+            $agent = new Agent();
+            $agent->setUserAgent($userAgent);
 
-        //salvar os dados no banco
-        $visitors = new visitor();
+            //salvar os dados no banco
+            $visitors = new visitor();
 
-        $visitors->ip = request()->ip();
-        $visitors->browser = $agent->browser();
-        $visitors->system = $agent->platform();
-        $visitors->device = $agent->device();
-        
-        if ($agent->isDesktop()) {
-            $visitors->typedevice = "Computador";
-        }if ($agent->isPhone()) {
-            $visitors->typedevice = "Telefone";
-        }if ($agent->isTablet()) {
-            $visitors->typedevice = "Tablet";
+            $visitors->ip = request()->ip();
+            $visitors->browser = $agent->browser();
+            $visitors->system = $agent->platform();
+            $visitors->device = $agent->device();
+            
+            if ($agent->isDesktop()) {
+                $visitors->typedevice = "Computador";
+            }if ($agent->isPhone()) {
+                $visitors->typedevice = "Telefone";
+            }if ($agent->isTablet()) {
+                $visitors->typedevice = "Tablet";
+            }
+            
+            $visitors->company = $companyName->companyname;
+            $visitors->save();
+        } catch (\Throwable $th) {
+            Log::error("Error getting visitor: " . $th->getMessage());
         }
-        
-        $visitors->company = $companyName->companyname;
-        $visitors->save();
     }
 }
