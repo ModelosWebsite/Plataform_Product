@@ -51,7 +51,8 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <img src="{{asset('storage/app/public/public/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
+                                    <img src="{{asset('storage/app/public/public/items/'.$item['image'])}}" class="img-fluid product-thumbnail"
+                                    data-bs-toggle="modal" data-bs-target="#detail{{$item['reference'] ?? ''}}">
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
                                 @endif
@@ -64,6 +65,7 @@
                             </span>
                         </div> 
                     @endif
+                    @include("modals.details")
                 @endforeach
             @else
                 <div class="rounded col-md-12 d-flex justify-content-center align-items-center flex-column mt-5" style="height: 20rem; border: 1px dashed #000;">

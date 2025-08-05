@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-6">
                 @if (!empty($item['image']))
-                    <img src="{{ Storage::url("items/{$item['image']}") }}" class="img-fluid product-thumbnail">
+                    <img src="{{asset('storage/app/public/public/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
                 @else 
                     <img src="{{asset("site/img/portfolio/app-1.png")}}" class="menu-img img-fluid" alt="">
                 @endif
