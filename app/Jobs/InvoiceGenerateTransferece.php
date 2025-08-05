@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Services\Request as RequestService;
 
 class InvoiceGenerateTransferece implements ShouldQueue
 {
@@ -23,176 +24,180 @@ class InvoiceGenerateTransferece implements ShouldQueue
     {
         //
     }
-
     /**
      * Execute the job.
      */
     public function handle(): void
     {
         try {
-            //CAPTURA DAS INFORMAÇÕES DA CONTA DO ARTISTA
-            $dataCompany = company::where("companyhashtoken", Cache::get('invoiceToken'))->first();
-            //BUSCAR DADOS DA PB VIA API - XZERO
-            $clientPb = \App\Services\Request::getCompany("50010487590");
-            //BUSCAR AS EMCOMENDAS VIA API - KYTUTES
-            $deliveries = \App\Services\Request::verifyDeliveryStatus("ENTREGUE", $dataCompany->companytokenapi);
-            Log::info("Deliveries", [$deliveries]);
-            if (isset($deliveries) and $deliveries != null) {
-                foreach ($deliveries as $delivery) {
-                    //BUSCAR DADOS DO PARCEIRO LOGISTICO VIA API - XZERO
-                    $logisticPartner = \App\Services\Request::getCompany("50010487590");
-                    //$logisticPartner = \App\Services\Request::getCompany($delivery['delivery']['logisticPartner']);
-                    //ALTERAR ESTADO DAS ENCOMENDAS
-                    $changeStatus = \App\Services\Request::changeDeliveryStatus($delivery['delivery']['reference'], $dataCompany->companytokenapi);
-                    /* Criar items */
-                    $items = [
-                        [
-                            "description" => "Taxa do Serviço de Entrega",
-                            "tax" => 0,
-                            "price" => str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $delivery['delivery']['deliveryPrice']),
-                            "quantity" => 1,
-                            "discount" => 0,
-                            "retension" => 0,
-                            "productType" => "Unidade",
-                            "exemption_code" => "M10",
-                        ],
-                        [
-                            "description" => "Taxa de Serviço PB",
-                            "tax" => 0,
-                            "price" => str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $delivery['delivery']['taxPb']),
-                            "quantity" => 1,
-                            "discount" => 0,
-                            "retension" => 0,
-                            "productType" => "Unidade",
-                            "exemption_code" => "M10",
-                        ]
-                    ];
-                    $itemsPB = [];
-                    if (isset($delivery["products"])) {
-                        foreach ($delivery["products"] as $item) {
-                            array_push($items, [
-                                "description" =>  $item['item'],
-                                "tax" => 0,
-                                "price" => str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $item['price']),
-                                "quantity" => $item['quantity'],
-                                "discount" => 0,
-                                "retension" => 0,
-                                "productType" => "Unidade",
-                                "exemption_code" => "M10",
-                            ]);
-                        }
+        // 1. CAPTURA DAS INFORMAÇÕES DA CONTA DA EMPRESA
+        $companyHash = Cache::get('invoiceToken');
+        $dataCompany = Company::where("companyhashtoken", $companyHash)->first();
+        $tokenTeste = "10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0";
 
-                        foreach ($delivery["products"] as $item) {
-                            array_push($itemsPB, [
-                                "description" =>  $item['item'],
-                                "tax" => 0,
-                                "price" => str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $item['price']),
-                                "quantity" => $item['quantity'],
-                                "discount" => 0,
-                                "retension" => 0,
-                                "productType" => "Unidade",
-                                "exemption_code" => "M10",
-                            ]);
-                        }
-                    }
+        // 2. BUSCAR DADOS DA PB E DO PARCEIRO LOGÍSTICO
+        $clientPb = RequestService::getCompany("50010487590");
+        $logisticPartner = RequestService::getCompany("50010487590"); // Substituir futuramente por $delivery['logisticPartner']
 
-                    if (isset($changeStatus["message"])) {
-                        if ($dataCompany->payment_type === "Referência") {
-                            //EMISSÃO DE FATURA DA PB PARA CLIENTE
-                            $invoicePb = Http::withHeaders([
-                                'Accept' => 'application/json',
-                                'Content-Type' => 'application/json',
-                                //'Authorization' => 'Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0',
-                                'Authorization' => "Bearer {$clientPb["APIKEY"]}",
-                            ])->post('https://fortcodedev.com/api/invoice/create', [
-                                "isBackoffice" => "0",
-                                "type" => "FR",
-                                "customerName" => $delivery['delivery']['client'],
-                                "customerPhone" => $delivery['delivery']['phone'],
-                                "taxpayerNumber" => $delivery['delivery']['taxPayer'],
-                                "customerEmail" => $delivery['delivery']['email'],
-                                "customerAddress" => $delivery['delivery']['address'],
-                                "paymentType" => "Transferencia",
-                                "items" => $items
-                            ])->json();
+        // 3. BUSCAR ENCOMENDAS ENTREGUES
+        $deliveries = RequestService::verifyDeliveryStatus("ENTREGUE", $dataCompany->companytokenapi);
+        Log::info("Entregas encontradas", compact('deliveries'));
 
-                            Log::info("CreateInvoice PB para cliente", [$invoicePb]);
-
-                            //EMISSÃO DE FATURA DO DONO DO WEBSITE PARA O PB
-                            $onnerWebsite = Http::withHeaders([
-                                'Accept' => 'application/json',
-                                'Content-Type' => 'application/json',
-                                'Authorization' => "Bearer {$dataCompany->token_xzero}",
-                            ])->post('https://fortcodedev.com/api/invoice/create', [
-                                "isBackoffice" => "0",
-                                "type" => "FT",
-                                "customerName" => $clientPb["Company"],
-                                "customerPhone" => $clientPb["Phone"],
-                                "taxpayerNumber" => $clientPb["TaxPayer"],
-                                "customerEmail" => $clientPb["Email"],
-                                "customerAddress" => $clientPb["Address"],
-                                "paymentType" => "Transferencia",
-                                "items" => $itemsPB
-                            ])->json();
-
-                            Log::info("CreateInvoice Dono Website para PB", [$onnerWebsite]);
-
-                            //EMISSÃO DE FACTURA DO PARCEIRO LOGISTICO PARA PB
-                            if (true) {
-                                $logisticPartnerInvoice = Http::withHeaders([
-                                    'Accept' => 'application/json',
-                                    'Content-Type' => 'application/json',
-                                    //'Authorization' => "Bearer 10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0",
-                                    'Authorization' => "Bearer {$logisticPartner["APIKEY"]}",
-                                ])->post('https://fortcodedev.com/api/invoice/create', [
-                                    "isBackoffice" => "0",
-                                    "type" => "FR",
-                                    "customerName" => $clientPb["Company"],
-                                    "customerPhone" => $clientPb["Phone"],
-                                    "taxpayerNumber" => $clientPb["TaxPayer"],
-                                    "customerEmail" => $clientPb["Email"],
-                                    "customerAddress" => $clientPb["Address"],
-                                    "paymentType" => "Transferencia",
-                                    "items" => [
-                                        [
-                                            "description" => "Taxa do Serviço de Entrega",
-                                            "tax" => 0,
-                                            "price" => str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $delivery['delivery']['deliveryPrice']),
-                                            "quantity" => 1,
-                                            "discount" => 0,
-                                            "retension" => 0,
-                                            "productType" => "Unidade",
-                                            "exemption_code" => "M10",
-                                        ]
-                                    ]
-                                ])->json();
-                                Log::info("CreateInvoice LogisticPartner", [$logisticPartnerInvoice]);
-                            }
-                        }else{
-                            //EMISSÃO DE FATURA DO DONO DO WEBSITE PARA O CLIENTE
-                            $onnerWebsite = Http::withHeaders([
-                                'Accept' => 'application/json',
-                                'Content-Type' => 'application/json',
-                                'Authorization' => "Bearer {$dataCompany->token_xzero}",
-                            ])->post('https://fortcodedev.com/api/invoice/create', [
-                                "isBackoffice" => "0",
-                                "type" => "FR",
-                                "customerName" => $delivery['delivery']['client'],
-                                "customerPhone" => $delivery['delivery']['phone'],
-                                "taxpayerNumber" => $delivery['delivery']['taxPayer'],
-                                "customerEmail" => $delivery['delivery']['email'],
-                                "customerAddress" => $delivery['delivery']['address'],
-                                "paymentType" => "Transferencia",
-                                "items" => $items
-                            ])->json();
-
-                            Log::info("CreateInvoice Dono Website para Cliente", [$onnerWebsite]);
-                        }
-                    }
-                }
-            }
-        } catch (\Throwable $th) {
-            Log::info("error generate invoices", [$th->getMessage()]);
+        if (empty($deliveries)) {
+            Log::warning("Nenhuma entrega encontrada para emissão.");
+            return;
         }
+
+        foreach ($deliveries as $delivery) {
+            // Atualiza status da entrega
+            $changeStatus = RequestService::changeDeliveryStatus($delivery['delivery']['reference'], $dataCompany->companytokenapi);
+
+            if (!isset($changeStatus["message"])) {
+                Log::warning("Falha ao alterar status da entrega", $changeStatus);
+                continue;
+            }
+
+            // Montagem dos itens para a fatura
+            $items = array_merge(
+                [
+                    [
+                        "description" => "Taxa do Serviço de Entrega",
+                        "tax" => 0,
+                        "price" => $this->toNumber($delivery['delivery']['deliveryPrice']),
+                        "quantity" => 1,
+                        "discount" => 0,
+                        "retension" => 0,
+                        "productType" => "Unidade",
+                        "exemption_code" => "M10",
+                    ],
+                    [
+                        "description" => "Taxa de Serviço PB",
+                        "tax" => 0,
+                        "price" => $this->toNumber($delivery['delivery']['taxPb']),
+                        "quantity" => 1,
+                        "discount" => 0,
+                        "retension" => 0,
+                        "productType" => "Unidade",
+                        "exemption_code" => "M10",
+                    ]
+                ],
+                collect($delivery['products'] ?? [])->map(function ($item) {
+                    return [
+                        "description" => $item['item'],
+                        "tax" => 0,
+                        "price" => $this->toNumber($item['price']),
+                        "quantity" => $item['quantity'],
+                        "discount" => 0,
+                        "retension" => 0,
+                        "productType" => "Unidade",
+                        "exemption_code" => "M10",
+                    ];
+                })->toArray()
+            );
+
+            // Duplicar produtos para outra fatura
+            $itemsPB = collect($delivery['products'] ?? [])->map(function ($item) {
+                return [
+                    "description" => $item['item'],
+                    "tax" => 0,
+                    "price" => $this->toNumber($item['price']),
+                    "quantity" => $item['quantity'],
+                    "discount" => 0,
+                    "retension" => 0,
+                    "productType" => "Unidade",
+                    "exemption_code" => "M10",
+                ];
+            })->toArray();
+
+            if ($dataCompany->payment_type === "Referência") {
+                // FATURA 1: PB → Cliente final
+                $invoicePb = $this->createInvoice(
+                    $tokenTeste,
+                    //$clientPb['APIKEY'],
+                    "FR",
+                    $delivery['delivery'],
+                    "Transferencia",
+                    $items
+                );
+                Log::info("Fatura PB para Cliente", $invoicePb);
+
+                // FATURA 2: Dono do Website → PB
+                $onnerWebsite = $this->createInvoice(
+                    $dataCompany->token_xzero,
+                    "FT",
+                    $clientPb,
+                    "Transferencia",
+                    $itemsPB
+                );
+                Log::info("Fatura Dono Website para PB", $onnerWebsite);
+
+                // FATURA 3: Parceiro Logístico → PB
+                $logisticPartnerInvoice = $this->createInvoice(
+                    //$logisticPartner['APIKEY'],
+                    $tokenTeste,
+                    "FR",
+                    $clientPb,
+                    "Transferencia",
+                    [[
+                        "description" => "Taxa do Serviço de Entrega",
+                        "tax" => 0,
+                        "price" => $this->toNumber($delivery['delivery']['deliveryPrice']),
+                        "quantity" => 1,
+                        "discount" => 0,
+                        "retension" => 0,
+                        "productType" => "Unidade",
+                        "exemption_code" => "M10",
+                    ]]
+                );
+                Log::info("Fatura Parceiro Logístico", $logisticPartnerInvoice);
+            } else {
+                // FATURA 1 alternativa: Dono do Website → Cliente
+                $onnerWebsite = $this->createInvoice(
+                    $dataCompany->token_xzero,
+                    "FR",
+                    $delivery['delivery'],
+                    "Transferencia",
+                    $items
+                );
+                Log::info("Fatura Dono Website para Cliente", $onnerWebsite);
+            }
+        }
+    } catch (\Throwable $th) {
+        Log::error("Erro ao gerar faturas", [
+            "message" => $th->getMessage(),
+            "file" => $th->getFile(),
+            "line" => $th->getLine()
+        ]);
+    }
+} // End of handle()
+
+    /**
+     * Função utilitário para limpar preços
+     */
+    public function toNumber($value)
+    {
+        return str_replace(['.', ',', 'Kz', ' '], ['', '.', '', ''], $value);
+    }
+
+    /**
+     * Função para criação de fatura via API
+    */
+    public function createInvoice($token, $type, $customer, $paymentType, $items)
+    {
+        return Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => "Bearer {$token}",
+        ])->post('https://fortcodedev.com/api/invoice/create', [
+            "isBackoffice" => "0",
+            "type" => $type,
+            "customerName" => $customer["client"] ?? $customer["Company"] ?? '',
+            "customerPhone" => $customer["phone"] ?? $customer["Phone"] ?? '',
+            "taxpayerNumber" => $customer["taxPayer"] ?? $customer["TaxPayer"] ?? '',
+            "customerEmail" => $customer["email"] ?? $customer["Email"] ?? '',
+            "customerAddress" => $customer["address"] ?? $customer["Address"] ?? '',
+            "paymentType" => $paymentType,
+            "items" => $items
+        ])->json();
     }
 }

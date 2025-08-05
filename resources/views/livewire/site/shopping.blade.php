@@ -6,7 +6,7 @@
   {{-- Listagem dos produtos e categorias --}}
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class="container-scroll">
+        <div class="container-scroll" style="background: var(--color);">
           <div class="iconChevron-left">
             <i>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
@@ -56,8 +56,8 @@
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
                                 @endif
                                 <h3 class="product-title">{{ $item['name'] ?? '' }}</h3>
-                                <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, ',', '.') }} kz</strong>
-              
+                                <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, '.', ' ') }} kz</strong>
+
                                 <span class="icon-cross" wire:click="addToCart('{{ $item['name'] ?? '' }}')">
                                     <img src="{{asset('cross.svg')}}" class="img-fluid">
                                 </span>

@@ -9,7 +9,7 @@
                                 <thead style="background: var(--color)">
                                     <tr class="p-5 m-5">
                                         <th>Produto</th>
-                                        <th>Quantidade</th>
+                                        <th>Dtd.</th>
                                         <th>Total</th>
                                         <th class="text-center">Remover</th>
                                     </tr>
@@ -37,7 +37,7 @@
                                             </div>
                                         </td>
                                         <td class="cart__price">
-                                            {{ number_format($item->price * $item->quantity, 2,',', '.') }} kz</td>
+                                            {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz</td>
                                         <td class="cart__close text-center">
                                             <button  wire:click='remove({{$item->id}})' style="color: red; border: none; backgound: #fff">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25"
@@ -76,9 +76,10 @@
                             <div class="line">
                                 <h6>Total do Carrinho</h6>
                                 <ul>
-                                    <li>Subtotal <span id="subtotal">{{ number_format(abs($getSubTotal), 2, ',', '.') }} Kz</span></li>
-                                    <li>Taxa PB <span>{{ number_format($taxapb, 2, ',', '.') }} Kz</span> </li>
-                                    <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, ',', '.')}} kz</span></li>
+                                    <li>Subtotal <span id="subtotal">{{ number_format(abs($getSubTotal), 2, '.', ' ') }} Kz</span></li>
+                                    <li>Entrega <span id="subtotal">{{ number_format(abs($localizacao), 2, '.', ' ') }} Kz</span></li>
+                                    <li>Taxa PB <span>{{ number_format($taxapb, 2, '.', ' ') }} Kz</span> </li>
+                                    <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, '.', ' ')}} kz</span></li>
                                 </ul>
                             </div>
 
@@ -89,7 +90,7 @@
                                             <input wire:click="selectLocation({{ $item['price'] }})" class="form-check-input checked"
                                                 type="radio" id="flexRadioDefault{{ $key + 1 }}" name="location" value="{{ $item['price'] }}">
                                             <label class="form-check-label" for="flexRadioDefault{{ $key + 1 }}" style="cursor: pointer">
-                                                {{ $item['location'] }} - {{ $item['price'] }} kz
+                                                {{ $item['location'] }} - {{ number_format($item['price'], 2, '.', ' ') }} kz
                                             </label>
                                         </div>
                                     @endforeach

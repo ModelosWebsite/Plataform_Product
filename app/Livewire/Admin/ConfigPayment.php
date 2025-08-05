@@ -3,13 +3,19 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\{Company, BankAccount};
+use App\Models\{company, BankAccount, Payment, pacote};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Carbon\Carbon;
 
 
 class ConfigPayment extends Component
 {
     public $company, $method, $bank_name, $bank_account, $bank_holder, $delivery_method;
+    public $referenceNumber, $status, $payment;
+    public $paymentId;
+    public $checking = false;
+
+    protected $listeners = ['updatePaymentMethod', 'generatePayment', 'checkStatus', 'updateDeliveryMethod', 'createBankAccount'];
     use LivewireAlert;
 
     public function mount()
@@ -21,14 +27,80 @@ class ConfigPayment extends Component
     public function updatePaymentMethod()
     {
         try {
-            $this->company->payment_type = $this->method;
-            $this->company->save();
+            if ($this->method === "Transferência") {
+                $this->generatePayment();
+            } else {
+                $this->company->payment_type = $this->method;
+                $this->company->save();
+            }
+        } catch (\Throwable $th) {
+            // Log error se necessário
+        }
+    }
+
+    public function generatePayment()
+    {
+        try {
+        $this->referenceNumber = rand(100000000, 999999999);
+
+        $this->payment = Payment::create([
+            'reference' => $this->referenceNumber,
+            'company_id' => $this->company->id,
+            'status' => 'pendente',
+            'value' => 25000,
+            'typeservice' => "Pagamento por Transferência",
+        ]);
+
+        $this->paymentId = $this->payment->id;
+        $this->checking = true;
+
+        // Alerta inicial de pagamento pendente
+        $this->alert('warning', 'Aguardando pagamento', [
+            'html' => "<div style='font-size:26px; font-weight:bold; color:#f59e0b;'>Referência: {$this->referenceNumber}</div>
+                       <p>Estamos aguardando o processamento do pagamento...</p>",
+            'position' => 'center',
+            'toast' => false,
+            'showConfirmButton' => false,
+            'allowOutsideClick' => false,
+            'timerProgressBar' => false,
+            'timer' => null,
+        ]);
 
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
 
+        public function checkStatus()
+    {
+        if (!$this->checking || !$this->paymentId) {
+            return;
+        }
+
+        $payment = Payment::find($this->paymentId);
+
+        if ($payment && $payment->status === 'processado') {
+            $this->checking = false;
+            $this->company->payment_type = $this->method;
+            $this->company->save();
+
+            pacote::create([
+                "pacote" => "Transferência",
+                "company_id" => $this->company->id,
+                "start_date" => Carbon::now(),
+                "end_date" => Carbon::now()->addDays(31),
+                "is_active" => true,
+            ]);
+
+            $this->alert('success', 'Pagamento processado!', [
+                'text' => 'Obrigado, o pagamento foi confirmado.',
+                'timer' => 3000,
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => false,
+            ]);
+        }
+    }
 
     public function updateDeliveryMethod()
     {

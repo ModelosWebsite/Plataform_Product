@@ -47,4 +47,9 @@
             </select>
         </div>
     </div>
+
+    
+    @if ($checking)
+        <div wire:poll.10s="checkStatus"></div>
+    @endif
 </div>

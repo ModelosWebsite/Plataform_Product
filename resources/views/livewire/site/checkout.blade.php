@@ -118,9 +118,11 @@
             </div>
             <h1></h1>
             <div class="modal-footer col-md-12 d-flex justify-content-between align-items-start">
-                <h4>Total: {{number_format(abs($totalFinal), 2, '.', ',')}} Kz</h4>
+                <h4>Total: {{number_format(abs($totalFinal), 2, '.', ' ')}} Kz</h4>
                 <button class="btn btn-primary text-uppercase text-white" type="button" wire:click='checkout("{{ session('companytoken') }}")'
-                style="background: var(--color); color:#fff; border: none;">Encomendar         
+                style="background: var(--color); color:#fff; border: none;">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading wire:target='checkout("{{ session('companytoken') }}")'></span>
+                  Encomendar         
                 </button>
             </div>
           </form>

@@ -29,25 +29,32 @@ class Shoppingcart extends Component
     {
         $this->paymentType = $this->getCompany()->payment_type;
         $this->deliveryType = $this->getCompany()->delivery_method;
-        //$this->deliveryUrl = (env("APP_ENV") == "local") ? "http://192.168.100.29:8000/api/deliveries" : "https://kytutes.com/api/deliveries";
-        $this->deliveryUrl = env("LINK_KITUTES") . "/deliveries";
     }
 
     public function render()
     {
         try {
+            $company = $this->getCompany();
             $this->cartContent = CartFacade::getContent();
             $this->getTotal = CartFacade::getTotal();
             $this->getSubTotal = CartFacade::getSubTotal();
             $this->getTotalQuantity = CartFacade::getTotalQuantity();
-            $this->finalCompra = $this->getSubTotal + $this->localizacao;
+
+            if ($company->delivery_method == "Entregadores PB") {
+                $this->finalCompra = $this->getSubTotal + $this->localizacao;
+            } else {
+                $this->finalCompra = $this->getSubTotal;
+            }
+
             $this->taxapb = ($this->finalCompra * 14) / 100;
-            if ($this->getCompany()->payment_type == "Referência") {
+
+            if ($company->payment_type == "Referência") {
                 $this->totalFinal = $this->finalCompra + $this->taxapb;
-            }else {
+            } else {
                 $this->totalFinal = $this->finalCompra;
                 $this->taxapb = 0;
             }
+
             $this->referenceNumber = rand(100000000, 999999999);
             $this->bankAccount = $this->bankAccountDetails();
 
@@ -143,8 +150,8 @@ class Shoppingcart extends Component
             
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
-            ->post($this->deliveryUrl,$data)->json();
-    
+            ->post("https://kytutes.com/api/deliveries",$data)->json();
+
             $infoReference = [
                 'amount' => $this->totalFinal,
                 'referenceCode' => $this->referenceNumber,
