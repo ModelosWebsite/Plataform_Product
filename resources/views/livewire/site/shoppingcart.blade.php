@@ -20,7 +20,7 @@
                                         <td class="product__cart__item">
                                             <div class="product__cart__item__pic">
                                                 @if ($item->attributes->image != null)
-                                                    <img style="width: 80px" src="https://kytutes.com/storage/{{$item->attributes->image}}" class="img-fluid product-thumbnail">
+                                                    <img style="width: 80px" src="{{asset('storage/app/public/public/items/'.$item->attributes->image)}}" class="img-fluid product-thumbnail">
                                                 @else 
                                                     <img style="width: 80px" src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
                                                 @endif
