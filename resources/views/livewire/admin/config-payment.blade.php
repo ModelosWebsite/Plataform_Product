@@ -11,26 +11,25 @@
                 <option value="Transferência">{{ __('Transferência') }}</option>
             </select>
         </div>
-
-        @if($company->payment_type === "Transferência")
+        @if($package && $package->is_active)
             <div class="form-group col-6">
-                <h6 for="bank_details">Detalhes Bancários</h6>
-            </div>
-            <div class="form-group col-6">
-                <h6 for="bank_name">Nome do Banco</h6>
-                <input type="text" id="bank_name" wire:model="bank_name" class="form-control">
-            </div>
-            <div class="form-group col-6">
-                <h6 for="bank_account">IBAN da Conta</h6>
-                <input type="text" id="bank_account" wire:model="bank_account" class="form-control">
-            </div>
-            <div class="form-group col-6">
-                <h6 for="bank_holder">Titular da Conta</h6>
-                <input type="text" id="bank_holder" wire:model="bank_holder" class="form-control">
-            </div>
-            <div>
-                <button class="btn btn-primary" wire:click="createBankAccount">Salvar Detalhes</button>
-            </div>
+                    <h6 for="bank_details">Detalhes Bancários</h6>
+                </div>
+                <div class="form-group col-6">
+                    <h6 for="bank_name">Nome do Banco</h6>
+                    <input type="text" id="bank_name" wire:model="bank_name" class="form-control">
+                </div>
+                <div class="form-group col-6">
+                    <h6 for="bank_account">IBAN da Conta</h6>
+                    <input type="text" id="bank_account" wire:model="bank_account" class="form-control">
+                </div>
+                <div class="form-group col-6">
+                    <h6 for="bank_holder">Titular da Conta</h6>
+                    <input type="text" id="bank_holder" wire:model="bank_holder" class="form-control">
+                </div>
+                <div>
+                    <button class="btn btn-primary" wire:click="createBankAccount">Salvar Detalhes</button>
+                </div>
         @endif
     </div>
 

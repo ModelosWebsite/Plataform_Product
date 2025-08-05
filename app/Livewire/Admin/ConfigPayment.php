@@ -12,7 +12,7 @@ class ConfigPayment extends Component
 {
     public $company, $method, $bank_name, $bank_account, $bank_holder, $delivery_method;
     public $referenceNumber, $status, $payment;
-    public $paymentId;
+    public $paymentId, $package;
     public $checking = false;
 
     protected $listeners = ['updatePaymentMethod', 'generatePayment', 'checkStatus', 'updateDeliveryMethod', 'createBankAccount'];
@@ -21,6 +21,14 @@ class ConfigPayment extends Component
     public function mount()
     {
         $this->company = Company::find(auth()->user()->company_id);
+
+        $this->package = Pacote::where('company_id', $this->company->id)
+        ->where('is_active', true)->where("pacote", "Transferência")->latest()->first();
+
+        if ($this->package && Carbon::now()->between($this->package->start_date, $this->package->end_date)) {
+            $this->is_active = true;
+        }
+
         $this->loadBankAccount();
     }
 
@@ -56,7 +64,10 @@ class ConfigPayment extends Component
 
         // Alerta inicial de pagamento pendente
         $this->alert('warning', 'Aguardando pagamento', [
-            'html' => "<div style='font-size:26px; font-weight:bold; color:#f59e0b;'>Referência: {$this->referenceNumber}</div>
+            'html' => "<div style='font-size:26px; font-weight:bold;'>
+                        <h5>Referência: {$this->referenceNumber}</h5>
+                        <h5>Preço: 25 000.00 kz</h5>
+                        </div>
                        <p>Estamos aguardando o processamento do pagamento...</p>",
             'position' => 'center',
             'toast' => false,
@@ -90,6 +101,7 @@ class ConfigPayment extends Component
                 "start_date" => Carbon::now(),
                 "end_date" => Carbon::now()->addDays(31),
                 "is_active" => true,
+                "status" => "premium",
             ]);
 
             $this->alert('success', 'Pagamento processado!', [

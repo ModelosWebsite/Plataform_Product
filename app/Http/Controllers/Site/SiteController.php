@@ -30,10 +30,10 @@ class SiteController extends Controller
         $elementData = Element::where("company_id", $companyId)
         ->whereIn("element", $elements)->get()->keyBy("element");
         
-        $packages = ["Shopping", "WhatsApp"];
+        $packages = ["Shopping", "Whatsapp"];
         $packageData = pacote::where("company_id", $companyId)
         ->whereIn("pacote", $packages)->get()->keyBy("pacote");
-        
+
         $companyName = company::where("companyhashtoken", $company)->first();
         session()->put('companyhashtoken', $companyName->companyhashtoken);
         Cache::put('invoiceToken', $companyName->companyhashtoken);
@@ -52,7 +52,7 @@ class SiteController extends Controller
             "parceiros" => $elementData["Parceiros"] ?? null,
             "clients" => $elementData["Clientes"] ?? null,
             "shopping" => $packageData["Shopping"] ?? null,
-            "WhatsApp" => $packageData["WhatsApp"] ?? null,
+            "whatsapp" => $packageData["Whatsapp"] ?? null,
             "phonenumber" => contact::where("company_id", $companyId)->first(),
             "companies" => Termpb_has_Company::where("company_id", $companyId)->with('termsPBs')->first(),
             "termos" => TermsCompany::where("company_id", $companyId)->first(),

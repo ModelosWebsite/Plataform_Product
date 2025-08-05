@@ -14,7 +14,10 @@ class pacote extends Model
     protected $fillable = [
         "pacote",
         "status",
-        "company_id"
+        "company_id",
+        "start_date",
+        "end_date",
+        "is_active"
     ];
 
     public function company()

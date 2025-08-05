@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
+              <div class="col-md-6">
                 @if (!empty($item['image']))
                     <img src="{{asset('storage/app/public/public/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
                 @else 
