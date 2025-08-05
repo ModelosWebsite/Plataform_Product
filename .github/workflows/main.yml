@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - features
+    - main
 name: 🚀 Deploy website classico modelo produto app on push
 jobs:
   web-deploy:
