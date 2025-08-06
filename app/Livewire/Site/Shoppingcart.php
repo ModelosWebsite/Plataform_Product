@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Site;
 
-use App\Models\{company, Payment, BankAccount};
+use App\Models\{company, Payment, BankAccount, pacote};
 use Livewire\Component;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Support\Facades\Http;
@@ -22,6 +22,7 @@ class Shoppingcart extends Component
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
     $email, $deliveryPrice =0,  $taxPayer,$otherAddress,$deliveryUrl;
     public $company, $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount;
+    public $package;
 
     protected $listeners = ["updateQuantity", "setLocation"];
 
@@ -29,6 +30,7 @@ class Shoppingcart extends Component
     {
         $this->paymentType = $this->getCompany()->payment_type;
         $this->deliveryType = $this->getCompany()->delivery_method;
+        $this->package = $this->loadPackage();
     }
 
     public function render()
@@ -65,6 +67,12 @@ class Shoppingcart extends Component
         } catch (\Throwable $th) {
             
         }
+    }
+
+    public function loadPackage()
+    {
+        return Pacote::where('company_id', $this->getCompany()->id)
+        ->where('is_active', true)->where("pacote", "Transferência")->latest()->first();
     }
 
     public function bankAccountDetails()

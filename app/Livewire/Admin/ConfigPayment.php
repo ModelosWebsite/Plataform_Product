@@ -25,10 +25,6 @@ class ConfigPayment extends Component
         $this->package = Pacote::where('company_id', $this->company->id)
         ->where('is_active', true)->where("pacote", "Transferência")->latest()->first();
 
-        if ($this->package && Carbon::now()->between($this->package->start_date, $this->package->end_date)) {
-            $this->is_active = true;
-        }
-
         $this->loadBankAccount();
     }
 

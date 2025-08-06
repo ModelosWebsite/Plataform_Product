@@ -11,7 +11,7 @@
                 <option value="Transferência">{{ __('Transferência') }}</option>
             </select>
         </div>
-        @if($company->payment_type == 'Transferência')
+        @if($package && $package->is_active)
             <div class="form-group col-6">
                     <h6 for="bank_details">Detalhes Bancários</h6>
                 </div>

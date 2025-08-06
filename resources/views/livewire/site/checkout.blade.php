@@ -11,7 +11,24 @@
         <div class="modal-body">
           <div>
             <div class="accordion" id="accordionExample">
-              @if($paymentType === 'Referência')
+              @if($package && $package->is_active)
+                  <div class="card">
+                  <div class="card-header" style="background: var(--color);" id="headingTwo">
+                    <h2 class="mb-0">
+                      <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        Pagamento Por Transferência
+                      </button>
+                    </h2>
+                  </div>
+
+                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="card-body">
+                      <h6 class="text-capitalize">Banco: {{ $bankAccount->bank_name }}  |  IBAN: {{ $bankAccount->bank_account }}</h6>
+                      <h6 class="text-capitalize">Titular: {{ $bankAccount->bank_holder }}</h6>
+                    </div>
+                  </div>
+                </div>
+              @else
                 <div class="card">
                   <div class="card-header" style="background: var(--color);" id="headingOne">
                     <h2 class="mb-0">
@@ -25,23 +42,6 @@
                     <div class="card-body">
                       <h6 class="text-capitalize">Entidade: Pacheco Barroso  |  Nº da Entidade: 10181</h6>
                       <h6 class="text-capitalize">Número de Referência: {{ $referenceNumber }}</h6>
-                    </div>
-                  </div>
-                </div>
-              @elseif($paymentType === 'Transferência')
-                <div class="card">
-                  <div class="card-header" style="background: var(--color);" id="headingTwo">
-                    <h2 class="mb-0">
-                      <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                        Pagamento Por Transferência
-                      </button>
-                    </h2>
-                  </div>
-
-                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="card-body">
-                      <h6 class="text-capitalize">Banco: {{ $bankAccount->bank_name }}  |  IBAN: {{ $bankAccount->bank_account }}</h6>
-                      <h6 class="text-capitalize">Titular: {{ $bankAccount->bank_holder }}</h6>
                     </div>
                   </div>
                 </div>
