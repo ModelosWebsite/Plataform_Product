@@ -1,4 +1,10 @@
 <style>
+    .fixed-image-size {
+        width: 200px;
+        height: 150px;
+        object-fit: cover;
+    }
+
     .container-scroll {
         background: #ddd;
         max-width: 900px;

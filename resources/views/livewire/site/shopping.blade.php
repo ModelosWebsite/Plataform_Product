@@ -51,7 +51,9 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <img src="{{asset('storage/items/'.$item['image'])}}" class="img-fluid product-thumbnail"
+                                    <img src="{{asset('storage/items/'.$item['image'])}}" class="img-fluid product-thumbnail fixed-image-size" 
+                                         alt="{{ $item['name'] ?? '' }}" 
+                                         wire:click="getItemDetails('{{ $item['reference'] ?? '' }}')"
                                     data-bs-toggle="modal" data-bs-target="#detail{{$item['reference'] ?? ''}}">
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
