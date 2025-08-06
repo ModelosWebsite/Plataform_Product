@@ -149,7 +149,7 @@ class Shoppingcart extends Component
                 "cupon" => "",
                 "deliveryPrice" => $this->localizacao ?? 0,
                 "phone" => $this->phone,
-                "otherPhone" => $this->otherPhone,
+                "otherPhone" => 999999999,
                 "email" => $this->email,
                 "taxPayer" => $this->taxPayer,
                 "paymentType" => "Referência",
