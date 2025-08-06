@@ -87,7 +87,7 @@ class Itens extends Component
             //manipulacao de arquivo;
             if ($this->image != null and !is_string($this->image)) {
                 $filaName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/items",$filaName);
+                $this->image->storeAs("/public/itens",$filaName);
             }
 
             $infoItem = [
