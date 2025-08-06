@@ -162,7 +162,10 @@ class Shoppingcart extends Component
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
             ->post("https://kytutes.com/api/deliveries",$data)->json();
-            \Log::info("Resposta da API de entrega", $response);
+            \Log::info("Resposta da API de entrega", [
+                "response" => $response,
+                "company" => $this->getCompany()
+            ]);
 
             $infoReference = [
                 'amount' => $this->totalFinal,
