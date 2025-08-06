@@ -5,7 +5,7 @@
               <h5 class="modal-title text-uppercase" id="exampleModalLabel">
                   {{ $editing ? 'Editar Produto' : 'Cadastrar Produto' }}
               </h5>
-              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
