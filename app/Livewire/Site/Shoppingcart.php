@@ -162,6 +162,7 @@ class Shoppingcart extends Component
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
             ->post("https://kytutes.com/api/deliveries",$data)->json();
+            \Log::info("Resposta da API de entrega", $response);
 
             $infoReference = [
                 'amount' => $this->totalFinal,
@@ -197,6 +198,7 @@ class Shoppingcart extends Component
             ]);
 
         } catch (\Throwable $th) {
+            \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());
             $this->alert("info", 
             [
                 'toast'=>false,
