@@ -51,10 +51,13 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <img src="{{asset('storage/items/'.$item['image'])}}" class="img-fluid product-thumbnail fixed-image-size" 
-                                         alt="{{ $item['name'] ?? '' }}" 
-                                         wire:click="getItemDetails('{{ $item['reference'] ?? '' }}')"
-                                    data-bs-toggle="modal" data-bs-target="#detail{{$item['reference'] ?? ''}}">
+                                    <div style="width: 350px; height: 350px; overflow: hidden;">
+        <img src="{{ asset('storage/items/'.$item['image']) }}"
+             class="img-fluid"
+             style="width: 100%; height: 100%; object-fit: cover;"
+             data-bs-toggle="modal"
+             data-bs-target="#detail{{ $item['reference'] ?? '' }}">
+    </div>
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
                                 @endif
