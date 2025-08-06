@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\pacote;
+use App\Models\{pacote, company};
 use Carbon\Carbon;
 
 class DisableExpiredPackages extends Command
@@ -21,7 +21,7 @@ class DisableExpiredPackages extends Command
             // Atualiza os pacotes e percorre-os
             foreach ($packages as $pacote) {
                 // Captura o company_id e atualiza o método
-                $company = Company::find($pacote->company_id);
+                $company = company::find($pacote->company_id);
                 if ($company) {
                     $company->payment_type = 'Referência';
                     $company->save();
