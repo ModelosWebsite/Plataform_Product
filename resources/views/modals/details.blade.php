@@ -1,14 +1,16 @@
 <div wire:ignore.self class="modal fade" id="detail{{$item['reference'] ?? ''}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
       <div class="modal-content">
-        <div class="modal-header text-white">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             <div class="row">
               <div class="col-md-6">
                 @if (!empty($item['image']))
-                    <img src="{{asset('storage/app/public/public/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
+                    <img src="{{asset('storage/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
                 @else 
                     <img src="{{asset("site/img/portfolio/app-1.png")}}" class="menu-img img-fluid" alt="">
                 @endif
