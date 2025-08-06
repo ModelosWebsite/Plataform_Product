@@ -87,7 +87,7 @@ class Itens extends Component
             //manipulacao de arquivo;
             if ($this->image != null and !is_string($this->image)) {
                 $filaName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("/public/itens",$filaName);
+                $this->image->storeAs("public/items",$filaName);
             }
 
             $infoItem = [
@@ -101,11 +101,8 @@ class Itens extends Component
                 "image" => $filaName
             ];
 
-            \Log::info("Informações do item a ser criado", $infoItem);
-
             $response = Http::withHeaders($this->getToken())
                 ->post("https://kytutes.com/api/items", $infoItem)->json();
-            \Log::info("Resposta da API ao criar produto", $response);
 
             if ($response != null) {
                 $this->resetForm();
@@ -121,10 +118,6 @@ class Itens extends Component
 
             DB::commit();
         } catch (\Throwable $th) {
-            \Log::error("Erro ao criar item: " . $th->getMessage(), [
-                "file" => $th->getFile(),
-                "line" => $th->getLine()
-            ]);
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
