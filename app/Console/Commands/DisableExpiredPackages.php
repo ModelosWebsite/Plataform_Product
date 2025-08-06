@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\{pacote, company};
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DisableExpiredPackages extends Command
 {
@@ -14,21 +15,21 @@ class DisableExpiredPackages extends Command
     public function handle()
     {
         try {
-            $package = pacote::where('is_active', true)
-            ->whereDate('end_date', '<', Carbon::today())
-            ->update(['is_active' => false]);
+                DB::transaction(function () {
+                    $expiredPackages = Pacote::where('is_active', true)
+                        ->whereDate('end_date', '<', Carbon::today())
+                        ->get();
 
-            // Atualiza os pacotes e percorre-os
-            foreach ($packages as $pacote) {
-                // Captura o company_id e atualiza o método
-                $company = company::find($pacote->company_id);
-                if ($company) {
-                    $company->payment_type = 'Referência';
-                    $company->save();
-                }
-            }
+                    foreach ($expiredPackages as $pacote) {
+                        $pacote->update(['is_active' => false]);
 
-            \Log::info("Pacotes expirados desativados com sucesso.");
+                        $company = Company::find($pacote->company_id);
+                        if ($company) {
+                            $company->update(['payment_type' => 'Referência']);
+                        }
+                    }
+                });
+                \Log::info("Pacotes expirados desativados com sucesso.");
         } catch (\Throwable $th) {
             \Log::error("Erro ao desativar pacotes expirados: " . $th->getMessage());
         }
