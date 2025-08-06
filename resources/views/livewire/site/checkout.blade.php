@@ -28,7 +28,7 @@
                     </div>
                   </div>
                 </div>
-              @else
+              @elseif($paymentType === 'Transferência')
                 <div class="card">
                   <div class="card-header" style="background: var(--color);" id="headingTwo">
                     <h2 class="mb-0">

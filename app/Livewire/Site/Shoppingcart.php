@@ -54,8 +54,11 @@ class Shoppingcart extends Component
                 $this->totalFinal = $this->finalCompra;
                 $this->taxapb = 0;
             }
-
-            $this->referenceNumber = rand(100000000, 999999999);
+            if (isset($this->referenceNumber) && $this->referenceNumber === null) {
+                $this->referenceNumber = $this->referenceNumber;
+            } else {
+                $this->referenceNumber = rand(100000000, 999999999);
+            }
             $this->bankAccount = $this->bankAccountDetails();
 
             return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
@@ -136,7 +139,7 @@ class Shoppingcart extends Component
                 "municipality" => $this->municipality,
                 "street" => $this->street,
                 "cupon" => "",
-                "deliveryPrice" => 0,
+                "deliveryPrice" => $this->localizacao ?? 0,
                 "phone" => $this->phone,
                 "otherPhone" => $this->otherPhone,
                 "email" => $this->email,
