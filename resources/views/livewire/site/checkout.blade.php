@@ -85,7 +85,7 @@
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="">Nº Contribuente </label>
+                  <label for="">Nº Contribuente <span class="text-danger">*</span></label>
                   <input type="text" min="9" name="nif" id="nif" class="form-control" wire:model="taxPayer"> 
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
