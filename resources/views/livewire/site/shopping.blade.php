@@ -51,7 +51,7 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <div style="width: 250px; height: 350px; overflow: hidden;">
+                                    <div style="width: 253px; height: 300px; overflow: hidden;">
         <img src="{{ asset('storage/items/'.$item['image']) }}"
              class="img-fluid"
              style="width: 100%; height: 100%; object-fit: cover;"
