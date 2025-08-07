@@ -42,7 +42,7 @@ class Shopping extends Component
         try {
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
-            ->get(env("LINK_KITUTES") . "/categories");
+            ->get("https://kytutes.com/api/categories");
 
             return json_decode($response, true);
         } catch (\Throwable $th) {
@@ -91,7 +91,7 @@ class Shopping extends Component
     {
         try {
             $getItemCart = Http::withHeaders($this->getHeaders())
-            ->get(env("LINK_KITUTES") . "/items?description=$itemid");
+            ->get("https://kytutes.com/api/items?description=$itemid");
 
             $product = Collect(json_decode($getItemCart,true));
             

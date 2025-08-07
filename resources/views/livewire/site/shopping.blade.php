@@ -51,18 +51,20 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <div style="width: 253px; height: 300px; overflow: hidden;">
-        <img src="{{ asset('storage/items/'.$item['image']) }}"
-             class="img-fluid"
-             style="width: 100%; height: 100%; object-fit: cover;"
-             data-bs-toggle="modal"
-             data-bs-target="#detail{{ $item['reference'] ?? '' }}">
-    </div>
+                                    <div class="mb-2" style="width: 253px; height: 300px; overflow: hidden;">
+                                      <img src="{{ asset('storage/items/'.$item['image']) }}"
+                                        class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;"
+                                        data-bs-toggle="modal" data-bs-target="#detail{{ $item['reference'] ?? '' }}">
+                                    </div>
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">
                                 @endif
-                                <h3 class="product-title">{{ $item['name'] ?? '' }}</h3>
-                                <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, '.', ' ') }} kz</strong>
+
+                                <div class="product-item-info">
+                                    <h3 class="product-title">{{ $item['name'] ?? '' }}</h3>
+                                    <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, '.', ' ') }} kz</strong>
+                                </div>
+
 
                                 <span class="icon-cross" wire:click="addToCart('{{ $item['name'] ?? '' }}')">
                                     <img src="{{asset('cross.svg')}}" class="img-fluid">
@@ -80,6 +82,7 @@
         </div>
       </div>
     </div>
+
 
   {{-- Codigo CSS --}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

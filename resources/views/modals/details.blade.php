@@ -10,9 +10,10 @@
             <div class="row">
               <div class="col-md-6">
                 @if (!empty($item['image']))
-                    <img src="{{asset('storage/items/'.$item['image'])}}" class="img-fluid product-thumbnail">
-                @else 
-                    <img src="{{asset("site/img/portfolio/app-1.png")}}" class="menu-img img-fluid" alt="">
+                    <div style="width: 253px; height: 300px; overflow: hidden;">
+                      <img src="{{ asset('storage/items/'.$item['image']) }}"
+                      class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
                 @endif
                 </div>
                 <div class="col-md-6">

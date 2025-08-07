@@ -4,10 +4,10 @@
             <div class="container-fluid px-3 px-md-3 px-lg-4">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="shopping__cart__table">
-                            <table>
-                                <thead style="background: var(--color)">
-                                    <tr class="p-5 m-5">
+                        <div class="table responsive">
+                            <table class="table">
+                                <thead class="text-white" style="background: var(--color)">
+                                    <tr>
                                         <th>Produto</th>
                                         <th>Dtd.</th>
                                         <th>Total</th>
@@ -17,28 +17,25 @@
                                 <tbody>
                                    @forelse ($cartContent as $item)
                                     <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
+                                        <td class="d-flex">
+                                            <div class="mr-3">
                                                 @if ($item->attributes->image != null)
-                                                    <img style="width: 80px" src="{{asset('storage/app/public/public/items/'.$item->attributes->image)}}" class="img-fluid product-thumbnail">
+                                                    <img style="width: 60px" src="{{asset('storage/items/'.$item->attributes->image)}}" class="img-fluid product-thumbnail">
                                                 @else 
-                                                    <img style="width: 80px" src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
+                                                    <img style="width: 60px" src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
                                                 @endif
                                             </div>
-                                            <div class="product__cart__item__text">
+                                            <div class="mt-3">
                                                 <h6>{{ $item->name }}</h6>
                                             </div>
                                         </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input class="quantity-input" type="number" value="{{ $item->quantity }}" min="1" wire:change="updateQuantity('{{$item->id}}', $event.target.value)">
-                                                </div>
-                                            </div>
+                                        <td>
+                                            <input class="quantity-input" width="100" type="number" value="{{ $item->quantity }}" min="1" wire:change="updateQuantity('{{$item->id}}', $event.target.value)">
                                         </td>
-                                        <td class="cart__price">
-                                            {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz</td>
-                                        <td class="cart__close text-center">
+                                        <td>
+                                            {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz
+                                        </td>
+                                        <td class="text-center">
                                             <button  wire:click='remove({{$item->id}})' style="color: red; border: none; backgound: #fff">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25"
                                                     height="25" fill="currentColor" class="bi bi-trash3-fill"
