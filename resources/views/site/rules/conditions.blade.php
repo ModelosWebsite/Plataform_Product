@@ -14,7 +14,12 @@
                 {{$termos->term}}
             </p>
           @else
-              <p style="text-align: justify">{{ isset($companies->termsPBs->term) ? $companies->termsPBs->term : "" }}</p>
+              <p style="text-align: justify">
+                @forelse ($companies as $company)
+                  {{ $company->termsPBs->term }}
+                @empty
+                @endforelse
+              </p>
           @endif
         </div>
       </div>

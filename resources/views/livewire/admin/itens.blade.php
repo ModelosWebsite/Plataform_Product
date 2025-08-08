@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="container-fluid col-md-12">
     <div class="card border-0 mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header flex-row align-items-center justify-content-between col-xl-12">

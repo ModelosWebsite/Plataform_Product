@@ -17,4 +17,15 @@ class Payment extends Model
         'typeservice',
         'company_id'
     ];
+
+    
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function extraPackage()
+    {
+        return $this->belongsTo(FunctionalityPlus::class);
+    }
 }

@@ -53,6 +53,14 @@
         </a>
     </li>
 
+        <!-- Nav Item - shopping -->
+    <li class="nav-item {{ (Route::current()->getName() == 'admin.shopping.premium') ? 'bg-white' : '' }}">
+        <a class="nav-link {{ (Route::current()->getName() == 'admin.shopping.premium') ? 'text-primary' : '' }}" href="{{ route('admin.shopping.premium') }}">
+            <i class="fas fa-fw fa-star {{ (Route::current()->getName() == 'admin.shopping.premium') ? 'text-secondary' : '' }}"></i>
+            <span>Elementos Premium</span>
+        </a>
+    </li> 
+
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ Route::current()->getName() == 'plataform.product.logout' ? 'bg-white' : '' }}">
         <a class="nav-link {{ Route::current()->getName() == 'plataform.product.logout' ? 'text-primary' : '' }}"

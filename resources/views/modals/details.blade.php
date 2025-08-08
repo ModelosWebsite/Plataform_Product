@@ -1,5 +1,5 @@
 <div wire:ignore.self class="modal fade" id="detail{{$item['reference'] ?? ''}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -8,7 +8,7 @@
         </div>
         <div class="modal-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 @if (!empty($item['image']))
                     <div style="width: 253px; height: 300px; overflow: hidden;">
                       <img src="{{ asset('storage/items/'.$item['image']) }}"
@@ -16,7 +16,7 @@
                     </div>
                 @endif
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card border-0">
                       <div class="card-body">
                         <h5 class="card-title">{{$item['name'] ?? ''}}</h5>

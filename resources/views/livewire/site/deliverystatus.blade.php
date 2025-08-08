@@ -3,7 +3,7 @@
   <section class="vh-100">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
+        <div class="col-12" >
           <div class="card text-dark" style="border-radius: 1rem;">
             <div class="card-body p-4">
               <div class="container">

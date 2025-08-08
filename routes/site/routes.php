@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Route::controller(SiteController::class)->group(function()
 {
     Route::get("/{company}", "index")->name("plataforma.produto.index");

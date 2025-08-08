@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\InvoiceGenerateTransferece;
+use App\Jobs\{InvoiceGenerateTransferece, StoreVisitor};
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\DisableExpiredPackages;
@@ -15,6 +15,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->job(new InvoiceGenerateTransferece)->everyMinute();
+        $schedule->job(new StoreVisitor(request()->header(
+            'User-Agent') ?? '',
+             request()->ip() ?? '0.0.0.0',
+            'NomeDaEmpresa', // ou busca do banco
+            123 // ID da empresa
+        ))->everyMinute();
         $schedule->command('pacotes:desativar-expirados')->everyMinute();
     }
 

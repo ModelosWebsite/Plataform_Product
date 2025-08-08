@@ -188,7 +188,7 @@ class InvoiceGenerateTransferece implements ShouldQueue
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer {$token}",
-        ])->post('https://fortcodedev.com/api/invoice/create', [
+        ])->post('https://xzero.live/api/invoice/create', [
             "isBackoffice" => "0",
             "type" => $type,
             "customerName" => $customer["client"] ?? $customer["Company"] ?? '',

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SuperAdmin\{DocumentationController, PacoteController, RegisterCompanyController, VisitorController};
 use App\Http\Controllers\SuperAdmin\{SuperAdminController, TermosController, UserController};
+use App\Livewire\SuperAdmin\FunctionalityPlusComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth")->prefix("/super/admin")->group(function()
@@ -40,5 +41,6 @@ Route::middleware("auth")->prefix("/super/admin")->group(function()
     Route::controller(VisitorController::class)->group(function(){
         Route::get("/metrics/incial", "index")->name("super.admin.visitor.index");
     });
-});
 
+    Route::get("/recursos", FunctionalityPlusComponent::class)->name("super.admin.functionality.plus");
+});

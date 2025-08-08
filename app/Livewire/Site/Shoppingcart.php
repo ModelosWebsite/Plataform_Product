@@ -71,8 +71,8 @@ class Shoppingcart extends Component
 
     public function loadPackage()
     {
-        return Pacote::where('company_id', $this->getCompany()->id)
-        ->where('is_active', true)->where("pacote", "Transferência")->latest()->first();
+        return pacote::where('company_id', $this->getCompany()->id)
+        ->where('is_active', true)->where("package_name", "Transferência")->latest()->first();
     }
 
     public function bankAccountDetails()
@@ -186,11 +186,20 @@ class Shoppingcart extends Component
                 ]);
             }
 
+            if ($response) {
+                session()->put("idDelivery", $response['reference']);
+                session()->put("companyapi", $this->getCompany()->companyhashtoken);
+            }
+
             CartFacade::clear();
             $this->reset([
                 'name', 'lastname', 'province', 'municipality', 'street', 
                 'phone', 'otherPhone', 'email', 'taxPayer', 'otherAddress',
                 'latitude', 'longitude'
+            ]);
+
+            return redirect()->route("plataforma.produto.delivery.status", [
+                $response['reference']
             ]);
     
             $this->alert('success', 'SUCESSO', [
@@ -201,15 +210,14 @@ class Shoppingcart extends Component
             ]);
 
         } catch (\Throwable $th) {
+            
             \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());
-            $this->alert("info", 
-            [
-                'toast'=>false,
-                'position'=>'center',
-                'timer'=>1000,
-                "Falha na encomenda"
-            ]
-        );
+            // $this->alert("info", [
+            //     'toast'=>false,
+            //     'position'=>'center',
+            //     'timer'=>1000,
+            //     "Falha na encomenda"
+            // ]);
         }
     }
     

@@ -57,7 +57,7 @@ class Request{
             return Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            ])->post('https://fortcodedev.com/api/company/show', [
+            ])->post('https://xzero.live/api/company/show', [
                 "TaxPayer" => $taxPayer,
             ])->json();
         } catch (\Throwable $th) {

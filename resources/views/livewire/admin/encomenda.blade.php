@@ -29,10 +29,39 @@
                                     </span>
                                     @break
                                 @case('ACEITE')
-                                    <span class="badge badge-success p-2" style="font-size:15px; font-weight:bold">
-                                        <i class="fa fa-check-circle"></i> {{ $data['status'] }}
-                                    </span>
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-success p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                            <i class="fa fa-thumbs-up"></i> {{ $data['status'] }}
+                                        </span>
                                     @break
+                                @case('FINALIZADO')
+                                        <span class="badge badge-primary p-2" style="font-size:15px; font-weight:bold">
+                                            <i class="fa fa-flag-checkered"></i> {{ $data['status'] }}
+                                        </span>
+                                        @break
+
+                                @case('EM PREPARAÇÃO')
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-warning p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                            <i class="fa fa-utensils"></i> {{ $data['status'] }}
+                                        </span>
+                                        @break
+
+                                @case('PRONTO')
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-info p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                            <i class="fa fa-box-open"></i> {{ $data['status'] }}
+                                        </span>
+                                        @break
+
+                                @case('A CAMINHO')
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-primary p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                            <i class="fa fa-truck"></i> {{ $data['status'] }}
+                                        </span>
+                                        @break
+
+                                @case('ENTREGUE')
+                                        <span class="badge badge-success p-2" style="font-size:15px; font-weight:bold">
+                                            <i class="fa fa-handshake"></i> {{ $data['status'] }}
+                                        </span>
+                                        @break
                                 @default
                                     <span class="badge badge-danger p-2" style="font-size:15px; font-weight:bold">
                                         <i class="fa fa-exclamation-triangle"></i> Estado Nulo

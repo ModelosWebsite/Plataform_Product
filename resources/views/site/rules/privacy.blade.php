@@ -14,7 +14,12 @@
                 {{$termos->privacity}}
             </p>
           @else
-            <p style="text-align: justify">{{ isset($companies->termsPBs->privacity) ? $companies->termsPBs->privacity : "" }}</p>
+            <p style="text-align: justify">
+              @forelse ($companies as $company)
+                  {{ $company->termsPBs->privacity }}
+              @empty
+              @endforelse
+            </p>
           @endif
         </div>
       </div>

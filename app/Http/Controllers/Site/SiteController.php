@@ -3,199 +3,120 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Mail\Company\SendEmail;
-use App\Models\{About, Color, company, CompanyTerm, contact, Detail, Element, Fundo, hero, infowhy, pacote, Produt, Termo, Termpb_has_Company, TermsCompany, visitor};
+use App\Services\CompanyService;
+use App\Services\VisitorService;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Http, Log, Cache};
-use Illuminate\Support\Facades\Mail;
-use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller
 {
-    public function index($company)
+    protected CompanyService $companyService;
+    protected VisitorService $visitorService;
+
+    public function __construct(CompanyService $companyService, VisitorService $visitorService)
     {
-        session()->forget("companyhashtoken");
-        Cache()->forget("company_token");
-
-        $data = $this->getCompany($company);
-        
-        if (!$data || $data->status !== 'active') {
-            return view("disable.App");
-        }
-        
-        $companyId = $data->id;
-        
-        $elements = ["Produtos", "Experiência", "Parceiros", "Clientes"];
-        $elementData = Element::where("company_id", $companyId)
-        ->whereIn("element", $elements)->get()->keyBy("element");
-        
-        $packages = ["Shopping", "Whatsapp"];
-        $packageData = pacote::where("company_id", $companyId)
-        ->whereIn("pacote", $packages)->get()->keyBy("pacote");
-
-        $companyName = company::where("companyhashtoken", $company)->first();
-        session()->put('companyhashtoken', $companyName->companyhashtoken);
-        Cache::put('invoiceToken', $companyName->companyhashtoken);
-        Log::info("Cache", [Cache::get('invoiceToken')]);
-        $this->getVisitor($companyName);
-        
-        return view("site.pages.home", [
-            "hero" => hero::where("company_id", $companyId)->get(),
-            "products" => Produt::where("company_id", $companyId)->get(),
-            "info" => infowhy::where("company_id", $companyId)->get(),
-            "details" => Detail::where("company_id", $companyId)->get(),
-            "about" => About::where("company_id", $companyId)->get(),
-            "contacts" => contact::where("company_id", $companyId)->get(),
-            "product" => $elementData["Produtos"] ?? null,
-            "experiencia" => $elementData["Experiência"] ?? null,
-            "parceiros" => $elementData["Parceiros"] ?? null,
-            "clients" => $elementData["Clientes"] ?? null,
-            "shopping" => $packageData["Shopping"] ?? null,
-            "whatsapp" => $packageData["Whatsapp"] ?? null,
-            "phonenumber" => contact::where("company_id", $companyId)->first(),
-            "companies" => Termpb_has_Company::where("company_id", $companyId)->with('termsPBs')->first(),
-            "termos" => TermsCompany::where("company_id", $companyId)->first(),
-            "companyName" => $companyName,
-            "color" => $this->colors($company),
-            "fundoAbout" => $this->fundoAbout($company),
-            "fundo" => $this->fundo($company),
-            "start" => $this->start($company)
-        ]);
+        $this->companyService = $companyService;
+        $this->visitorService = $visitorService;
     }
 
-    public function start($company)
-    {
-        $data = company::where("companyhashtoken", $company)->first();
-        $start = Fundo::where("tipo", "Start")
-        ->where("company_id", $data->id)->first();
-        return $start;
-    }
-
-    public function colors($company)
-    {
-        $data = company::where("companyhashtoken", $company)->first();
-        $color = Color::where("company_id", $data->id)->first();
-        return $color;
-    }
-
-    public function fundoAbout($company)
-    {
-        $data = company::where("companyhashtoken", $company)->first();
-        $about = Fundo::where("tipo", "AboutMain")
-        ->where("company_id", $data->id)->first();
-        return $about;
-    }
-
-    public function fundo($company)
-    {
-        $data = company::where("companyhashtoken", $company)->first();
-        $about = Fundo::where("tipo", "AboutSecund")
-        ->where("company_id", $data->id)->first();
-        return $about;
-    }
-
-    public function sendEmail($company)
+    public function index(string $companyHash, Request $request)
     {
         try {
-            $companyEmail = company::where("companyhashtoken", $company)->first();
+
+            $company = $this->companyService->getByHash($companyHash);
             
-            $email = "albertocativa653@gmail.com";
-            Mail::to($companyEmail->companyemail)->send(new SendEmail($email, $companyEmail));
-            return "enviado";
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-        }
-    }
+            if ($company->status !== 'active') {
+                return view('disable.App');
+            }
+            
+            session()->put('companyhashtoken', $company->companyhashtoken);
+            cache()->put("company:{$company->id}:invoiceToken", $company->companyhashtoken, now()->addHours(2));
 
-    public function getShopping($company)
-    {
-        try {
-            $shopping = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id: "")
-            ->where("pacote", "Shopping")->first();
-            $WhatsApp = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")
-            ->where("pacote", "WhatsApp")->first();
-            $phonenumber = contact::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")->first();
-            $companyName = $this->getCompany($company);
-            session()->put("tokencompany", $companyName->companyhashtoken);
+            // registra visita (job dispatched dentro do service)
+            $this->visitorService->registerFromRequest($request, $company);
 
-            return view("site.pages.shopping", [
-                "companyName" => $companyName,
-                "shopping" => $shopping,
-                "WhatsApp" => $WhatsApp,
-                "phonenumber" => $phonenumber,
-                "color" => $this->colors($company),
+            $data = $this->companyService->getCompanyDataForHome($company);
+
+            return view('site.pages.home', [
+                'hero' => $company->heroes,
+                'products' => $company->products,
+                'info' => $company->infoWhy,
+                'details' => $company->details,
+                'about' => $company->about,
+                'contacts' => $company->contacts,
+                'product' => $data['elements']['Produtos'] ?? null,
+                'experiencia' => $data['elements']['Experiência'] ?? null,
+                'parceiros' => $data['elements']['Parceiros'] ?? null,
+                'clients' => $data['elements']['Clientes'] ?? null,
+                'whatsapp' => $company->packages->where('is_active', true)->where('package_name', 'Whatsapp')->first(),
+                'phonenumber' => $company->contacts->first(),
+                'companies' => $company->termpbHasCompany ? $company->termpbHasCompany->load('termsPBs') : null,
+                'termos' => $company->termsCompany,
+                'companyName' => $company,
+                'color' => $company->color,
+                'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
+                'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
+                'start' => $company->fundos->where('tipo', 'Start')->first()
             ]);
 
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::error('SiteController@index error: ', [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
+            abort(404);
         }
     }
 
-    public function getShoppingCart($company)
+    public function getShopping(string $companyHash)
     {
         try {
-            if (CartFacade::getContent()->count() > 0) {
-                $shopping = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id: "")
-                ->where("pacote", "Shopping")->first();
-                $WhatsApp = pacote::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")
-            ->where("pacote", "WhatsApp")->first();
-            $phonenumber = contact::where("company_id", isset($this->getCompany($company)->id) ? $this->getCompany($company)->id : "")->first();
-            $companyName = $this->getCompany($company);
-            //session()->put("tokencompany", $companyName->companyhashtoken);
-            return view("site.pages.carrinho", [
-                "companyName" => $companyName,
-                "shopping" => $shopping,
-                "WhatsApp" => $WhatsApp,
-                "phonenumber" => $phonenumber,
-                "color" => $this->colors($company)]);
-            } else {
-                return redirect()->back()->with("info", "Carrinho Vazio");
-            }  
+            $company = $this->companyService->getByHash($companyHash);
+
+            session()->put("tokencompany", $company->companyhashtoken);
+
+            $shopping = $company->packages->firstWhere('pacote', 'Shopping');
+            $whatsapp = $company->packages->firstWhere('pacote', 'WhatsApp');
+
+            return view('site.pages.shopping', [
+                'companyName' => $company,
+                'shopping' => $shopping,
+                'WhatsApp' => $whatsapp,
+                'phonenumber' => $company->contacts->first(),
+                'color' => $company->color
+            ]);
         } catch (\Throwable $th) {
-            
+            Log::error('getShopping error: ' . $th->getMessage());
+            abort(404);
         }
     }
 
-    public function getCompany($company)
+    public function getShoppingCart(string $companyHash)
     {
         try {
-            return company::where("companyhashtoken", $company)->first();
-        } catch (\Throwable $th) {
-            return redirect()->back();
-        }
-    }
+            $company = $this->companyService->getByHash($companyHash);
 
-    public function getVisitor($companyName)
-    {
-        try {
-            // Capturar informações da requisição
-            $userAgent = request()->header('User-Agent');
+            session()->put("tokencompany", $company->companyhashtoken);
 
-            // Usar a biblioteca Jenssegers/Agent para analisar o user agent
-            $agent = new Agent();
-            $agent->setUserAgent($userAgent);
-
-            //salvar os dados no banco
-            $visitors = new visitor();
-
-            $visitors->ip = request()->ip();
-            $visitors->browser = $agent->browser();
-            $visitors->system = $agent->platform();
-            $visitors->device = $agent->device();
-            
-            if ($agent->isDesktop()) {
-                $visitors->typedevice = "Computador";
-            }if ($agent->isPhone()) {
-                $visitors->typedevice = "Telefone";
-            }if ($agent->isTablet()) {
-                $visitors->typedevice = "Tablet";
+            if (CartFacade::getContent()->count() <= 0) {
+                return redirect()->route('plataforma.produto.shopping', ['company' => $company->companyhashtoken]);
             }
-            
-            $visitors->company = $companyName->companyname;
-            $visitors->save();
+
+            $shopping = $company->packages->firstWhere('pacote', 'Shopping');
+            $whatsapp = $company->packages->firstWhere('pacote', 'WhatsApp');
+
+            return view('site.pages.carrinho', [
+                'companyName' => $company,
+                'shopping' => $shopping,
+                'WhatsApp' => $whatsapp,
+                'phonenumber' => $company->contacts->first(),
+                'color' => $company->color
+            ]);
         } catch (\Throwable $th) {
-            Log::error("Error getting visitor: " . $th->getMessage());
+            Log::error('getShoppingCart error: ' . $th->getMessage());
+            abort(404);
         }
     }
 }

@@ -45,7 +45,13 @@
                                                <tr>
                                                     <td>{{$pacote->company->companyname}}</td>
                                                     <td>{{$pacote->pacote}}</td>
-                                                    <td class=" text-capitalize">{{$pacote->status}}</td>
+                                                    <td class=" text-capitalize">
+                                                        @if($pacote->is_active)
+                                                            <span class="badge bg-success p-2 text-white" role="status" aria-label="Activo">Activo</span>
+                                                        @else
+                                                            <span class="badge bg-danger p-2 text-white" role="status" aria-label="Inativo">Inativo</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
 
                                                         <!-- Button trigger modal -->

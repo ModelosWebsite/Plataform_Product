@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index(){
-        $shopping = pacote::where("pacote", "Shopping")
-        ->where("company_id", auth()->user()->company_id)->first();
+        $shopping = null;
         return view("sbadmin.home", compact("shopping"));
     }
 }

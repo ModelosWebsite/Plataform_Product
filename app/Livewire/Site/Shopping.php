@@ -46,6 +46,7 @@ class Shopping extends Component
 
             return json_decode($response, true);
         } catch (\Throwable $th) {
+            \Log::error('Shopping@getCategories: ' . $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
@@ -75,6 +76,8 @@ class Shopping extends Component
                 return collect($response->json());
             } 
         } catch (\Throwable $th) {
+            \Log::error('Shopping@getItens: ' . $th->getMessage());
+
             // Mostra um alerta com uma mensagem de erro personalizada
             $this->alert('error', 'ERRO', [
                 'toast' => false,
@@ -106,15 +109,17 @@ class Shopping extends Component
 
                 )
             ));
-
+            $this->dispatch("updateCartCounter");
             $this->alert('success', 'SUCESSO', [
                 'toast'=>false,
                 'position'=>'center',
                 'timer' => '1000',
                 'text'=>'Item '.$product[0]["name"].', adicionado'
             ]);
+
             return;
         } catch (\Throwable $th) {
+            \Log::error('Shopping@AddCart: ' . $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
