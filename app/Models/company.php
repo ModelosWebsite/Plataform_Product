@@ -37,7 +37,7 @@ class company extends Model
     }
     public function products() 
     { 
-        return $this->hasMany(produt::class, 'company_id'); 
+        return $this->hasMany(Produt::class, 'company_id'); 
     }
     public function infoWhy() 
     { 
