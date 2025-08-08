@@ -32,16 +32,16 @@ class company extends Model
 
     public function heroes() 
     { 
-        return $this->hasMany(Hero::class, 'company_id'); 
+        return $this->hasMany(hero::class, 'company_id'); 
     
     }
     public function products() 
     { 
-        return $this->hasMany(Produt::class, 'company_id'); 
+        return $this->hasMany(produt::class, 'company_id'); 
     }
     public function infoWhy() 
     { 
-        return $this->hasMany(Infowhy::class, 'company_id'); 
+        return $this->hasMany(infowhy::class, 'company_id'); 
     }
     public function details() 
     { 
@@ -53,7 +53,7 @@ class company extends Model
     }
     public function contacts() 
     { 
-        return $this->hasMany(Contact::class, 'company_id'); 
+        return $this->hasMany(contact::class, 'company_id'); 
     }
     public function color() 
     { 
@@ -65,7 +65,7 @@ class company extends Model
     }
     public function packages() 
     { 
-        return $this->hasMany(Pacote::class, 'company_id'); 
+        return $this->hasMany(pacote::class, 'company_id'); 
     }
     public function termsCompany() 
     { 

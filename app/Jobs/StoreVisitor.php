@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Visitor;
+use App\Models\visitor;
 use Jenssegers\Agent\Agent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +33,7 @@ class StoreVisitor implements ShouldQueue
             $agent = new Agent();
             $agent->setUserAgent($this->userAgent ?? '');
 
-            $visitor = new Visitor();
+            $visitor = new visitor();
             $visitor->ip = $this->ip ?? '0.0.0.0';
             $visitor->browser = $agent->browser() ?? 'Unknown';
             $visitor->system = $agent->platform() ?? 'Unknown';
