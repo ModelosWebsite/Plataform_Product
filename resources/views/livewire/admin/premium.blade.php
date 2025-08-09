@@ -10,7 +10,7 @@
                 @forelse($packages as $package)
                     <div class="col-lg-3">
                         <div class="card border text-center">
-                            <img src="{{asset('storage/premium/'.$package->image)}}" width="200" class="card-img-top">
+                            <img style="whith: 200px;" src="{{asset('storage/premium/'.$package->image)}}" class="card-img-top image-fluid">
                             <div class="card-body">
                                 <h5 class="card-title">{{$package->title ?? ''}}</h5>
                                 <p class="card-text">{{$package->description ?? ''}}</p>
