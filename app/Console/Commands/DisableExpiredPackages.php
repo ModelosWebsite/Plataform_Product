@@ -24,7 +24,7 @@ class DisableExpiredPackages extends Command
                         $pacote->update(['is_active' => false]);
 
                         $company = Company::find($pacote->company_id);
-                        if ($company) {
+                        if ($company->payment_type === "Transferência") {
                             $company->update(['payment_type' => 'Referência']);
                         }
                     }
