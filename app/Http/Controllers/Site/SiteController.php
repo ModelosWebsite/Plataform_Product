@@ -35,7 +35,7 @@ class SiteController extends Controller
             }
             
             session()->put('companyhashtoken', $company->companyhashtoken);
-            cache()->put("invoiceToken", $company->companyhashtoken, now()->addHours(2));
+            cache()->put("invoiceToken", $company->companyhashtoken);
 
             // registra visita (job dispatched dentro do service)
             $this->visitorService->registerFromRequest($request, $company);
@@ -85,6 +85,8 @@ class SiteController extends Controller
             $company = $this->companyService->getByHash($companyHash);
 
             session()->put("tokencompany", $company->companyhashtoken);
+            cache()->put("invoiceToken", $company->companyhashtoken);
+
 
             $shopping = $company->packages->firstWhere('pacote', 'Shopping');
             $whatsapp = $company->packages->firstWhere('pacote', 'WhatsApp');
@@ -108,6 +110,8 @@ class SiteController extends Controller
             $company = $this->companyService->getByHash($companyHash);
 
             session()->put("tokencompany", $company->companyhashtoken);
+            cache()->put("invoiceToken", $company->companyhashtoken);
+
 
             if (CartFacade::getContent()->count() <= 0) {
                 return redirect()->route('plataforma.produto.shopping', ['company' => $company->companyhashtoken]);

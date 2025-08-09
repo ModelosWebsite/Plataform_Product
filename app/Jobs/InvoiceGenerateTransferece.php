@@ -32,6 +32,9 @@ class InvoiceGenerateTransferece implements ShouldQueue
         try {
         // 1. CAPTURA DAS INFORMAÇÕES DA CONTA DA EMPRESA
         $companyHash = Cache::get('invoiceToken');
+
+        Log::info("comapny", ["as" => $companyHash]);
+
         $dataCompany = Company::where("companyhashtoken", $companyHash)->first();
         $tokenTeste = "10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0";
 

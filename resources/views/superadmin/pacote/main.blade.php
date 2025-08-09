@@ -21,13 +21,6 @@
                                     <div>
                                         <h4 class="m-0 font-weight-bold text-white">Pacotes Premium</h4>
                                     </div>
-                                    <div>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn bg-white text-primary" data-toggle="modal" data-target="#exampleModal">
-                                            Adicionar
-                                        </button>
-                                        @include("superadmin.pacote.modal")
-                                    </div>
                                 </div>
                             </div>
                             <!-- Card Body -->
@@ -44,7 +37,7 @@
                                             @foreach ($pacotes as $pacote)
                                                <tr>
                                                     <td>{{$pacote->company->companyname}}</td>
-                                                    <td>{{$pacote->pacote}}</td>
+                                                    <td>{{$pacote->package_name}}</td>
                                                     <td class=" text-capitalize">
                                                         @if($pacote->is_active)
                                                             <span class="badge bg-success p-2 text-white" role="status" aria-label="Activo">Activo</span>

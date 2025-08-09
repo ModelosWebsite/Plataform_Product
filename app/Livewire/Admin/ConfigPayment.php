@@ -22,6 +22,9 @@ class ConfigPayment extends Component
     {
         $this->company = Company::find(auth()->user()->company_id);
         $this->loadBankAccount();
+        $this->package = pacote::where("company_id", auth()->user()->company_id)->where("package_name", "Transferência")
+        ->where("is_active", true)->latest()->first();
+        
     }
 
         public function updateDeliveryMethod()

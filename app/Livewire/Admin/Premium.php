@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\{Payment, FunctionalityPlus, pacote};
+use App\Models\{Payment, FunctionalityPlus, pacote, company};
 use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -54,6 +54,13 @@ class Premium extends Component
                     "functionality_plus_id" => $this->element->id,
                     "is_active" => true,
                 ]);
+
+                if ($this->element->title === "Transferência") {
+                    $company = company::find(auth()->user()->company->id);
+
+                    $company->delivery_method = "Meus Entregadores";
+                    $company->save();
+                }
             }
         }
     }
@@ -66,19 +73,33 @@ class Premium extends Component
             $this->element = FunctionalityPlus::where('id', $id)->first();
             $this->price = $this->element->amount;
 
-            $this->alert('warning', 'Confirmar', [
-                'icon' => 'warning',
-                'position' => 'center',
-                'toast' => false,
-                'text' => "Deseja adquerir ". $this->element->title ." ? "." Clique confirmar para prosseguir",
-                'showConfirmButton' => true,
-                'showCancelButton' => true,
-                'cancelButtonText' => 'Cancelar',
-                'confirmButtonText' => 'Confirmar',
-                'confirmButtonColor' => '#3085d6',
-                'cancelButtonColor' => '#d33',
-                'onConfirmed' => 'sendReference' 
-            ]);
+            $packagesExtras = pacote::where("company_id", auth()->user()->company->id)
+            ->where("is_active", true)->where("package_name", $this->element->title)->latest()->first();
+
+            if ($packagesExtras) {
+                $this->alert('info', 'Informação', [
+                    'toast'=>false,
+                    'position'=>'center',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'OK',
+                    'confirmButtonColor' => '#222831e5',
+                    'text'=>'Já Possui está pacote activo'
+                ]);
+            }else {
+                $this->alert('warning', 'Confirmar', [
+                    'icon' => 'warning',
+                    'position' => 'center',
+                    'toast' => false,
+                    'text' => "Deseja adquerir ". $this->element->title ." ? "." Clique confirmar para prosseguir",
+                    'showConfirmButton' => true,
+                    'showCancelButton' => true,
+                    'cancelButtonText' => 'Cancelar',
+                    'confirmButtonText' => 'Confirmar',
+                    'confirmButtonColor' => '#3085d6',
+                    'cancelButtonColor' => '#d33',
+                    'onConfirmed' => 'sendReference' 
+                ]);
+            }
         } catch (\Throwable $th) {
             $this->alert('error', 'ERRO', [
                 'toast'=>false,

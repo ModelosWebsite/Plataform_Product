@@ -87,8 +87,9 @@ class Encomenda extends Component
 
             foreach ($delivery as $item) {
                 $estado = $item['delivery']['status'];
+                $estadosPendentes = ['PENDENTE', 'ACEITE', 'EM PREPARAÇÃO', 'PRONTO', 'A CAMINHO'];
 
-                if ($estado == 'PENDENTE') {
+                if (in_array($estado, $estadosPendentes)) {
                     $updateResponse = Http::withHeaders($headers)
                         ->put("https://kytutes.com/api/deliveries?reference=$id", [
                             'switch' => $newStatus

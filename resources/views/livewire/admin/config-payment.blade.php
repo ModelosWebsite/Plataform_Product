@@ -29,7 +29,9 @@
         <div class="form-group col-12 mb-3">
             <h5>Método de Entrega: {{ $company->delivery_method }}</h5>
         </div>
-        @if($company->payment_type === "Referência")
+        @if($package)
+
+        @else
             <div class="form-group col-12">
                 <h6 for="delivery_method">Método de Entrega</h6>
                 <select id="delivery_method" wire:change="updateDeliveryMethod" wire:model="delivery_method" class="form-control">

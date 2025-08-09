@@ -13,9 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Binding do CompanyRepository como singleton para injeção automática
-        $this->app->singleton(CompanyRepository::class, function ($app) {
-            return new CompanyRepository();
-        });
+
     }
 
     /**
