@@ -4,279 +4,241 @@ namespace App\Livewire\Site;
 
 use App\Models\{company, Payment, BankAccount, pacote};
 use Livewire\Component;
-use Darryldecode\Cart\Facades\CartFacade;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Shoppingcart extends Component
 {
-    use WithFileUploads;
-    use LivewireAlert;
+    use WithFileUploads, LivewireAlert;
 
-    public $number = 0, $localizacao, $cartContent, $getTotal, $getSubTotal,
-    $getTotalQuantity, $location, $cupon, $taxapb = 0, $finalCompra,
-    $totalFinal = 0, $code, $delveryId, $receipt, $deliveryType;
+    // Dados gerais do carrinho
+    public $number = 0, $localizacao = 0, $cartContent, $getTotal, $getSubTotal,
+           $getTotalQuantity, $cupon, $taxapb = 0, $finalCompra,
+           $totalFinal = 0, $code, $delveryId, $receipt, $deliveryType;
 
-    //propriedades de checkout
+    // Dados de checkout
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
-    $email, $deliveryPrice =0,  $taxPayer,$otherAddress,$deliveryUrl;
-    public $company, $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount;
-    public $package;
+           $email, $deliveryPrice = 0, $taxPayer, $otherAddress, $deliveryUrl,
+           $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package;
+
+    // Guarda apenas o ID da empresa
+    public $companyId;
 
     protected $listeners = ["updateQuantity", "setLocation"];
 
     public function mount()
     {
-        $this->paymentType = $this->getCompany()->payment_type;
-        $this->deliveryType = $this->getCompany()->delivery_method;
-        $this->package = $this->loadPackage();
+        $company = company::where("companyhashtoken", session("tokencompany"))->firstOrFail();
+        $this->companyId = $company->id;
+
+        $this->paymentType  = $company->payment_type;
+        $this->deliveryType = $company->delivery_method;
+        $this->package      = $this->loadPackage();
+
+        $this->removeOtherCompanyItems();
     }
 
     public function render()
     {
         try {
             $company = $this->getCompany();
-            $this->cartContent = CartFacade::getContent();
-            $this->getTotal = CartFacade::getTotal();
-            $this->getSubTotal = CartFacade::getSubTotal();
-            $this->getTotalQuantity = CartFacade::getTotalQuantity();
 
-            if ($company->delivery_method == "Entregadores PB") {
-                $this->finalCompra = $this->getSubTotal + $this->localizacao;
-            } else {
-                $this->finalCompra = $this->getSubTotal;
-            }
+            $this->cartContent      = Cart::getContent();
+            $this->getTotal         = Cart::getTotal();
+            $this->getSubTotal      = Cart::getSubTotal();
+            $this->getTotalQuantity = Cart::getTotalQuantity();
+
+            $this->finalCompra = $company->delivery_method === "Entregadores PB"
+                ? $this->getSubTotal + $this->localizacao
+                : $this->getSubTotal;
 
             $this->taxapb = ($this->finalCompra * 14) / 100;
 
-            if ($company->payment_type == "Referência") {
-                $this->totalFinal = $this->finalCompra + $this->taxapb;
-            } else {
-                $this->totalFinal = $this->finalCompra;
-                $this->taxapb = 0;
-            }
-            if (isset($this->referenceNumber) && $this->referenceNumber === null) {
-                $this->referenceNumber = $this->referenceNumber;
-            } else {
+            $this->totalFinal = $company->payment_type === "Referência"
+                ? $this->finalCompra + $this->taxapb
+                : $this->finalCompra;
+
+            if (!$this->referenceNumber) {
                 $this->referenceNumber = rand(100000000, 999999999);
             }
+
             $this->bankAccount = $this->bankAccountDetails();
 
-            return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
+            return view('livewire.site.shoppingcart', [
+                'locations' => $this->getAllLocations()
+            ]);
         } catch (\Throwable $th) {
-            
+            \Log::error("Erro no render carrinho: " . $th->getMessage());
         }
     }
 
-    public function loadPackage()
+    private function getCompany(): Company
     {
-        return pacote::where('company_id', $this->getCompany()->id)
-        ->where('is_active', true)->where("package_name", "Transferência")->latest()->first();
+        return company::findOrFail($this->companyId);
     }
 
-    public function bankAccountDetails()
+    private function loadPackage()
     {
-        return BankAccount::where('company_id', $this->getCompany()->id)->first();
+        return pacote::where('company_id', $this->companyId)->where('is_active', true)
+        ->where("package_name", "Transferência")->latest()->first();
     }
 
-    public function getCompany()
+    private function bankAccountDetails()
     {
-        return company::where("companyhashtoken", session("tokencompany"))->first();
+        return BankAccount::where('company_id', $this->companyId)->first();
     }
 
-    //Dados de autenticação a API
-    public function getHeaders()
+    private function getHeaders()
     {
         return [
-            "Accept" => "application/json",
-            "Content-Type" => "application/json",
+            "Accept"        => "application/json",
+            "Content-Type"  => "application/json",
             "Authorization" => $this->getCompany()->companytokenapi,
         ];
     }
 
-    //logica para aplicar cupon de desconto
     public function cuponDiscount()
-    {   
-       try {
+    {
+        try {
             $response = Http::withHeaders($this->getHeaders())
-            ->post(env("LINK_KITUTES") . "/cupons",[
-                "code"=>$this->code,
-                "total"=>$this->totalFinal,
-            ]);
-            
+                ->post(env("LINK_KITUTES") . "/cupons", [
+                    "code"  => $this->code,
+                    "total" => $this->totalFinal,
+                ]);
+
             $cupon = collect(json_decode($response));
-                
+
             if (isset($cupon['discount'])) {
-                session()->put('discountvalue',$cupon['discount']);
+                session()->put('discountvalue', $cupon['discount']);
                 $this->code = "";
             }
-       } catch (\Throwable $th) {
-        //throw $th;
-       }
+        } catch (\Throwable $th) {
+            \Log::error("Erro ao aplicar cupom: " . $th->getMessage());
+        }
     }
-        
+
     public function checkout()
     {
-        try {  
-            if($this->getCompany()->payment_type == "Transferência") {
-                $filaName = null;
-                if ($this->receipt != null and !is_string($this->receipt)) {
-                    $filaName = md5($this->receipt->getClientOriginalName())
-                            .".".$this->receipt->getClientOriginalExtension();
-                    $this->receipt->storeAs("public/recibos",$filaName);
-                }  
+        try {
+            $company = $this->getCompany();
+
+            // Upload do comprovativo
+            $fileName = null;
+            if ($company->payment_type === "Transferência" && $this->receipt && !is_string($this->receipt)) {
+                $fileName = md5($this->receipt->getClientOriginalName()) . "." . $this->receipt->getClientOriginalExtension();
+                $this->receipt->storeAs("public/recibos", $fileName);
             }
-            //Acesso a API com um token
+
+            // Itens do carrinho
             $items = [];
-            if (count(CartFacade::getContent()) > 0) {
-                foreach(CartFacade::getContent() as $key => $item) {
-                    array_push($items,[
-                        "id"=>$item->id,
-                        "name"=>$item->name,
-                        "price"=>$item->price,
-                        "quantity"=>$item->quantity,
-                    ]);
-                }
+            foreach (Cart::getContent() as $item) {
+                $items[] = [
+                    "id"       => $item->id,
+                    "name"     => $item->name,
+                    "price"    => $item->price,
+                    "quantity" => $item->quantity,
+                ];
             }
-            
+
+            // Dados para API de entrega
             $data = [
-                "clientName" => $this->name,
-                "clientLastName" => $this->lastname,
-                "province" => $this->province,
-                "municipality" => $this->municipality,
-                "street" => $this->street,
-                "cupon" => "",
+                "clientName"    => $this->name,
+                "clientLastName"=> $this->lastname,
+                "province"      => $this->province,
+                "municipality"  => $this->municipality,
+                "street"        => $this->street,
+                "cupon"         => "",
                 "deliveryPrice" => $this->localizacao ?? 0,
-                "phone" => $this->phone,
-                "otherPhone" => 999999999,
-                "email" => $this->email,
-                "taxPayer" => $this->taxPayer,
-                "paymentType" => "Referência",
-                "receipt" => $filaName ?? null,
-                "latitude" => $this->latitude,
-                "longitude" => $this->longitude,
-                "items" => $items,
+                "phone"         => $this->phone,
+                "otherPhone"    => 999999999,
+                "email"         => $this->email,
+                "taxPayer"      => $this->taxPayer,
+                "paymentType"   => $company->payment_type,
+                "receipt"       => $fileName,
+                "latitude"      => $this->latitude,
+                "longitude"     => $this->longitude,
+                "items"         => $items,
             ];
-            
-            //Chamada a API
+
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/deliveries",$data)->json();
-            \Log::info("Resposta da API de entrega", [
-                "response" => $response,
-                "company" => $this->getCompany()
-            ]);
-
-            $infoReference = [
-                'amount' => $this->totalFinal,
-                'referenceCode' => $this->referenceNumber,
-            ];
-
-            //$responsePayment = Http::post('http://192.168.100.29:8000/api/payment/website', $infoReference)->json();
-            //$responsePayment = Http::post('https://fortcodedev.com/api/payment/website', $infoReference)->json();
+                ->post("https://kytutes.com/api/deliveries", $data)
+                ->json();
 
             if ($response) {
-            //if ($responsePayment != null) {
                 Payment::create([
-                    'reference' => $this->referenceNumber,
-                    'value' => $this->totalFinal,
-                    'status' => "pendente",
+                    'reference'   => $this->referenceNumber,
+                    'value'       => $this->totalFinal,
+                    'status'      => "pendente",
                     'typeservice' => "Pagamento de Encomenda",
-                    'company_id' => $this->getCompany()->id
+                    'company_id'  => $this->companyId
                 ]);
-            }
 
-            if ($response) {
                 session()->put("idDelivery", $response['reference']);
-                session()->put("companyapi", $this->getCompany()->companyhashtoken);
+                session()->put("companyapi", $company->companyhashtoken);
             }
 
-            CartFacade::clear();
-            $this->reset([
-                'name', 'lastname', 'province', 'municipality', 'street', 
-                'phone', 'otherPhone', 'email', 'taxPayer', 'otherAddress',
-                'latitude', 'longitude'
-            ]);
+            Cart::clear();
 
             return redirect()->route("plataforma.produto.delivery.status", [
                 $response['reference']
             ]);
-    
-            $this->alert('success', 'SUCESSO', [
-                'toast'=>false,
-                'position'=>'center',
-                'timer'=>1000,
-                'text'=>'Encomenda Finalizada'
-            ]);
 
         } catch (\Throwable $th) {
-            
             \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());
-            // $this->alert("info", [
-            //     'toast'=>false,
-            //     'position'=>'center',
-            //     'timer'=>1000,
-            //     "Falha na encomenda"
-            // ]);
         }
     }
-    
+
     public function remove($id)
     {
         try {
-            $itenDelete = CartFacade::remove($id);
+            Cart::remove($id);
             $this->alert('success', '', [
-                'toast'=>false,
-                'position'=>'center',
-                'timer'=>1000,
-                'text'=>'Item Eliminado'
+                'toast'    => false,
+                'position' => 'center',
+                'timer'    => 1000,
+                'text'     => 'Item Eliminado'
             ]);
-            return redirect()->back();
         } catch (\Throwable $th) {
-            throw $th;
+            \Log::error("Erro ao remover item: " . $th->getMessage());
         }
     }
-    
+
     public function updateQuantity($id, $quantity)
     {
-        $idCart = CartFacade::get($id);
+        $idCart = Cart::get($id);
 
-        $getItemCart = Http::withHeaders($this->getHeaders())
-        ->get(env("LINK_KITUTES") . "/items?description=$idCart->name");
-
-        $product = Collect(json_decode($getItemCart,true));
+        $product = Http::withHeaders($this->getHeaders())
+            ->get(env("LINK_KITUTES") . "/items?description=$idCart->name")
+            ->json();
 
         if ((int)$quantity > $product[0]["quantity"]) {
-          $this->alert('info', 'Informação', [
-            'toast'=>false,
-            'position'=>'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'OK',
-            'text'=>'Quantidade indisponível'
-          ]);
-          $quantity = $product[0]["quantity"];
-          $this->render();
-          return;
-        }else{
-              CartFacade::update($id, [
-                'quantity' => 1,
+            $this->alert('info', 'Informação', [
+                'toast'             => false,
+                'position'          => 'center',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'text'              => 'Quantidade indisponível'
             ]);
+            return;
         }
-    }
 
- 
+        Cart::update($id, ['quantity' => $quantity]);
+    }
 
     public function getAllLocations()
     {
         try {
-            $response = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/locations");
-            return Collect(json_decode($response, true));
+            return collect(Http::withHeaders($this->getHeaders())
+                ->get("https://kytutes.com/api/locations")
+                ->json());
         } catch (\Throwable $th) {
-            //throw $th;Collect(json_decode($response, true))
+            \Log::error("Erro ao carregar localizações: " . $th->getMessage());
+            return collect([]);
         }
     }
-    
+
     public function selectLocation($price)
     {
         $this->localizacao = $price;
@@ -284,12 +246,17 @@ class Shoppingcart extends Component
 
     public function setLocation($latitude, $longitude)
     {
-        try {
-            $this->latitude = $latitude;
-            $this->longitude = $longitude;
-            \Log::info("Geolocalização: $latitude, Longitude: $longitude");
-        } catch (\Throwable $th) {
-            return [];
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        \Log::info("Geolocalização: $latitude, Longitude: $longitude");
+    }
+
+    private function removeOtherCompanyItems()
+    {
+        foreach (Cart::getContent() as $item) {
+            if (isset($item->attributes['company_id']) && $item->attributes['company_id'] != $this->companyId) {
+                Cart::remove($item->id);
+            }
         }
     }
 }

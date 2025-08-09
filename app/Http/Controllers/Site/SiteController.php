@@ -22,6 +22,10 @@ class SiteController extends Controller
 
     public function index(string $companyHash, Request $request)
     {
+        // Remover da session
+        session()->forget('companyhashtoken');
+        // Remover do cache
+        cache()->forget("invoiceToken");
         try {
 
             $company = $this->companyService->getByHash($companyHash);
@@ -31,7 +35,7 @@ class SiteController extends Controller
             }
             
             session()->put('companyhashtoken', $company->companyhashtoken);
-            cache()->put("company:{$company->id}:invoiceToken", $company->companyhashtoken, now()->addHours(2));
+            cache()->put("invoiceToken", $company->companyhashtoken, now()->addHours(2));
 
             // registra visita (job dispatched dentro do service)
             $this->visitorService->registerFromRequest($request, $company);
@@ -72,6 +76,11 @@ class SiteController extends Controller
 
     public function getShopping(string $companyHash)
     {
+        // Remover da session
+        session()->forget('companyhashtoken');
+        // Remover do cache
+        cache()->forget("invoiceToken");
+        cache()->forget("tokencompany");
         try {
             $company = $this->companyService->getByHash($companyHash);
 

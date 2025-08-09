@@ -3,19 +3,16 @@
 namespace App\Services;
 
 use App\Repositories\CompanyRepository;
-use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use App\Models\Company;
 use Illuminate\Support\Facades\Log;
 
 class CompanyService
 {
     protected CompanyRepository $repo;
-    protected CacheRepository $cache;
 
-    public function __construct(CompanyRepository $repo, CacheRepository $cache)
+    public function __construct(CompanyRepository $repo)
     {
         $this->repo = $repo;
-        $this->cache = $cache;
     }
 
     /**
@@ -23,11 +20,7 @@ class CompanyService
      */
     public function getByHash(string $hash): Company
     {
-        $cacheKey = "company:hash:{$hash}";
-
-        return $this->cache->remember($cacheKey, now()->addHour(), function () use ($hash) {
-            return $this->repo->findByHashOrFail($hash);
-        });
+        return $this->repo->findByHashOrFail($hash);
     }
 
     /**
