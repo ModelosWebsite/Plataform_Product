@@ -11,7 +11,7 @@
                     <div class="col-lg-3">
                         <div class="card border text-center">
                         <img src="{{ asset('storage/premium/'.$package->image) }}"
-                            class="card-img-top img-fluid" style="width: 100%; height: 200px; object-fit: cover;">
+                            class="card-img-top img-fluid" style="width: 100%; height: 250px; object-fit: cover;">
 
                             <div class="card-body">
                                 <h5 class="card-title">{{$package->title ?? ''}}</h5>
