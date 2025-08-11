@@ -10,6 +10,12 @@ class Deliverystatus extends Component
 {
     public $deliveries, $id, $deliveryNumber;
 
+    public function mount()
+    {
+        session()->put("tokencompany", Request("company"));
+        \Log::info("deliveryStatus@mount@token", ["token" => session('tokencompany')]);
+    }
+
     public function status()
     {
         try {
