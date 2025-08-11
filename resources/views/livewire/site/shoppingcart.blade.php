@@ -30,7 +30,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input class="quantity-input" width="100" type="number" value="{{ $item->quantity }}" min="1" wire:change="updateQuantity('{{$item->id}}', $event.target.value)">
+                                        <input class="quantity-input" 
+       type="number" 
+       value="{{ $item->quantity }}" 
+       min="1" 
+       wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
+
                                         </td>
                                         <td>
                                             {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz
