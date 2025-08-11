@@ -94,7 +94,7 @@
                                 @endif
                             @endif
                             
-                            <button type="button" {{count($cart) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
+                            <button type="button" {{count($cartContent) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
                                 style="background: var(--color); color:#fff; border: none;" data-bs-toggle="modal"
                                 data-bs-target="#checkout" id="getLocationButton">Finalizar Compra
                             </button>

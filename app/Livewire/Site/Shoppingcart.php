@@ -36,8 +36,7 @@ class Shoppingcart extends Component
         $this->paymentType  = $company->payment_type;
         $this->deliveryType = $company->delivery_method;
         $this->package      = $this->loadPackage();
-        $cart = Cart::getContent()->count();
-
+        
         $this->removeOtherCompanyItems();
     }
 
