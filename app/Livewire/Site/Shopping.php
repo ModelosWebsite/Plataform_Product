@@ -106,7 +106,7 @@ class Shopping extends Component
                 'quantity' => 1,
                 'attributes' => array(
                     'image' => $product[0]["image"],
-
+                    'company_id' => $this->getCompany()->id
                 )
             ));
             $this->dispatch("updateCartCounter");

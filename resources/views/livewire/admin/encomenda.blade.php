@@ -5,7 +5,6 @@
                 <th>Cliente</th>
                 <th>Endereço</th>
                 <th>Tel</th>
-                <th>Pagamento</th>
                 <th>Total</th>
                 <th>Estado</th>
                 <th>Acções</th>
@@ -19,8 +18,7 @@
                         <td>{{ $data['client'] ?? '-' }}</td>
                         <td>{{ $data['address'] ?? '-' }}</td>
                         <td>{{ $data['phone'] ?? '-' }}</td>
-                        <td>{{ ($data['isPaid'] ?? false) ? 'Pago' : 'Pendente' }}</td>
-                        <td>{{$data['total'] ?? 0}}</td>
+                        <td>{{ $data['total'] ?? 0}} Kz</td>
                         <td>
                             @switch($data['status'])
                                 @case('PENDENTE')

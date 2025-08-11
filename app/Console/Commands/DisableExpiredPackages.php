@@ -16,14 +16,14 @@ class DisableExpiredPackages extends Command
     {
         try {
                 DB::transaction(function () {
-                    $expiredPackages = Pacote::where('is_active', true)
+                    $expiredPackages = pacote::where('is_active', true)
                         ->whereDate('end_date', '<', Carbon::today())
                         ->get();
 
                     foreach ($expiredPackages as $pacote) {
                         $pacote->update(['is_active' => false]);
 
-                        $company = Company::find($pacote->company_id);
+                        $company = company::find($pacote->company_id);
                         if ($company->payment_type === "Transferência") {
                             $company->update(['payment_type' => 'Referência']);
                         }

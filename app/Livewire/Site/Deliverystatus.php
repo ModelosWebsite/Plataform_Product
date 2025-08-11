@@ -8,12 +8,12 @@ use Livewire\Component;
 
 class Deliverystatus extends Component
 {
-    public $deliveries, $id;
+    public $deliveries, $id, $deliveryNumber;
 
     public function status()
     {
         try {
-            $id = Request("id");
+            $id = $this->deliveryNumber ?? session("idDelivery");
             //Acesso a API com um token
             $headers = [
                 "Accept" => "application/json",
@@ -22,10 +22,23 @@ class Deliverystatus extends Component
             ];
 
             $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
-            return collect(json_decode($response));
+            ->get("https://kytutes.com/api/deliveries", ['reference' => $id]);
+
+            if ($id != null) {
+                return collect(json_decode($response));
+            }
+            return collect();
         } catch (\Throwable $th) {
             throw $th;
+        }
+    }
+
+    public function setDelivery()
+    {
+        try {
+            $this->deliveryNumber;
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 
@@ -33,7 +46,7 @@ class Deliverystatus extends Component
     {
         return view('livewire.site.deliverystatus', [
             "data" => $this->status()
-        ])->extends("layouts.site.status");
+        ])->layout("layouts.site.status");
     }
 
     public function getCompany()

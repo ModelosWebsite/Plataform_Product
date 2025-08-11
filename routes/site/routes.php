@@ -14,7 +14,7 @@ Route::controller(SiteController::class)->group(function()
     Route::get("/{company}/carrinho/compra", "getShoppingCart")->name("produto.shoppingcart");    
 });
 
-Route::get("/encomeda/estado/{id}", Deliverystatus::class)->name("plataforma.produto.delivery.status");
+Route::get("/{company}/encomeda/estado/", Deliverystatus::class)->name("plataforma.produto.delivery.status");
 
 Route::get('/email/verify/{id}/{hash}', function () {
     $auth = Request("id");

@@ -7,6 +7,11 @@
           <div class="card text-dark" style="border-radius: 1rem;">
             <div class="card-body p-4">
               <div class="container">
+                  <h5 for="qtd" class="form-label">Número da encomenda</h5>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Insira número da encomenda" wire:model="deliveryNumber" aria-label="Recipient’s username" aria-describedby="button-addon2">
+                  <button wire:click="setDelivery" class="btn btn-dark" type="button" id="button-addon2">Verificar</button>
+                </div>
                 @if ($data->isNotEmpty())
                   @foreach ($data as $delivery)
                   <div class="row mb-4 align-items-center">
@@ -75,8 +80,8 @@
                   </div>
                   @endforeach
                 @else
-                  <div class="text-center">
-                    <p>Nenhuma encomenda encontrada.</p>
+                  <div class="rounded col-md-12 d-flex justify-content-center align-items-center flex-column mt-5" style="height: 25em; border: 1px dashed #000;">
+                      <h5 class="text-muted text-center text-uppercase">A consulta não retornou nenhum resultado</h5>
                   </div>
                 @endif
               </div>

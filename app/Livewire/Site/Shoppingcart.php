@@ -163,8 +163,7 @@ class Shoppingcart extends Component
             ];
 
             $response = Http::withHeaders($this->getHeaders())
-                ->post("https://kytutes.com/api/deliveries", $data)
-                ->json();
+            ->post("https://kytutes.com/api/deliveries", $data)->json();
 
             if ($response) {
                 Payment::create([
@@ -181,9 +180,7 @@ class Shoppingcart extends Component
 
             Cart::clear();
 
-            return redirect()->route("plataforma.produto.delivery.status", [
-                $response['reference']
-            ]);
+            return redirect()->route("plataforma.produto.delivery.status", ["company" => $company->companyhashtoken]);
 
         } catch (\Throwable $th) {
             \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());

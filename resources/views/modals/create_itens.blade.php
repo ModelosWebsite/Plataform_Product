@@ -11,13 +11,13 @@
           <div class="modal-body">
               <div class="form-group">
                   <h5 for="image" class="form-label">Imagem</h5>
-                  <input class="form-control form-control-sm" type="file" wire:model="image">
+                  <input class="form-control" type="file" wire:model="image">
                   @error('image') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
                   <h5 for="category_id" class="form-label">Categoria</h5>
-                  <select class="form-control form-control-sm" wire:model="category_id">
+                  <select class="form-control" wire:model="category_id">
                       <option>Selecione a categoria</option>
                       @if (isset($categories) and count($categories) > 0)
                         @foreach ($categories as $category)
@@ -30,25 +30,25 @@
 
               <div class="form-group">
                   <h5 for="description" class="form-label">Nome do Produto</h5>
-                  <input class="form-control form-control-sm" type="text" placeholder="Insira o nome do produto" wire:model="description">
+                  <input class="form-control" type="text" placeholder="Insira o nome do produto" wire:model="description">
                   @error('description') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
                   <h5 for="longDescription">Descrição</h5>
-                  <textarea wire:model="longdescription" class="form-control form-control-sm" id="longDescription" cols="30" rows="2"></textarea>
+                  <textarea wire:model="longdescription" class="form-control" id="longDescription" cols="30" rows="2"></textarea>
                   @error('longdescription') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
                   <h5 for="price" class="form-label">Preço</h5>
-                  <input class="form-control form-control-sm" min="1" type="number" placeholder="Insira o preço" wire:model="price">
+                  <input class="form-control" min="1" type="number" placeholder="Insira o preço" wire:model="price">
                   @error('price') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
                   <h5 for="qtd" class="form-label">Quantidade</h5>
-                  <input class="form-control form-control-sm" min="1" type="number" placeholder="Quantidade" wire:model="qtd">
+                  <input class="form-control" min="1" type="number" placeholder="Quantidade" wire:model="qtd">
                   @error('qtd') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 

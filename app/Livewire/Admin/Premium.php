@@ -83,7 +83,7 @@ class Premium extends Component
                     'showConfirmButton' => true,
                     'confirmButtonText' => 'OK',
                     'confirmButtonColor' => '#222831e5',
-                    'text'=>'Já Possui está pacote activo'
+                    'text'=>'Já Possui este pacote activo'
                 ]);
             }else {
                 $this->alert('warning', 'Confirmar', [

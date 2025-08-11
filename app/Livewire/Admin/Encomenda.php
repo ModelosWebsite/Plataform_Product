@@ -159,12 +159,17 @@ class Encomenda extends Component
             return response()->download(storage_path('app/public/public/recibos/' . $receipt));
 
         } catch (\Throwable $th) {
+            \Log::error("Encomenda@download", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text'=>'Falha ao realizar operação' . $th->getMessage()
+                'text'=>'Falha ao realizar operação'
             ]);
         }
     }
