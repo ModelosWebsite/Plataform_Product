@@ -29,7 +29,7 @@ class Deliverystatus extends Component
 
             $response = Http::withHeaders($headers)
             ->get("https://kytutes.com/api/deliveries", ['reference' => $id]);
-            \Log::info("DeliveryStatus@statu", ["message" => $response]);
+            \Log::info("DeliveryStatus@status", ["message" => $response]);
 
             if ($id != null) {
                 return collect(json_decode($response));

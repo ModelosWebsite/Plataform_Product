@@ -21,7 +21,7 @@ class Shoppingcart extends Component
     // Dados de checkout
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
            $email, $deliveryPrice = 0, $taxPayer, $otherAddress, $deliveryUrl,
-           $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package;
+           $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package,$cart =0;
 
     // Guarda apenas o ID da empresa
     public $companyId;
@@ -36,6 +36,7 @@ class Shoppingcart extends Component
         $this->paymentType  = $company->payment_type;
         $this->deliveryType = $company->delivery_method;
         $this->package      = $this->loadPackage();
+        $cart = Cart::getContent();
 
         $this->removeOtherCompanyItems();
     }
@@ -204,7 +205,7 @@ class Shoppingcart extends Component
 
     public function updateQuantity($id, $quantity)
     {
-        $idCart = Cart::get($id);
+        $idCart = Cart::remove($id);
 
         $product = Http::withHeaders($this->getHeaders())
             ->get(env("LINK_KITUTES") . "/items?description=$idCart->name")
@@ -221,7 +222,16 @@ class Shoppingcart extends Component
             return;
         }
 
-        Cart::update($id, ['quantity' => $quantity]);
+         Cart::add(array(
+                'id' => $product[0]["reference"],
+                'name' => $product[0]["name"],
+                'price' => $product[0]["price"],
+                'quantity' => 1,
+                'attributes' => array(
+                    'image' => $product[0]["image"],
+                    'company_id' => $this->getCompany()->id
+                )
+            ));
     }
 
     public function getAllLocations()
