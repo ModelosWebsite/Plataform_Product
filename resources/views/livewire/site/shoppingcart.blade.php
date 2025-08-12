@@ -1,5 +1,5 @@
 <div >
-    <main id="main" style="margin-top: 2rem;">
+    <main id="main" style="margin-top: 1.3rem;">
         <section class="shopping-cart spad">
             <div class="container-fluid px-3 px-md-3 px-lg-4">
                 <div class="row">
@@ -34,12 +34,8 @@
                                             {{ number_format($item->price, 2,'.', ' ') }} kz
                                         </td>
                                         <td>
-                                        <input class="quantity-input" 
-       type="number" 
-       value="{{ $item->quantity }}" 
-       min="1" 
-       wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
-
+                                            <input class="quantity-input" type="number" value="{{ $item->quantity }}" min="1" 
+                                            wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
                                         </td>
                                         <td>
                                             {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz
