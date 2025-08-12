@@ -131,11 +131,11 @@ class Home extends Component
 
             //Chamada às APIs externas
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://test.kytutes.com/api/create/company", $infoCompany)
+            ->post("https://kytutes.com/api/create/company", $infoCompany)
             ->json();
 
             $xzeroResponse = Http::withHeaders($this->getHeaders())
-            ->post("https://test.xzero.ao/api/create/account", $infoXzero)
+            ->post("https://xzero.live/api/create/account", $infoXzero)
             ->json();
 
             //Atualizar tokens da empresa
@@ -152,7 +152,7 @@ class Home extends Component
 
             return redirect()->route("site.status.account");
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            \Log::info("Criar Website", ["message" => $th->getMessage()]);
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
