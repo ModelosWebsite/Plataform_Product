@@ -73,7 +73,7 @@
                         <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
                             @foreach ($about as $item)
                                 <div class="content ps-0 ps-lg-5">
-                                    <p>{{ $item->p1 ?? '' }}</p>
+                                    <p class="text-dark">{{ $item->p1 ?? '' }}</p>
  
                                     <p>{{ $item->p2 ?? '' }}</p>
                                     <div class="position-relative mt-4">
