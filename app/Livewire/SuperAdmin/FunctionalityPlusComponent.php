@@ -41,10 +41,6 @@ class FunctionalityPlusComponent extends Component
             $existing = $this->selectedId ? FunctionalityPlus::find($this->selectedId) : null;
 
             if ($this->image && !is_string($this->image)) {
-                if ($existing && $existing->image && Storage::disk('public')->exists('premium/'.$existing->image)) {
-                    Storage::disk('public')->delete('premium/'.$existing->image);
-                }
-
                 $filename = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
                 $this->image->storeAs('premium', $filename, 'public');
             } elseif ($existing) {
