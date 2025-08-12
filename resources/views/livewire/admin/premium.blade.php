@@ -13,7 +13,7 @@
         align-items: center;
         gap: 15px;
         padding: 15px;
-        border-bottom: 1px solid #eee;
+        border: 1px solid #adadadff;
         background: #fff;
         border-radius: 10px;
         margin-bottom: 10px;
@@ -39,12 +39,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: -1rem;
     }
 
     .package-description {
         font-size: 0.85rem;
         color: #6e6e73;
-        margin-top: 4px;
         margin-bottom: 6px;
     }
 

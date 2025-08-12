@@ -3,9 +3,17 @@
         <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
             @if($selectedPackage)
                 <!-- Imagem grande no topo -->
-                <div style="height: 300px; background-size: cover; background-position: center;"
-                     class="w-100"
-                     style="background-image: url('{{ asset('storage/premium/'.$selectedPackage->image) }}');">
+                <div style="height: 300px;" class="w-100">
+                    <div class="col-12 row">
+                        <div class="col-4">
+                            <img class="mt-3" src="{{ asset('storage/premium/'.$selectedPackage->image) }}" class="package-img">
+                        </div>
+                        <div class="col-8">
+                            <p class="mt-3 text-muted" style="font-size: 15px;">
+                                {{ $selectedPackage->description }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Conteúdo -->
@@ -16,9 +24,6 @@
                             {{ number_format($selectedPackage->amount, 2, '.', ' ') }} kz
                         </span>
                     </div>
-                    <p class="mt-3 text-muted" style="font-size: 15px;">
-                        {{ $selectedPackage->description }}
-                    </p>
 
                     <div class="mt-4 d-flex gap-2">
                         <button class="btn btn-primary flex-fill"
@@ -26,7 +31,7 @@
                             Ativar Agora
                         </button>
                         <button class="btn btn-outline-secondary flex-fill"
-                                data-bs-dismiss="modal">
+                                data-dismiss="modal">
                             Fechar
                         </button>
                     </div>
