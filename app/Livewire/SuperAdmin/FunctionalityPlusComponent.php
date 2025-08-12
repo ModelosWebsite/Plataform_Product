@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class FunctionalityPlusComponent extends Component
 {
     use LivewireAlert, WithFileUploads;
-    public $editMode = false;
+    public $editMode = false, $selectedId = null;
     public $image, $title, $description, $price;
 
     public function render()
@@ -21,47 +21,64 @@ class FunctionalityPlusComponent extends Component
         ->layout('layouts.superadmin.app');
     }
 
-    public function createFunctionality()
+    public function edit($id)
+    {
+        $this->editMode = true;
+        $this->selectedId = $id;
+
+        $item = FunctionalityPlus::findOrFail($id);
+        $this->title = $item->title;
+        $this->description = $item->description;
+        $this->price = $item->amount;
+        $this->image = $item->image; // mantém como string para não sobrescrever se não trocar
+    }
+
+    public function saveFunctionality()
     {
         DB::beginTransaction();
         try {
-            //manipulacao de arquivo;
-            if ($this->image != null and !is_string($this->image)) {
+            $filename = null;
+            $existing = $this->selectedId ? FunctionalityPlus::find($this->selectedId) : null;
+
+            if ($this->image && !is_string($this->image)) {
+                if ($existing && $existing->image && Storage::disk('public')->exists('premium/'.$existing->image)) {
+                    Storage::disk('public')->delete('premium/'.$existing->image);
+                }
+
                 $filename = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
                 $this->image->storeAs('premium', $filename, 'public');
+            } elseif ($existing) {
+                $filename = $existing->image;
             }
 
-            FunctionalityPlus::create([
-                "title" => $this->title,
-                "description" => $this->description,
-                "amount" => $this->price,
-                "image" => $filename,
-            ]);
+            FunctionalityPlus::updateOrCreate(
+                ['id' => $this->selectedId],
+                [
+                    "title" => $this->title,
+                    "description" => $this->description,
+                    "amount" => $this->price,
+                    "image" => $filename
+                ]
+            );
 
-            $this->reset('title', 'description', 'price', 'image');
+            $this->reset('title', 'description', 'price', 'image', 'selectedId', 'editMode');
 
             $this->alert('success', 'SUCESSO', [
                 'toast' => false,
-                'text' => 'Elemento premium criado',
+                'text' => $this->editMode ? 'Elemento premium atualizado' : 'Elemento premium criado',
                 'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
             ]);
+
             DB::commit();
-            return;
 
         } catch (\Throwable $th) {
-            \Log::error("Erro ao criar premium", [
-                "message" => $th->getMessage(),
-                "file" => $th->getFile(),
-                "line" => $th->getLine()
-            ]);
             DB::rollBack();
+            \Log::error($th);
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
                 'text' => 'Falha ao realizar operação'
             ]);
         }

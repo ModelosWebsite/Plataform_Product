@@ -26,6 +26,7 @@
                             <tr>
                                 <th scope="col">Elemento</th>
                                 <th scope="col">Preço</th>
+                                <th scope="col">acção</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -33,6 +34,11 @@
                                     <tr>
                                         <td>{{$package->title ?? ''}}</td>
                                         <td>{{ number_format($package->amount, 2,'.', ' ' ?? '0.00') }} kz</td>
+                                        <td>                    
+                                            <button class="btn btn-primary" wire:click="edit({{ $package->id }})" data-toggle="modal" data-target="#addElement">
+                                                Editar
+                                            </button>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

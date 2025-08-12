@@ -32,7 +32,9 @@
 
         <div class="card-footer">
           <div class="form-group">
-            <button wire:click="createFunctionality" class="btn btn-primary">Cadastrar</button>
+            <button wire:click="saveFunctionality" class="btn btn-primary">
+                {{ $editMode ? 'Atualizar' : 'Cadastrar' }}
+            </button>
           </div>
         </div>
 
