@@ -9,6 +9,7 @@
                                 <thead class="text-white" style="background: var(--color)">
                                     <tr>
                                         <th>Produto</th>
+                                        <th>Preço</th>
                                         <th>Dtd.</th>
                                         <th>Total</th>
                                         <th class="text-center">Remover</th>
@@ -28,6 +29,9 @@
                                             <div class="mt-3">
                                                 <h6>{{ $item->name }}</h6>
                                             </div>
+                                        </td>
+                                        <td>
+                                            {{ number_format($item->price, 2,'.', ' ') }} kz
                                         </td>
                                         <td>
                                         <input class="quantity-input" 
