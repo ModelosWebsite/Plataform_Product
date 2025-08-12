@@ -23,8 +23,8 @@ class Cookies {
                         Ao aceitar este banner, você concorda com o uso de tais cookies.
                     </p>
                     <div class="buttons">
-                        <button class="item" id="cookies-accept">Aceitar</button>
-                        <button class="item" id="cookies-reject">Rejeitar</button>
+                        <button class="item" style="color: var(--color)" id="cookies-accept">Aceitar</button>
+                        <button class="item" style="color: var(--color)" id="cookies-reject">Rejeitar</button>
                     </div>
                 </div>
             </div>
