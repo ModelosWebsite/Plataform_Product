@@ -6,10 +6,11 @@
                 <div style="height: 300px;" class="w-100">
                     <div class="col-12 row">
                         <div class="col-4">
-                            <img class="mt-3" src="{{ asset('storage/premium/'.$selectedPackage->image) }}" class="package-img">
+                            <img class="mt-5" src="{{ asset('storage/premium/'.$selectedPackage->image) }}" class="package-img">
                         </div>
                         <div class="col-8">
-                            <p class="mt-3 text-muted" style="font-size: 15px;">
+                            <h3 class="fw-bold mt-5">{{ $selectedPackage->title }}</h3>
+                            <p class="text-muted justify" style="font-size: 15px;">
                                 {{ $selectedPackage->description }}
                             </p>
                         </div>
@@ -18,10 +19,10 @@
 
                 <!-- Conteúdo -->
                 <div class="p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="fw-bold mb-0">{{ $selectedPackage->title }}</h3>
+                    <div class="align-items-center">
+                        <span>Preço à pagar: </span>
                         <span class="badge bg-success fs-6">
-                            {{ number_format($selectedPackage->amount, 2, '.', ' ') }} kz
+                             {{ number_format($selectedPackage->amount, 2, '.', ' ') }} kz
                         </span>
                     </div>
 
