@@ -75,7 +75,7 @@
                                 <div class="content ps-0 ps-lg-5">
                                     <p class="text-dark">{{ $item->p1 ?? '' }}</p>
  
-                                    <p>{{ $item->p2 ?? '' }}</p>
+                                    <p class="text-dark">{{ $item->p2 ?? '' }}</p>
                                     <div class="position-relative mt-4">
                                         <img src="{{ isset($fundo->image) ? Storage::url("arquivos/background/".$fundo->image) : '' }}" class="img-fluid" alt="">
                                     </div>
