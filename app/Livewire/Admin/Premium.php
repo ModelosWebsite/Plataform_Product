@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class Premium extends Component
 {
-    public $code, $price, $id, $element, $status, $typeservice, $acceptTerms = false;
+    public $selectedPackage, $code, $price, $id, $element, $status, $typeservice, $acceptTerms = false;
     protected $listeners = ['sendReference'=>'sendReference','openModal'=>'openModal'];
 
     use LivewireAlert;
@@ -20,6 +20,12 @@ class Premium extends Component
         return view('livewire.admin.premium', 
         ["packages" => FunctionalityPlus::query()->orderBy('title', 'asc')->get()])
         ->layout('layouts.config.app');
+    }
+
+    public function viewDetails($id)
+    {
+        $this->selectedPackage = FunctionalityPlus::find($id);
+        $this->dispatch('open-modal', 'package-details');
     }
 
     public function accept()
