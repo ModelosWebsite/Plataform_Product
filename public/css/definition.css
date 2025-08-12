@@ -375,3 +375,7 @@ input:checked + label {
     input:checked + .slider:after {
       transform: translateX(98px);
     }
+
+
+    /*COOKIES*/
+    
