@@ -204,8 +204,6 @@ class Shoppingcart extends Component
 
     public function updateQuantity($id, $quantity, $name)
 {
-    // Remove o item do carrinho antes de atualizar
-    Cart::remove($id);
 
     $product = Http::withHeaders($this->getHeaders())
         ->get(env("LINK_KITUTES") . "/items?description=$name")
@@ -222,6 +220,9 @@ class Shoppingcart extends Component
         ]);
         return;
     }
+
+    // Remove o item do carrinho antes de atualizar
+    Cart::remove($id);
 
     // Adiciona novamente com a quantidade correta
     Cart::add([
