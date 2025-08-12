@@ -16,6 +16,7 @@
               <tr>
                 <th scope="col">Item</th>
                 <th scope="col">Categoria</th>
+                <th scope="col">Qtd.</th>
                 <th scope="col">Preço</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Acções</th>
@@ -28,6 +29,7 @@
                             <tr>
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['category'] }}</td>
+                                <td>{{ $item['quantity'] }}</td>
                                 <td>{{ number_format($item['price'], 2, '.', ',') }} kz</td>
                                 <td>
                                     <span class="{{ $item['status'] === 'DISPONIVEL' ? 'bg-primary text-light' : 'bg-danger text-light' }} p-1 rounded">

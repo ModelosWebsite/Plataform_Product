@@ -10,7 +10,7 @@
                         </div>
                         <div class="col-8">
                             <h3 class="fw-bold mt-5">{{ $selectedPackage->title }}</h3>
-                            <p class="text-muted justify" style="font-size: 15px;">
+                            <p class="text-muted" style="font-size: 15px;">
                                 {{ $selectedPackage->description }}
                             </p>
                         </div>
