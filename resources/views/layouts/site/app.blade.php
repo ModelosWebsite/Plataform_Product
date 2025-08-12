@@ -88,7 +88,6 @@
   .buttons .item{
     margin: 0 10px;
     background: #ffffff;
-    color: #001973;
   }
   </style>
 
