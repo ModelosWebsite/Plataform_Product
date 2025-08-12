@@ -65,7 +65,7 @@
                       </div>
                     </div>
                     
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-6 rounded">
                       <img src="{{ asset('delivery.svg') }}" class="img-fluid mb-3" alt="Delivery Image">
                       @if ($delivery->delivery->status === 'PENDENTE')
                         <div class="text-light p-1 mt-3 bg-danger">
@@ -73,6 +73,26 @@
                         </div>
                       @elseif ($delivery->delivery->status === 'ACEITE')
                         <div class="text-light p-1 mt-3 bg-success">
+                            <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
+                        </div>
+                      @elseif ($delivery->delivery->status === 'ENTREGUE')
+                        <div class="text-light p-1 mt-3 bg-success">
+                            <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
+                        </div>
+                      @elseif ($delivery->delivery->status === 'A CAMINHO')
+                        <div class="text-light p-1 mt-3 bg-primary">
+                            <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
+                        </div>
+                      @elseif ($delivery->delivery->status === 'FINALIZADO')
+                        <div class="text-light p-1 mt-3 bg-success">
+                            <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
+                        </div>
+                      @elseif ($delivery->delivery->status === 'EM PREPARAÇÃO')
+                        <div class="text-light p-1 mt-3 bg-warning">
+                            <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
+                        </div>
+                      @elseif ($delivery->delivery->status === 'PRONTO')
+                        <div class="text-light p-1 mt-3 bg-info">
                             <h5 class="text-uppercase text-center">{{ $delivery->delivery->status }}</h5>
                         </div>
                       @endif
