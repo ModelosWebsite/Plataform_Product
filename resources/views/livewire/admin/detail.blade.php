@@ -8,10 +8,8 @@
         <div class="modal-body">
           @if (isset($itens) and count($itens) > 0)
             @foreach ($itens as $Item)
-              <span class="text-capitalize fw-bold fs-6 mb-1">Taxa PB : {{$Item->delivery->taxPb}}</span> <br>
-              <span class="text-capitalize fw-bold fs-6 mb-1">Preço de Entrega : {{$Item->delivery->deliveryPrice}}</span> <br>
-              <span class="text-capitalize fw-bold fs-6 mb-1">Data de Encomenda : {{$Item->delivery->date}}</span> <br>
-              <span class="text-capitalize fw-bold fs-6 mb-1">Endereço de Entrega : {{$Item->delivery->address}}</span> <br>
+              <p class="text-capitalize fw-bold fs-6 mb-1">Data da Encomenda : {{$Item->delivery->date}}</p>
+              <p class="text-capitalize fw-bold fs-6 mb-1">Endereço de Entrega : {{$Item->delivery->address}}</p>
             @endforeach
           @endif
             

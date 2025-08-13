@@ -33,8 +33,8 @@ class Encomenda extends Component
             ];
     
             //Chamada a API
-            $this->deliveries = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries")->json();
+            $this->deliveries = collect(Http::withHeaders($headers)->get("https://kytutes.com/api/deliveries")
+            ->json())->sortBy(function ($delivery) {return $delivery['delivery']['client'] ?? ''; })->values()->all();
 
         } catch (\Throwable $th) {
             //throw $th;

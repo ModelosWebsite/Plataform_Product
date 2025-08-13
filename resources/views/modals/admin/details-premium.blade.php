@@ -20,17 +20,27 @@
                 <!-- Conteúdo -->
                 <div class="p-4">
                     <div class="align-items-center">
-                        <span>Preço à pagar: </span>
                         <span class="badge bg-success fs-6">
                              {{ number_format($selectedPackage->amount, 2, '.', ' ') }} kz
                         </span>
+                        <span> Por mês </span>
                     </div>
 
                     <div class="mt-4 d-flex gap-2">
-                        <button class="btn btn-primary flex-fill"
+                        @php
+                            $isActive = $packagesExtras->contains('functionality_plus_id', $selectedPackage->id);
+                        @endphp
+
+                        @if($isActive)
+                            <button class="btn btn-success flex-fill" disabled style="background-color: #28a745;" >
+                                Activo
+                            </button>
+                        @else
+                            <button class="btn btn-primary flex-fill"
                                 wire:click="generate('{{ $selectedPackage->id }}')">
                             Ativar Agora
                         </button>
+                        @endif
                         <button class="btn btn-outline-secondary flex-fill"
                                 data-dismiss="modal">
                             Fechar

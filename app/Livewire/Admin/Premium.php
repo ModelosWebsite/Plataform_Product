@@ -18,7 +18,9 @@ class Premium extends Component
     public function render()
     {
         return view('livewire.admin.premium', 
-        ["packages" => FunctionalityPlus::query()->orderBy('title', 'asc')->get()])
+        ["packages" => FunctionalityPlus::query()->orderBy('title', 'asc')->get(),
+        "packagesExtras" => pacote::where("company_id", auth()->user()->company->id)
+            ->where("is_active", true)->latest()->get()])
         ->layout('layouts.config.app');
     }
 
@@ -38,7 +40,7 @@ class Premium extends Component
                 'referenceCode' => $this->code,
             ];
 
-            //$responsePayment = Http::post('https://xzero.ao/api/payment/website', $infoReference)->json();
+            //$responsePayment = Http::post('https://xzero.live/api/payment/website', $infoReference)->json();
 
             //if ($responsePayment != null) {
             if (1) {

@@ -34,7 +34,7 @@
                                             {{ number_format($item->price, 2,'.', ' ') }} kz
                                         </td>
                                         <td>
-                                            <input class="quantity-input" type="number" value="{{ $item->quantity }}" min="1" 
+                                            <input class="quantity-input" wire:model.lazy="cartQuantities.{{ $item->id }} ?? $item->quantity" type="number" min="1"
                                             wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
                                         </td>
                                         <td>
@@ -113,6 +113,7 @@
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
+
 </div>
 
 {{-- //get location latitude in longitude in client --}}

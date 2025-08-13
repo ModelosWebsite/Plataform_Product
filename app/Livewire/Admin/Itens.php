@@ -56,8 +56,8 @@ class Itens extends Component
     public function getCategories()
     {
         try {
-            $response = Http::withHeaders($this->getToken())
-            ->get("https://kytutes.com/api/categories")->json();
+            $response = collect(Http::withHeaders($this->getToken())
+            ->get("https://kytutes.com/api/categories")->json())->sortBy(function ($delivery) {return $delivery->name ?? ''; })->values()->all();
 
             if ($response != null) {
                 return $response;

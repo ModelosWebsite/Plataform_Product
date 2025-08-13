@@ -108,34 +108,45 @@
                 }
             </style>
 
-            <div class="package-list col-12 row">
-                @forelse($packages as $package)
-                    <div class="package-item col-6 mb-3">
-                        <img src="{{ asset('storage/premium/'.$package->image) }}" class="package-img">
+        <div class="package-list col-12 row">
+            @forelse($packages as $package)
+                <div class="package-item col-6 mb-3">
+                    <img src="{{ asset('storage/premium/'.$package->image) }}" class="package-img">
 
-                        <div class="package-info">
-                            <div class="package-title">
-                                <span>{{ $package->title ?? '' }}</span>
-                                <div class="d-flex flex-column">
+                    <div class="package-info">
+                        <div class="package-title">
+                            <span>{{ $package->title ?? '' }}</span>
+                            <div class="d-flex flex-column">
+                                @php
+                                    $isActive = $packagesExtras->contains('functionality_plus_id', $package->id);
+                                @endphp
+
+                                @if($isActive)
+                                    <button class="package-btn" disabled style="background-color: #28a745;">
+                                        Activo
+                                    </button>
+                                @else
                                     <button class="package-btn" wire:click="generate('{{ $package->id }}')">
                                         Ativar
                                     </button>
-                                    <button class="package-btn-secondary" data-toggle="modal" data-target="#package-details"  wire:click="viewDetails('{{ $package->id }}')">
-                                        Saber mais
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="package-description">{{ Str::limit($package->description, 50)?? '' }}</p>
-                            <span class="package-price">
-                                Preço à pagar: {{ number_format($package->amount, 2, '.', ' ') }} kz
-                            </span>
+                                @endif
 
+                                <button class="package-btn-secondary" data-toggle="modal" data-target="#package-details" wire:click="viewDetails('{{ $package->id }}')">
+                                    Saber mais
+                                </button>
+                            </div>
                         </div>
+                        <p class="package-description">{{ Str::limit($package->description, 50) ?? '' }}</p>
+                        <span class="package-price">
+                            {{ number_format($package->amount, 2, '.', ' ') }} kz Por mês
+                        </span>
                     </div>
-                @empty
-                    <p class="text-muted text-center">Nenhum pacote disponível</p>
-                @endforelse
-            </div>
+                </div>
+            @empty
+                <p class="text-muted text-center">Nenhum pacote disponível</p>
+            @endforelse
+        </div>
+
         </div>
         @include("modals.premium")
         @include("modals.admin.details-premium")

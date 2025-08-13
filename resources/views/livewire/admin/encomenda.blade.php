@@ -18,7 +18,7 @@
                         <td>{{ $data['client'] ?? '-' }}</td>
                         <td>{{ $data['address'] ?? '-' }}</td>
                         <td>{{ $data['phone'] ?? '-' }}</td>
-                        <td>{{ $data['total'] ?? 0}} Kz</td>
+                        <td>{{ $data['subtotal'] }}</td>
                         <td>
                             @switch($data['status'])
                                 @case('PENDENTE')

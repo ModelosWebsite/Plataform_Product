@@ -30,7 +30,7 @@
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['category'] }}</td>
                                 <td>{{ $item['quantity'] }}</td>
-                                <td>{{ number_format($item['price'], 2, '.', ',') }} kz</td>
+                                <td>{{ number_format($item['price'], 2, '.', ' ') }} kz</td>
                                 <td>
                                     <span class="{{ $item['status'] === 'DISPONIVEL' ? 'bg-primary text-light' : 'bg-danger text-light' }} p-1 rounded">
                                         {{ $item['status'] }}

@@ -24,7 +24,7 @@ class Shoppingcart extends Component
            $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package,$cart =0;
 
     // Guarda apenas o ID da empresa
-    public $companyId;
+    public $companyId, $cartQuantities = [];
 
     protected $listeners = ["updateQuantity", "setLocation"];
 
@@ -45,14 +45,14 @@ class Shoppingcart extends Component
         try {
             $company = $this->getCompany();
 
-            $this->cartContent      = Cart::getContent();
-            $this->getTotal         = Cart::getTotal();
-            $this->getSubTotal      = Cart::getSubTotal();
+            $this->cartContent = Cart::getContent();
+            $this->getTotal = Cart::getTotal();
+            $this->getSubTotal = Cart::getSubTotal();
             $this->getTotalQuantity = Cart::getTotalQuantity();
 
             $this->finalCompra = $company->delivery_method === "Entregadores PB"
-                ? $this->getSubTotal + $this->localizacao
-                : $this->getSubTotal;
+            ? $this->getSubTotal + $this->localizacao
+            : $this->getSubTotal;
 
             $this->taxapb = ($this->finalCompra * 14) / 100;
 
@@ -65,6 +65,14 @@ class Shoppingcart extends Component
             }
 
             $this->bankAccount = $this->bankAccountDetails();
+
+            foreach ($this->cartContent as $item) {
+                $this->cartQuantities[$item->id] = $item->quantity;
+
+                \Log::info("Shopping@mount", [
+                    "quantity" => $this->cartQuantities[$item->id]
+                ]);
+            }
 
             return view('livewire.site.shoppingcart', [
                 'locations' => $this->getAllLocations()
@@ -144,22 +152,22 @@ class Shoppingcart extends Component
 
             // Dados para API de entrega
             $data = [
-                "clientName"    => $this->name,
+                "clientName" => $this->name,
                 "clientLastName"=> $this->lastname,
-                "province"      => $this->province,
-                "municipality"  => $this->municipality,
-                "street"        => $this->street,
-                "cupon"         => "",
+                "province" => $this->province,
+                "municipality" => $this->municipality,
+                "street" => $this->street,
+                "cupon" => "",
                 "deliveryPrice" => $this->localizacao ?? 0,
-                "phone"         => $this->phone,
-                "otherPhone"    => 999999999,
-                "email"         => $this->email,
-                "taxPayer"      => $this->taxPayer,
-                "paymentType"   => $company->payment_type,
-                "receipt"       => $fileName,
-                "latitude"      => $this->latitude,
-                "longitude"     => $this->longitude,
-                "items"         => $items,
+                "phone" => $this->phone,
+                "otherPhone" => 999999999,
+                "email" => $this->email,
+                "taxPayer" => $this->taxPayer,
+                "paymentType" => $company->payment_type,
+                "receipt" => $fileName,
+                "latitude" => $this->latitude,
+                "longitude" => $this->longitude,
+                "items" => $items,
             ];
 
             $response = Http::withHeaders($this->getHeaders())
@@ -167,11 +175,11 @@ class Shoppingcart extends Component
 
             if ($response) {
                 Payment::create([
-                    'reference'   => $this->referenceNumber,
-                    'value'       => $this->totalFinal,
-                    'status'      => "pendente",
+                    'reference' => $this->referenceNumber,
+                    'value' => $this->totalFinal,
+                    'status' => "pendente",
                     'typeservice' => "Pagamento de Encomenda",
-                    'company_id'  => $this->companyId
+                    'company_id' => $this->companyId
                 ]);
 
                 session()->put("idDelivery", $response['reference']);
@@ -203,40 +211,50 @@ class Shoppingcart extends Component
     }
 
     public function updateQuantity($id, $quantity, $name)
-{
+    {
+        try {
 
-    $product = Http::withHeaders($this->getHeaders())
-        ->get(env("LINK_KITUTES") . "/items?description=$name")
-        ->json();
+            $product = Http::withHeaders($this->getHeaders())
+            ->get("https://kytutes.com/api/items?description=$name")->json();
 
-    // Valida se a quantidade solicitada é maior que a disponível
-    if ((int) $quantity > (int) $product[0]["quantity"]) {
-        $this->alert('info', 'Informação', [
-            'toast'             => false,
-            'position'          => 'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'OK',
-            'text'              => 'Quantidade indisponível'
-        ]);
-        return;
+            if ((int) $quantity > (int) $product[0]["quantity"]) {
+
+                $this->alert('info', 'Informação', [
+                    'toast' => false,
+                    'position' => 'center',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'OK',
+                    'text' => 'Quantidade indisponível'
+                ]);
+
+                // Restaura quantidade original no estado
+                $this->cartQuantities[$id] = $this->cartQuantities[$id];
+                return;
+            }
+
+            // Atualiza quantidade no estado
+            $this->cartQuantities[$id] = (int) $quantity;
+
+            Cart::remove($id);
+            Cart::add([
+                'id'        => $product[0]["reference"],
+                'name'      => $product[0]["name"],
+                'price'     => $product[0]["price"],
+                'quantity'  => (int) $quantity,
+                'attributes'=> [
+                    'image'      => $product[0]["image"],
+                    'company_id' => $this->getCompany()->id
+                ]
+            ]);
+
+        } catch (\Throwable $th) {
+            \Log::info("message", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine()
+            ]);
+        }
     }
-
-    // Remove o item do carrinho antes de atualizar
-    Cart::remove($id);
-
-    // Adiciona novamente com a quantidade correta
-    Cart::add([
-        'id'        => $product[0]["reference"],
-        'name'      => $product[0]["name"],
-        'price'     => $product[0]["price"],
-        'quantity'  => (int) $quantity,
-        'attributes'=> [
-            'image'      => $product[0]["image"],
-            'company_id' => $this->getCompany()->id
-        ]
-    ]);
-}
-
 
     public function getAllLocations()
     {
