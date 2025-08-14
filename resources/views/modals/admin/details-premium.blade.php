@@ -9,7 +9,7 @@
                             <img class="mt-5" src="{{ asset('storage/premium/'.$selectedPackage->image) }}" class="package-img">
                         </div>
                         <div class="col-8">
-                            <h3 class="fw-bold mt-5">{{ $selectedPackage->title }}</h3>
+                            <h3 class="fw-bold mt-5">{{ $selectedPackage->view_description ?? '' }}</h3>
                             <p class="text-muted" style="font-size: 15px;">
                                 {{ $selectedPackage->description }}
                             </p>

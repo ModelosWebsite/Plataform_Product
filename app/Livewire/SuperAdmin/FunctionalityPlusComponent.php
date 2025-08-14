@@ -12,7 +12,7 @@ class FunctionalityPlusComponent extends Component
 {
     use LivewireAlert, WithFileUploads;
     public $editMode = false, $selectedId = null;
-    public $image, $title, $description, $price;
+    public $image, $title, $description, $price, $view_description;
 
     public function render()
     {
@@ -30,7 +30,8 @@ class FunctionalityPlusComponent extends Component
         $this->title = $item->title;
         $this->description = $item->description;
         $this->price = $item->amount;
-        $this->image = $item->image; // mantém como string para não sobrescrever se não trocar
+        $this->image = $item->image;
+        $this->view_description = $item->view_description;
     }
 
     public function saveFunctionality()
@@ -53,11 +54,12 @@ class FunctionalityPlusComponent extends Component
                     "title" => $this->title,
                     "description" => $this->description,
                     "amount" => $this->price,
+                    "view_description" => $this->view_description,
                     "image" => $filename
                 ]
             );
 
-            $this->reset('title', 'description', 'price', 'image', 'selectedId', 'editMode');
+            $this->reset('title', 'description', 'price', 'image', 'selectedId', 'editMode', 'view_description');
 
             $this->alert('success', 'SUCESSO', [
                 'toast' => false,
@@ -70,6 +72,7 @@ class FunctionalityPlusComponent extends Component
             DB::commit();
 
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             DB::rollBack();
             \Log::error($th);
             $this->alert('error', 'ERRO', [

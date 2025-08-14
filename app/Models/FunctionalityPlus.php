@@ -12,6 +12,7 @@ class FunctionalityPlus extends Model
     protected $fillable = [
         "title",
         "description",
+        "view_description",
         "amount",
         "image",
     ];

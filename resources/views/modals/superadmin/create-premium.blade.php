@@ -20,6 +20,11 @@
             </div>
 
             <div class="form-group">
+                <h5 for="" class="form-label">Descrição Visual</h5>
+                <input class="form-control" type="text" placeholder="Insira a descrição Visual" wire:model="view_description">
+            </div>
+
+            <div class="form-group">
                 <h5 for="" class="form-label">Descrição</h5>
                 <textarea class="form-control" wire:model="description"></textarea>
             </div>

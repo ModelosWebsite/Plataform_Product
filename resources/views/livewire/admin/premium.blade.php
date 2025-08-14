@@ -115,7 +115,7 @@
 
                     <div class="package-info">
                         <div class="package-title">
-                            <span>{{ $package->title ?? '' }}</span>
+                            <span>{{ $package->view_description ?? '' }}</span>
                             <div class="d-flex flex-column">
                                 @php
                                     $isActive = $packagesExtras->contains('functionality_plus_id', $package->id);

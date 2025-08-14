@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class Request{
-
     /** metodo para verificar estados de encomendas encomendas */
     public static function verifyDeliveryStatus($status, $tokenShopping)
     {

@@ -23,7 +23,7 @@
 
                 @if ($data->isNotEmpty())
                   @foreach ($data as $delivery)
-                  <div class="row mb-4 align-items-center" wire:poll.10ms>
+                  <div class="row mb-4 align-items-center" wire:poll.50ms>
                     <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                       <div class="bg-dark rounded text-light p-2 mb-3 text-center">
                         <h5 class="text-uppercase">Estado da Encomenda</h5>
@@ -62,7 +62,7 @@
                       </div>
                       
                       <div class="form-group">
-                          <label class="form-label fw-bold">Total: {{ $delivery->delivery->total }}</label>
+                          <label class="form-label fw-bold">Total: {{ $delivery->delivery->total }} kz</label>
                       </div>
                       
                       <div class="form-group">
@@ -116,6 +116,7 @@
                   </div>
                 @endif
               </div>
+                <h5 class="text-uppercase text-center">Caro cliente informamos que, temos outras lojas disponiveis. by@grupo xZero - in Website Cássico</h5>
             </div>
           </div>
         </div>
