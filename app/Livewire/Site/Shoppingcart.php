@@ -263,8 +263,6 @@ class Shoppingcart extends Component
                 $this->alert('info', 'Informação', [
                     'toast' => true,
                     'position' => 'top-end',
-                    'showConfirmButton' => true,
-                    'confirmButtonText' => 'OK',
                     'text' => 'Quantidade indisponível'
                 ]);
 
