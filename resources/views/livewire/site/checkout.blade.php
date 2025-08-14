@@ -23,8 +23,18 @@
 
                   <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="card-body">
-                      <h6 class="text-capitalize">Banco: {{ $bankAccount->bank_name }}  |  IBAN: {{ $bankAccount->bank_account }}</h6>
-                      <h6 class="text-capitalize">Titular: {{ $bankAccount->bank_holder }}</h6>
+                      @php  $nameCompany = $bankAccount["Company"]  @endphp
+                      @forelse($bankAccount['bankAccounts'] as $bankAccount)
+                        <div class="row">
+                          <div class="col-6">
+                            <h6 class="text-capitalize">Banco: {{ $bankAccount['bank'] }}  |  IBAN: AO06 {{ trim(chunk_split($bankAccount['ibam'], 4, ' ')) ?? ''}}</h6>
+                            <h6 class="text-capitalize">Titular: {{ $nameCompany ?? '' }}</h6>
+                          </div>
+                          <div class="col-6">
+                          </div>
+                        <div>
+                      @empty
+                      @endforelse
                     </div>
                   </div>
                 </div>
@@ -55,43 +65,50 @@
                 <div class="form-group col-md-4">
                   <label for="name">Nome <span class="text-danger">*</span></label>
                   <input type="text" name="name" id="name" class="form-control" placeholder="Nome" wire:model="name">
+                  @error('email') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Sobrenome <span class="text-danger">*</span></label>
                   <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Sobrenome" wire:model="lastname">
+                  @error('lastname') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Provincia <span class="text-danger">*</span></label>
                   <input type="text" name="province" id="province" class="form-control" placeholder="Provincia" wire:model="province">
+                  @error('province') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
-    
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Município <span class="text-danger">*</span></label>
                   <input type="text" name="municipality" id="municipality" class="form-control" placeholder="Município" wire:model="municipality">
+                    @error('municipality') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
     
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Bairro <span class="text-danger">*</span></label>
                   <input type="text" name="street" id="street" class="form-control" placeholder="Bairro" wire:model="street">
+                  @error('street') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">E-mail <span class="text-danger">*</span></label>
                   <input type="text" name="email" id="email" class="form-control" placeholder="E-mail" wire:model="email">
+                  @error('email') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Nº Contribuente <span class="text-danger">*</span></label>
                   <input type="text" min="9" name="nif" id="nif" class="form-control" wire:model="taxPayer"> 
+                  @error('nifPayer') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Telefone <span class="text-danger">*</span></label>
                   <input type="text" name="phone" id="phone" class="form-control" placeholder="999-999-999" wire:model="phone">
+                  @error('phone') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
     
                 </div>
@@ -103,6 +120,7 @@
                 <div class="form-group col-md-4">
                   <label for="">Local de Refência <span class="text-danger">*</span></label>
                   <input type="text" name="otherAddress" id="otherAddress" class="form-control" placeholder="Digite..." wire:model="otherAddress">
+                  @error('otherAddress') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
 

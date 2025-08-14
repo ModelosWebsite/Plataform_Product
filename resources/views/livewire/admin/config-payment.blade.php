@@ -3,6 +3,7 @@
         <div class="form-group col-12 mb-3">
             <h5>Método de Pagamento: {{ $company->payment_type }}</h5>
         </div>
+        <h6 for="bank_details">{{$detailsXzero['APIKEY']}}</h6>
         @if($company->payment_type === "Transferência")
             <div class="form-group col-6">
                     <h6 for="bank_details">Detalhes Bancários</h6>

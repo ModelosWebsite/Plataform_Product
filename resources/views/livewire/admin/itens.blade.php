@@ -18,6 +18,7 @@
                 <th scope="col">Categoria</th>
                 <th scope="col">Qtd.</th>
                 <th scope="col">Preço</th>
+                <th scope="col">Taxa/Iva</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Acções</th>
               </tr>
@@ -30,7 +31,17 @@
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['category'] }}</td>
                                 <td>{{ $item['quantity'] }}</td>
-                                <td>{{ number_format($item['price'], 2, '.', ' ') }} kz</td>
+                                <td>
+                                    @if($item['tax'] > 0)
+                                        {{ number_format($item['priceWithTax'], 2, '.', ' ') }} kz </br>
+                                        <span class="badge badge-dark">Iva incluido.</span>
+                                    @else
+                                        {{ number_format($item['price'], 2, '.', ' ') }} kz
+                                    @endif 
+                                </td>
+
+                                <td>{{ $item['tax'] }}%</td>
+                                
                                 <td>
                                     <span class="{{ $item['status'] === 'DISPONIVEL' ? 'bg-primary text-light' : 'bg-danger text-light' }} p-1 rounded">
                                         {{ $item['status'] }}

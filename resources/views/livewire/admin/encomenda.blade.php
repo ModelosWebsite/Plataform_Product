@@ -22,12 +22,12 @@
                         <td>
                             @switch($data['status'])
                                 @case('PENDENTE')
-                                    <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" style="cursor: pointer; font-size:15px; font-weight:bold" class="badge badge-info p-2">
+                                    <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" style="cursor: pointer; font-size:15px; font-weight:bold" class="badge badge-info p-2">
                                         <i class="fa fa-spinner fa-spin-pulse"></i> {{ $data['status'] }}
                                     </span>
                                     @break
                                 @case('ACEITE')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-success p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-success p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-thumbs-up"></i> {{ $data['status'] }}
                                         </span>
                                     @break
@@ -38,19 +38,19 @@
                                         @break
 
                                 @case('EM PREPARAÇÃO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-warning p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-warning p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-utensils"></i> {{ $data['status'] }}
                                         </span>
                                         @break
 
                                 @case('PRONTO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-info p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-info p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-box-open"></i> {{ $data['status'] }}
                                         </span>
                                         @break
 
                                 @case('A CAMINHO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado')" class="badge badge-primary p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-primary p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-truck"></i> {{ $data['status'] }}
                                         </span>
                                         @break

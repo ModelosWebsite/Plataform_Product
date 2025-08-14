@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use App\Models\{company, BankAccount, Payment, pacote};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Services\Request as RequestService;
 use Carbon\Carbon;
 
 
@@ -12,7 +13,7 @@ class ConfigPayment extends Component
 {
     public $company, $method, $bank_name, $bank_account, $bank_holder, $delivery_method;
     public $referenceNumber, $status, $payment;
-    public $paymentId, $package;
+    public $paymentId, $package, $detailsXzero;
     public $checking = false;
 
     protected $listeners = ['updatePaymentMethod', 'generatePayment', 'checkStatus', 'updateDeliveryMethod', 'createBankAccount'];
@@ -24,7 +25,9 @@ class ConfigPayment extends Component
         $this->loadBankAccount();
         $this->package = pacote::where("company_id", auth()->user()->company_id)->where("package_name", "Transferência")
         ->where("is_active", true)->latest()->first();
-        
+
+        $this->detailsXzero = RequestService::getCompany($this->company->companynif);
+
     }
 
         public function updateDeliveryMethod()

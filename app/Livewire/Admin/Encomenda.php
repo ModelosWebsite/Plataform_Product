@@ -11,7 +11,7 @@ class Encomenda extends Component
 {
     use LivewireAlert;
     public $company, $deliveries, $response, $id,
-    $itens, $delivery, $item, $newStatus;
+    $itens, $delivery, $item, $newStatus, $pending;
     
     protected $listeners = ['confirmedUpdateStatus'];
 
@@ -41,11 +41,13 @@ class Encomenda extends Component
         }
     }
 
-    public function updateStatus($id, $newStatus)
+    public function updateStatus($id, $newStatus, $pending)
     {
         $this->confirm('Tem certeza?', [
             'icon' => 'question',
-            'text' => 'Informamos que se aceitar, não é de nossa responsabilidade aferir a originalidade do comprovativo de pagamento por transferência.',            
+            'text' => $pending === "PENDENTE"
+            ? 'Informamos que se aceitar, não é de nossa responsabilidade aferir a originalidade do comprovativo de pagamento por transferência.'
+            : '',
             'confirmButtonText' => 'Sim, aceitar',
             'cancelButtonText' => 'Cancelar',
             'onConfirmed' => 'confirmedUpdateStatus',
@@ -86,7 +88,9 @@ class Encomenda extends Component
             }
 
             foreach ($delivery as $item) {
+
                 $estado = $item['delivery']['status'];
+                $this->pending = $estado;
                 $estadosPendentes = ['PENDENTE', 'ACEITE', 'EM PREPARAÇÃO', 'PRONTO', 'A CAMINHO'];
 
                 if (in_array($estado, $estadosPendentes)) {

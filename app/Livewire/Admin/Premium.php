@@ -6,6 +6,7 @@ use App\Models\{Payment, FunctionalityPlus, pacote, company};
 use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Services\InvoiceXzero;
 use Carbon\Carbon;
 
 class Premium extends Component
@@ -60,15 +61,48 @@ class Premium extends Component
                     "start_date" => Carbon::now(),
                     "end_date" => Carbon::now()->addDays(31),
                     "functionality_plus_id" => $this->element->id,
-                    "is_active" => true,
+                    "is_active" => false,
                 ]);
 
+                
+                $company = company::find(auth()->user()->company->id);
                 if ($this->element->title === "Transferência") {
-                    $company = company::find(auth()->user()->company->id);
-
                     $company->delivery_method = "Meus Entregadores";
                     $company->save();
                 }
+
+                /*
+                *  LOGICA PARA EMISSÃO DE FACTURA DOS ELEMENTOS PREMIUM
+                */
+
+                $infoXzero = \App\Services\Request::getCompany($company->companynif);
+
+                $infoCompany = [
+                    "name" => $infoXzero["Company"],
+                    "phone" => $infoXzero["Phone"],
+                    "taxPayer" => $infoXzero["TaxPayer"],
+                    "email" => $infoXzero["Email"],
+                    "address" => $infoXzero["Address"],
+                ];
+
+
+                $Invoice = InvoiceXzero::createInvoice(
+                    "10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0",
+                    "FR",
+                    $infoCompany,
+                    "Referência",
+                    [[
+                        "description" => $this->element->title,
+                        "tax" => 0,
+                        "price" => $this->element->amount,
+                        "quantity" => 1,
+                        "discount" => 0,
+                        "retension" => 0,
+                        "productType" => "Unidade",
+                        "exemption_code" => "M10",
+                    ]]);
+
+                \Log::info("Elemento Premium", $Invoice);
             }
         }
     }

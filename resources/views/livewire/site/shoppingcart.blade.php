@@ -1,4 +1,4 @@
-<div >
+<div wire:poll>
     <main id="main" style="margin-top: 1.3rem;">
         <section class="shopping-cart spad">
             <div class="container-fluid px-3 px-md-3 px-lg-4">
@@ -16,7 +16,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @forelse ($cartContent as $item)
+                                   @forelse ($cartContent as $key=> $item)
                                     <tr>
                                         <td class="d-flex">
                                             <div class="mr-3">
@@ -34,7 +34,7 @@
                                             {{ number_format($item->price, 2,'.', ' ') }} kz
                                         </td>
                                         <td>
-                                            <input class="quantity-input" wire:model.lazy="cartQuantities.{{ $item->id }} ?? $item->quantity" type="number" min="1"
+                                            <input class="quantity-input" wire:model="qtd.{{$item->id}}" value="{{ $cartQuantities[$item->id] ?? $item->quantity }}" type="number" min="1"
                                             wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
                                         </td>
                                         <td>

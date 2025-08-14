@@ -15,13 +15,13 @@ class Shoppingcart extends Component
 
     // Dados gerais do carrinho
     public $number = 0, $localizacao = 0, $cartContent, $getTotal, $getSubTotal,
-           $getTotalQuantity, $cupon, $taxapb = 0, $finalCompra,
-           $totalFinal = 0, $code, $delveryId, $receipt, $deliveryType;
+    $getTotalQuantity, $cupon, $taxapb = 0, $finalCompra,
+    $totalFinal = 0, $code, $delveryId, $receipt, $deliveryType,$qtd = [];
 
     // Dados de checkout
     public $name, $lastname, $province, $municipality, $street, $phone, $otherPhone,
-           $email, $deliveryPrice = 0, $taxPayer, $otherAddress, $deliveryUrl,
-           $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package,$cart =0;
+    $email, $deliveryPrice = 0, $taxPayer, $otherAddress, $deliveryUrl,
+    $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package,$cart =0;
 
     // Guarda apenas o ID da empresa
     public $companyId, $cartQuantities = [];
@@ -36,8 +36,22 @@ class Shoppingcart extends Component
         $this->paymentType  = $company->payment_type;
         $this->deliveryType = $company->delivery_method;
         $this->package      = $this->loadPackage();
-        
+
+       $this->renderQtd();
+
         $this->removeOtherCompanyItems();
+    }
+
+    protected function renderQtd()
+    {
+         $cartItem = Cart::getContent();
+        if ($cartItem) {
+            foreach ($cartItem as $key => $value) {
+            # code...
+            $this->qtd[$value->id] = $value['quantity'];
+            }
+            
+        }
     }
 
     public function render()
@@ -64,7 +78,7 @@ class Shoppingcart extends Component
                 $this->referenceNumber = rand(100000000, 999999999);
             }
 
-            $this->bankAccount = $this->bankAccountDetails();
+            $this->bankAccount = \App\Services\Request::getCompany($company->companynif);
 
             foreach ($this->cartContent as $item) {
                 $this->cartQuantities[$item->id] = $item->quantity;
@@ -84,18 +98,13 @@ class Shoppingcart extends Component
 
     private function getCompany(): Company
     {
-        return company::findOrFail($this->companyId);
+        return company::find($this->companyId);
     }
 
     private function loadPackage()
     {
         return pacote::where('company_id', $this->companyId)->where('is_active', true)
         ->where("package_name", "Transferência")->latest()->first();
-    }
-
-    private function bankAccountDetails()
-    {
-        return BankAccount::where('company_id', $this->companyId)->first();
     }
 
     private function getHeaders()
@@ -129,14 +138,27 @@ class Shoppingcart extends Component
 
     public function checkout()
     {
+        $ValidateTaxResponse = \App\Services\Request::validateTaxPayer($this->taxPayer);
+ 
+        if (isset($ValidateTaxResponse['status']) && $ValidateTaxResponse['status'] === false) {
+            $this->addError('nifPayer', $ValidateTaxResponse['message'] ?? 'Erro desconhecido.');
+            return;
+        }
+
         try {
             $company = $this->getCompany();
 
             // Upload do comprovativo
             $fileName = null;
             if ($company->payment_type === "Transferência" && $this->receipt && !is_string($this->receipt)) {
-                $fileName = md5($this->receipt->getClientOriginalName()) . "." . $this->receipt->getClientOriginalExtension();
-                $this->receipt->storeAs("public/recibos", $fileName);
+                $fileName = (new \App\Services\UploadGoogleDrive)->sendFile(
+                    $company->companyname,
+                    $company->companynif,
+                    "Recibos",
+                    $this->receipt
+                );
+
+                \Log::info("ShoppingCart@Send Google File", ["message" => $fileName]);
             }
 
             // Itens do carrinho
@@ -150,7 +172,7 @@ class Shoppingcart extends Component
                 ];
             }
 
-            // Dados para API de entrega
+            // Dados para API
             $data = [
                 "clientName" => $this->name,
                 "clientLastName"=> $this->lastname,
@@ -171,9 +193,28 @@ class Shoppingcart extends Component
             ];
 
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/deliveries", $data)->json();
+                ->post("https://kytutes.com/api/deliveries", $data);
 
-            if ($response) {
+            // Caso API retorne erro de validação
+            if ($response->failed()) {
+                $body = $response->json();
+
+                if (isset($body['errors'])) {
+                    foreach ($body['errors'] as $field => $messages) {
+                        // Adiciona erro específico no campo Livewire
+                        $this->addError($field, implode(' ', (array) $messages));
+                    }
+                } elseif (isset($body['message'])) {
+                    $this->addError('api', $body['message']);
+                } else {
+                    $this->addError('api', 'Erro desconhecido ao processar a encomenda.');
+                }
+                return; // Não prossegue
+            }
+
+            $dataResponse = $response->json();
+
+            if ($dataResponse) {
                 Payment::create([
                     'reference' => $this->referenceNumber,
                     'value' => $this->totalFinal,
@@ -182,7 +223,7 @@ class Shoppingcart extends Component
                     'company_id' => $this->companyId
                 ]);
 
-                session()->put("idDelivery", $response['reference']);
+                session()->put("idDelivery", $dataResponse['reference']);
                 session()->put("companyapi", $company->companyhashtoken);
             }
 
@@ -192,6 +233,7 @@ class Shoppingcart extends Component
 
         } catch (\Throwable $th) {
             \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());
+            $this->addError('api', 'Ocorreu um erro inesperado. Tente novamente.');
         }
     }
 
@@ -213,22 +255,21 @@ class Shoppingcart extends Component
     public function updateQuantity($id, $quantity, $name)
     {
         try {
-
             $product = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/items?description=$name")->json();
+            ->get("https://kytutes.com/api/items?description=$name")
+            ->json();
 
             if ((int) $quantity > (int) $product[0]["quantity"]) {
-
                 $this->alert('info', 'Informação', [
-                    'toast' => false,
-                    'position' => 'center',
+                    'toast' => true,
+                    'position' => 'top-end',
                     'showConfirmButton' => true,
                     'confirmButtonText' => 'OK',
                     'text' => 'Quantidade indisponível'
                 ]);
 
-                // Restaura quantidade original no estado
-                $this->cartQuantities[$id] = $this->cartQuantities[$id];
+                $this->renderQtd();
+               
                 return;
             }
 

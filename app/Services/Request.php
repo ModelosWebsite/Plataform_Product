@@ -63,4 +63,18 @@ class Request{
         } catch (\Throwable $th) {
         }
     }
+
+    public static function validateTaxPayer($taxPayer)
+    {
+        try {
+            return Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])->post('https://kytutes.com/api/verify/nif', [
+                "nif" => $taxPayer,
+            ])->json();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

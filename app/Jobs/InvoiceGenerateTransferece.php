@@ -36,7 +36,6 @@ class InvoiceGenerateTransferece implements ShouldQueue
         Log::info("comapny", ["as" => $companyHash]);
 
         $dataCompany = Company::where("companyhashtoken", $companyHash)->first();
-        $tokenTeste = "10|NeK7hEiyZi5boujA1B3nWGSPQgb7Adt3u6EUA0Swd75947f0";
 
         // 2. BUSCAR DADOS DA PB E DO PARCEIRO LOGÍSTICO
         $clientPb = RequestService::getCompany("50010487590");
@@ -115,11 +114,10 @@ class InvoiceGenerateTransferece implements ShouldQueue
             if ($dataCompany->payment_type === "Referência") {
                 // FATURA 1: PB → Cliente final
                 $invoicePb = $this->createInvoice(
-                    $tokenTeste,
-                    //$clientPb['APIKEY'],
+                    $clientPb['APIKEY'],
                     "FR",
                     $delivery['delivery'],
-                    "Transferencia",
+                    "Transferência",
                     $items
                 );
                 Log::info("Fatura PB para Cliente", $invoicePb);
@@ -129,15 +127,14 @@ class InvoiceGenerateTransferece implements ShouldQueue
                     $dataCompany->token_xzero,
                     "FT",
                     $clientPb,
-                    "Transferencia",
+                    "Transferência",
                     $itemsPB
                 );
                 Log::info("Fatura Dono Website para PB", $onnerWebsite);
 
                 // FATURA 3: Parceiro Logístico → PB
                 $logisticPartnerInvoice = $this->createInvoice(
-                    //$logisticPartner['APIKEY'],
-                    $tokenTeste,
+                    $logisticPartner['APIKEY'],
                     "FR",
                     $clientPb,
                     "Transferencia",
@@ -159,7 +156,7 @@ class InvoiceGenerateTransferece implements ShouldQueue
                     $dataCompany->token_xzero,
                     "FR",
                     $delivery['delivery'],
-                    "Transferencia",
+                    "Transferência",
                     $items
                 );
                 Log::info("Fatura Dono Website para Cliente", $onnerWebsite);

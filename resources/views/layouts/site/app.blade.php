@@ -92,6 +92,7 @@
   }
   </style>
 
+    @livewireStyles
 </head>
 
 <body>
@@ -107,6 +108,7 @@
     <script src="{{asset("js/cookies.js")}}"></script>
 
     <!-- Vendor JS Files -->
+        @livewireScripts
     <script src="{{asset("site/vendor/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
     <script src="{{asset("site/vendor/aos/aos.js")}}"></script>
     <script src="{{asset("site/vendor/glightbox/js/glightbox.min.js")}}"></script>
