@@ -25,7 +25,7 @@
                     <!-- Delivery Data -->
                     @if (!empty($data) && is_array($data))
                         @foreach ($data as $delivery)
-                            <div class="row mb-4 align-items-center" wire:poll.50ms>
+                            <div class="row mb-4 align-items-center" wire:poll.5000ms>
                                 <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                                     <div class="bg-dark text-white rounded p-2 mb-3 text-center">
                                         <h5 class="text-uppercase mb-0">Estado da Encomenda</h5>
