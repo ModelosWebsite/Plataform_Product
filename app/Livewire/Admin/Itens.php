@@ -2,6 +2,7 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
+use App\Models\company;
 use Illuminate\Support\Facades\{DB, Http};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -13,9 +14,14 @@ class Itens extends Component
 
     public $cost, $description, $longdescription, $price,$imagePath,
     $image, $category_id, $qtd, $editing = false, $getItens = [],
-    $itemId;
+    $itemId, $company;
 
     protected $listeners = ['refreshItems' => 'getItens'];
+
+    public function mount()
+    {
+        $this->company = company::find(auth()->user()->company_id);
+    }
 
     public function render()
     {
@@ -88,6 +94,12 @@ class Itens extends Component
             if ($this->image != null and !is_string($this->image)) {
                 $filename = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
                 $this->image->storeAs('items', $filename, 'public');
+                // $upload = new \App\Services\UploadGoogleDrive(
+                //     $this->company->companyname,
+                //     $this->company->companynif,
+                //     "Hero",
+                //     $this->image
+                // );
             }
 
             $infoItem = [
@@ -98,6 +110,7 @@ class Itens extends Component
                 "description" => $this->description,
                 "category" => $this->category_id,
                 "longDescription" => $this->longdescription,
+                //"image" => $upload->sendFile()
                 "image" => $filename
             ];
             

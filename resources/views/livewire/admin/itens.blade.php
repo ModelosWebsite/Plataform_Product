@@ -32,12 +32,14 @@
                                 <td>{{ $item['category'] }}</td>
                                 <td>{{ $item['quantity'] }}</td>
                                 <td>
-                                    @if($item['tax'] > 0)
-                                        {{ number_format($item['priceWithTax'], 2, '.', ' ') }} kz </br>
-                                        <span class="badge badge-dark">Iva incluido.</span>
-                                    @else
-                                        {{ number_format($item['price'], 2, '.', ' ') }} kz
-                                    @endif 
+                                    <div class="text-end">
+                                        @if($item['tax'] > 0)
+                                            {{ number_format($item['priceWithTax'], 2, '.', ' ') }} kz </br>
+                                            <span class="badge badge-dark">Iva incluido.</span>
+                                        @else
+                                            {{ number_format($item['price'], 2, '.', ' ') }} kz
+                                        @endif 
+                                    </div>
                                 </td>
 
                                 <td>{{ $item['tax'] }}%</td>

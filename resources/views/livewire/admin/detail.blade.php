@@ -29,9 +29,17 @@
                   @foreach ($Item->products as $itens)
                     <tr>
                       <td scope="row">{{$itens->item}}</td>
-                      <td scope="row">{{$itens->price}}</td>
+                      <td scope="row">
+                        <div class="text-end">
+                          {{ str_replace(['.', ','], ['  ', '.'], $itens->price) }}
+                        </div>
+                      </td>
                       <td scope="row">{{$itens->quantity}}</td>
-                      <td scope="row">{{$itens->subtotal}}</td>
+                      <td scope="row">
+                        <div class="text-end">
+                          {{ str_replace(['.', ','], ['  ', '.'], $itens->subtotal) }}
+                        </div>
+                      </td>
                     </tr>
                   @endforeach
                 @endforeach

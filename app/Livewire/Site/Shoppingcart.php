@@ -151,14 +151,12 @@ class Shoppingcart extends Component
             // Upload do comprovativo
             $fileName = null;
             if ($company->payment_type === "Transferência" && $this->receipt && !is_string($this->receipt)) {
-                $fileName = (new \App\Services\UploadGoogleDrive)->sendFile(
-                    $company->companyname,
-                    $company->companynif,
-                    "Recibos",
-                    $this->receipt
-                );
-
-                \Log::info("ShoppingCart@Send Google File", ["message" => $fileName]);
+                $filename = rand(2000, 3000) .".".$this->receipt->getClientOriginalExtension();
+                $this->receipt->storeAs('recibos', $filename, 'public');
+                
+                // $upload = new \App\Services\UploadGoogleDrive(
+                //     $company->companyname, $company->companynif, "Hero", $this->receipt
+                // );
             }
 
             // Itens do carrinho
@@ -187,34 +185,19 @@ class Shoppingcart extends Component
                 "taxPayer" => $this->taxPayer,
                 "paymentType" => $company->payment_type,
                 "receipt" => $fileName,
+                //"receipt" => $upload->sendFile(),
                 "latitude" => $this->latitude,
                 "longitude" => $this->longitude,
                 "items" => $items,
             ];
 
             $response = Http::withHeaders($this->getHeaders())
-                ->post("https://kytutes.com/api/deliveries", $data);
+            ->post("https://kytutes.com/api/deliveries", $data)->json();
+
+            \Log::info("delivery", ["message" => $response]);
 
             // Caso API retorne erro de validação
-            if ($response->failed()) {
-                $body = $response->json();
-
-                if (isset($body['errors'])) {
-                    foreach ($body['errors'] as $field => $messages) {
-                        // Adiciona erro específico no campo Livewire
-                        $this->addError($field, implode(' ', (array) $messages));
-                    }
-                } elseif (isset($body['message'])) {
-                    $this->addError('api', $body['message']);
-                } else {
-                    $this->addError('api', 'Erro desconhecido ao processar a encomenda.');
-                }
-                return; // Não prossegue
-            }
-
-            $dataResponse = $response->json();
-
-            if ($dataResponse) {
+            if ($response != null) {
                 Payment::create([
                     'reference' => $this->referenceNumber,
                     'value' => $this->totalFinal,
@@ -223,8 +206,9 @@ class Shoppingcart extends Component
                     'company_id' => $this->companyId
                 ]);
 
-                session()->put("idDelivery", $dataResponse['reference']);
+                session()->put("idDelivery", $response['reference']);
                 session()->put("companyapi", $company->companyhashtoken);
+                session()->put("phoneNumber", $this->phone);
             }
 
             Cart::clear();
@@ -233,7 +217,6 @@ class Shoppingcart extends Component
 
         } catch (\Throwable $th) {
             \Log::error("Erro ao finalizar encomenda: " . $th->getMessage());
-            $this->addError('api', 'Ocorreu um erro inesperado. Tente novamente.');
         }
     }
 

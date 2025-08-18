@@ -32,8 +32,8 @@ class Project extends Component
                 $fileName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
                 $this->image->storeAs("public/arquivos",$fileName);
             }
+
             // Atualizar projeto
-            // $project = ModelsProject::find($this->projectId);
             $project->update([
                 "title" => $this->title, 
                 "image" => $fileName

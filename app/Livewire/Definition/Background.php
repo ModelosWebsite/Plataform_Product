@@ -2,20 +2,21 @@
 
 namespace App\Livewire\Definition;
 
-use App\Models\Fundo;
+use App\Models\{Fundo, company};
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Background extends Component
 {
-    public $fundo, $image, $type, $fundoId, $currentImage;
+    public $fundo, $image, $type, $fundoId, $currentImage, $company;
     use LivewireAlert;
     use WithFileUploads;
     
     public function mount()
     {
         $this->fundo = Fundo::where("company_id", auth()->user()->company->id)->get();
+        $this->company = company::find(auth()->user()->company->id);
     }
 
     public function render()
@@ -44,15 +45,16 @@ class Background extends Component
 
             $fundo->tipo = $this->type;
 
-            // // Manipulação de arquivo
-            // if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
-            //     $fileName = uniqid().".".$this->image->getClientOriginalExtension();
-            //     $this->image->storeAs("arquivos/background", $fileName);
-            //     $fundo->image = $fileName;
-            // }
-
             // Manipulação de imagem
             if ($this->image && !is_string($this->image)) {
+                // $upload = new \App\Services\UploadGoogleDrive(
+                //     $this->company->companyname,
+                //     $this->company->companynif,
+                //     "Fundo",
+                //     $this->image
+                // );
+                // $fundo->image = $upload->sendFile();
+
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
                 $this->image->storeAs("public/arquivos/background", $fileName);
                 $fundo->image = $fileName;
@@ -74,7 +76,11 @@ class Background extends Component
             ]);
 
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            \Log::error("DefiniçõesGerais@Add Imagem", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine()
+            ]);
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',

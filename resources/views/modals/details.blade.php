@@ -30,7 +30,7 @@
         <div class="modal-footer">
 
             <div>
-                <h4 class="text-danger">{{ number_format($item['price'], 2,'.', '.' ?? '') }} kz</h4>
+                <h4 class="text-danger">{{ number_format($item['price'], 2,'.', ' ' ?? '') }} kz</h4>
             </div>
 
             <button 

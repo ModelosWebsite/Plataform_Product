@@ -2,68 +2,106 @@
 
 namespace App\Livewire\Site;
 
-use App\Models\company;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
-class Deliverystatus extends Component
+class DeliveryStatus extends Component
 {
-    public $deliveries, $id, $deliveryNumber;
+    public ?string $deliveryNumber = null;
+    public ?string $phoneNumber = null;
+    public ?array $deliveries = null;
 
-    public function mount()
+    public function mount(): void
     {
-        session()->put("tokencompany", Request("company"));
-        \Log::info("deliveryStatus@mount@token", ["token" => session('tokencompany')]);
+        session()->put('tokencompany', request()->input('company'));
     }
 
-    public function status()
+    /**
+     * Fetch delivery status from the API.
+     *
+     * @return array|null
+     */
+    private function fetchDeliveryStatus(?string $deliveryNumber, ?string $phoneNumber): ?array
     {
         try {
-            $id = $this->deliveryNumber ?? session("idDelivery");
-            //Acesso a API com um token
             $headers = [
-                "Accept" => "application/json",
-                "Content-Type" => "application/json",
-                "Authorization" => $this->getCompany()->companytokenapi,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
             ];
 
             $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries", ['reference' => $id]);
-            \Log::info("DeliveryStatus@status", ["message" => $response]);
-            
-            if ($id != null) {
-                return collect(json_decode($response));
-            }else{
-                \Log::info("DeliveryStatus@Não Encontra", ["message" => $response]);
-            }
-            
-        } catch (\Throwable $th) {
-            \Log::error("DeliveryStatus@status", [
-                "message" => $th->getMessage(),
-                "file" => $th->getFile(),
-                "line" => $th->getLine(),
+                ->get('https://kytutes.com/api/filter', [
+                    'reference' => $deliveryNumber,
+                    'phone' => $phoneNumber,
+                ])->json();
+
+            Log::info('DeliveryStatus@fetchDeliveryStatus', [
+                'deliveryNumber' => $deliveryNumber,
+                'phoneNumber' => $phoneNumber,
+                'response' => $response,
             ]);
-        }
-    }
 
-    public function setDelivery()
-    {
-        try {
-            $this->deliveryNumber;
+            return $response;
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::error('DeliveryStatus@fetchDeliveryStatus', [
+                'message' => $th->getMessage(),
+                'file' => $th->getFile(),
+                'line' => $th->getLine(),
+            ]);
+
+            session()->flash('error', 'Unable to fetch delivery status. Please try again later.');
+
+            return null;
         }
     }
 
+    /**
+     * Get delivery status based on delivery number and phone number.
+     *
+     * @return array|null
+     */
+    public function status(): ?array
+    {
+        $deliveryNumber = $this->deliveryNumber ?? session('idDelivery');
+        $phoneNumber = $this->phoneNumber ?? session('phoneNumber');
+
+        if (empty($deliveryNumber) || empty($phoneNumber)) {
+            session()->flash('error', 'Delivery number and phone number are required.');
+            return null;
+        }
+
+        return $this->fetchDeliveryStatus($deliveryNumber, $phoneNumber);
+    }
+
+    /**
+     * Set delivery details and fetch status.
+     *
+     * @return void
+     */
+    public function setDelivery(): void
+    {
+        $this->validate([
+            'deliveryNumber' => 'required|string',
+            'phoneNumber' => 'required|string',
+        ]);
+
+        $this->deliveries = $this->status();
+
+        if ($this->deliveries) {
+            session()->flash('success', 'Delivery status retrieved successfully.');
+        }
+    }
+
+    /**
+     * Render the component view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.site.deliverystatus', [
-            "data" => $this->status()
-        ])->layout("layouts.site.status");
-    }
-
-    public function getCompany()
-    {
-        return company::where("companyhashtoken", session("tokencompany"))->first();
+            'data' => $this->deliveries ?? $this->status(),
+        ])->layout('layouts.site.status');
     }
 }

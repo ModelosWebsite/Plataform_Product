@@ -19,9 +19,7 @@ class UploadGoogleDrive
         $this->folder = $folder;
         $this->file = $file;
 
-        $this->url = (env('APP_ENV') == 'local') ?
-            'http://127.0.0.1:8000/api/send/file' :
-            'https://xzero.live/api/send/file';
+        $this->url = 'https://xzero.live/api/send/file';
     }
 
     public  function sendFile()
@@ -39,9 +37,7 @@ class UploadGoogleDrive
                 'companynif' => $this->companynif,
                 'folder' => $this->folder,
             ]);
-
-
-
+            
             return $response['path'];
         } catch (\Throwable $th) {
             Log::error('errors', [

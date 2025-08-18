@@ -31,14 +31,18 @@
                                             </div>
                                         </td>
                                         <td>
-                                            {{ number_format($item->price, 2,'.', ' ') }} kz
+                                            <div class="text-end">
+                                                {{ number_format($item->price, 2,'.', ' ') }} kz
+                                            </div>
                                         </td>
                                         <td>
                                             <input class="quantity-input" wire:model="qtd.{{$item->id}}" value="{{ $cartQuantities[$item->id] ?? $item->quantity }}" type="number" min="1"
                                             wire:change="updateQuantity({{ $item->id }}, $event.target.value, '{{ $item->name }}')">
                                         </td>
                                         <td>
-                                            {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz
+                                            <div style="text-align: left !important">
+                                                {{ number_format($item->price * $item->quantity, 2,'.', ' ') }} kz
+                                            </div>
                                         </td>
                                         <td class="text-center">
                                             <button  wire:click='remove({{$item->id}})' style="color: red; border: none; backgound: #fff">

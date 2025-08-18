@@ -18,7 +18,11 @@
                         <td>{{ $data['client'] ?? '-' }}</td>
                         <td>{{ $data['address'] ?? '-' }}</td>
                         <td>{{ $data['phone'] ?? '-' }}</td>
-                        <td>{{ $data['subtotal'] }}</td>
+                        <td>
+                            <div class="text-end">
+                                {{ str_replace(['.', ','], ['  ', '.'], $data['subtotal']) }}
+                            </div>
+                        </td>
                         <td>
                             @switch($data['status'])
                                 @case('PENDENTE')
