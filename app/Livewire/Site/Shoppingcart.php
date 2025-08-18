@@ -151,8 +151,8 @@ class Shoppingcart extends Component
             // Upload do comprovativo
             $fileName = null;
             if ($company->payment_type === "Transferência" && $this->receipt && !is_string($this->receipt)) {
-                $filename = rand(2000, 3000) .".".$this->receipt->getClientOriginalExtension();
-                $this->receipt->storeAs('recibos', $filename, 'public');
+                $fileName = rand(2000, 3000) .".".$this->receipt->getClientOriginalExtension();
+                $this->receipt->storeAs('recibos', $fileName, 'public');
                 
                 // $upload = new \App\Services\UploadGoogleDrive(
                 //     $company->companyname, $company->companynif, "Hero", $this->receipt

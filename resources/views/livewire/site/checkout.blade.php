@@ -64,68 +64,68 @@
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="name">Nome <span class="text-danger">*</span></label>
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Nome" wire:model="name">
+                  <input type="text" name="name" id="name" class="form-control shadow-none" placeholder="Nome" wire:model="name">
                   @error('email') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Sobrenome <span class="text-danger">*</span></label>
-                  <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Sobrenome" wire:model="lastname">
+                  <input type="text" name="lastname" id="lastname" class="form-control shadow-none" placeholder="Sobrenome" wire:model="lastname">
                   @error('lastname') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Provincia <span class="text-danger">*</span></label>
-                  <input type="text" name="province" id="province" class="form-control" placeholder="Provincia" wire:model="province">
+                  <input type="text" name="province" id="province" class="form-control shadow-none" placeholder="Provincia" wire:model="province">
                   @error('province') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Município <span class="text-danger">*</span></label>
-                  <input type="text" name="municipality" id="municipality" class="form-control" placeholder="Município" wire:model="municipality">
+                  <input type="text" name="municipality" id="municipality" class="form-control shadow-none" placeholder="Município" wire:model="municipality">
                     @error('municipality') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
     
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Bairro <span class="text-danger">*</span></label>
-                  <input type="text" name="street" id="street" class="form-control" placeholder="Bairro" wire:model="street">
+                  <input type="text" name="street" id="street" class="form-control shadow-none" placeholder="Bairro" wire:model="street">
                   @error('street') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">E-mail <span class="text-danger">*</span></label>
-                  <input type="text" name="email" id="email" class="form-control" placeholder="E-mail" wire:model="email">
+                  <input type="text" name="email" id="email" class="form-control shadow-none" placeholder="E-mail" wire:model="email">
                   @error('email') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Nº Contribuente <span class="text-danger">*</span></label>
-                  <input type="text" min="9" name="nif" id="nif" class="form-control" wire:model="taxPayer"> 
+                  <input type="text" min="9" name="nif" id="nif" class="form-control shadow-none" wire:model="taxPayer"> 
                   @error('nifPayer') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Telefone <span class="text-danger">*</span></label>
-                  <input type="text" name="phone" id="phone" class="form-control" placeholder="999-999-999" wire:model="phone">
+                  <input type="text" name="phone" id="phone" class="form-control shadow-none" placeholder="999-999-999" wire:model="phone">
                   @error('phone') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
     
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Telefone Alternativo</label>
-                  <input type="text" name="otherPhone" id="otherPhone" class="form-control" placeholder="999-999-999" wire:model="otherPhone">
+                  <input type="text" name="otherPhone" id="otherPhone" class="form-control shadow-none" placeholder="999-999-999" wire:model="otherPhone">
                 </div>
                 
                 <div class="form-group col-md-4">
                   <label for="">Local de Refência <span class="text-danger">*</span></label>
-                  <input type="text" name="otherAddress" id="otherAddress" class="form-control" placeholder="Digite..." wire:model="otherAddress">
+                  <input type="text" name="otherAddress" id="otherAddress" class="form-control shadow-none" placeholder="Digite..." wire:model="otherAddress">
                   @error('otherAddress') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
 
                 @if($paymentType === 'Transferência')
-                  <div class="form-group col-md-4 shadow-sm">
+                  <div class="form-group col-md-4 shadow-none">
                     <label for="image">Recibo de Pagamento <span class="text-danger">*</span></label>
                     <input id="receipt" type="file" class="form-control w-100" name="receipt" wire:model="receipt">
                   </div>
