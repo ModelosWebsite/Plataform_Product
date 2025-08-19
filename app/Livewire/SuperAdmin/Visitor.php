@@ -2,35 +2,88 @@
 
 namespace App\Livewire\SuperAdmin;
 
-use App\Models\company;
-use App\Models\visitor as ModelsVisitor;
+use App\Models\Company;
+use App\Models\Visitor as ModelsVisitor;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 
 class Visitor extends Component
 {
     use WithPagination;
-    public $visitors, $company, $moth, 
-    $companydados, $companyselect;
+
+    public $companyList, $companyselect = '';
+    public $browser = '';
+    public $month = '';
+    
+    // KPIs
+    public $totalVisitors;
+    public $uniqueVisitors;
+    public $topBrowser;
+    public $topCompany;
 
     public function mount()
     {
-        $this->visitors = ModelsVisitor::get();
-        $this->company = company::get();
+        $this->companyList = Company::all();
+        $this->updateKPIs();
+    }
+
+    public function updated($property)
+    {
+        // sempre que filtro mudar, atualiza KPIs
+        $this->updateKPIs();
+    }
+
+    public function updateKPIs()
+    {
+        $query = ModelsVisitor::query();
+
+        if ($this->companyselect) {
+            $query->where('company', $this->companyselect);
+        }
+
+        if ($this->browser) {
+            $query->where('browser', $this->browser);
+        }
+
+        if ($this->month) {
+            $query->whereMonth('created_at', $this->month);
+        }
+
+        $this->totalVisitors = $query->count();
+        $this->uniqueVisitors = $query->distinct('ip')->count('ip');
+
+        $this->topBrowser = ModelsVisitor::selectRaw('browser, count(*) as total')
+            ->groupBy('browser')
+            ->orderByDesc('total')
+            ->first()?->browser ?? 'N/A';
+
+        $this->topCompany = ModelsVisitor::selectRaw('company, count(*) as total')
+            ->groupBy('company')
+            ->orderByDesc('total')
+            ->first()?->company ?? 'N/A';
     }
 
     public function render()
     {
-        return view('livewire.super-admin.visitor');
-    }
+        $query = ModelsVisitor::query();
 
-    public function getVisitorCompany()
-    {
-        try {
-            $this->companydados = ModelsVisitor::where("company", $this->companyselect)
-            ->whereMonth('created_at', $this->moth)->count();
-        } catch (\Throwable $th) {
-            return redirect()->back();
+        if ($this->companyselect) {
+            $query->where('company', $this->companyselect);
         }
+
+        if ($this->browser) {
+            $query->where('browser', $this->browser);
+        }
+
+        if ($this->month) {
+            $query->whereMonth('created_at', $this->month);
+        }
+
+        $visitors = $query->latest()->paginate(10);
+
+        return view('livewire.super-admin.visitor', [
+            'visitors' => $visitors,
+        ]);
     }
 }
