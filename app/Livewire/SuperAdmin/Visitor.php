@@ -3,7 +3,7 @@
 namespace App\Livewire\SuperAdmin;
 
 use App\Models\company;
-use App\Models\Visitor as ModelsVisitor;
+use App\Models\visitor as ModelsVisitor;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Carbon\Carbon;
@@ -24,7 +24,7 @@ class Visitor extends Component
 
     public function mount()
     {
-        $this->companyList = Company::all();
+        $this->companyList = company::all();
         $this->updateKPIs();
     }
 
