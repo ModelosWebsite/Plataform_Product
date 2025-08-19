@@ -12,19 +12,14 @@ class Visitor extends Component
 {
     use WithPagination;
 
-    public $companyList, $companyselect = '';
-    public $browser = '';
-    public $month = '';
+    public $companyList, $companyselect = '', $browser = '', $start_date = '', $end_date = '';
     
     // KPIs
-    public $totalVisitors;
-    public $uniqueVisitors;
-    public $topBrowser;
-    public $topCompany;
+    public $totalVisitors, $uniqueVisitors, $topBrowser, $topCompany;
 
     public function mount()
     {
-        $this->companyList = company::all();
+        $this->companyList = company::latest()->orderBy('companyname', 'asc')->get();
         $this->updateKPIs();
     }
 
@@ -36,32 +31,38 @@ class Visitor extends Component
 
     public function updateKPIs()
     {
-        $query = ModelsVisitor::query();
+        try {
+            $query = ModelsVisitor::query();
 
-        if ($this->companyselect) {
-            $query->where('company', $this->companyselect);
+            if ($this->companyselect) {
+                $query->where('company', $this->companyselect);
+            }
+
+            if ($this->browser) {
+                $query->where('browser', $this->browser);
+            }
+
+            if ($this->start_date and $this->end_date) {
+                $start = Carbon::parse($this->start_date)->startOfDay();
+                $end = Carbon::parse($this->end_date)->endOfDay();
+                $query->whereBetween("created_at", [$start, $end]);
+            }
+
+            $this->totalVisitors = $query->count();
+            $this->uniqueVisitors = $query->distinct('ip')->count('ip');
+
+            $this->topBrowser = ModelsVisitor::selectRaw('browser, count(*) as total')
+            ->groupBy('browser')->orderByDesc('total')->first()?->browser ?? 'N/A';
+
+            $this->topCompany = ModelsVisitor::selectRaw('company, count(*) as total')
+            ->groupBy('company')->orderByDesc('total')->first()?->company ?? 'N/A';
+        } catch (\Throwable $th) {
+            \Log::error("updateKPIs", [
+                "message" =>  $th->getMessage(),
+                "file" =>  $th->getFile(),
+                "line" =>  $th->getLine(),
+            ]);
         }
-
-        if ($this->browser) {
-            $query->where('browser', $this->browser);
-        }
-
-        if ($this->month) {
-            $query->whereMonth('created_at', $this->month);
-        }
-
-        $this->totalVisitors = $query->count();
-        $this->uniqueVisitors = $query->distinct('ip')->count('ip');
-
-        $this->topBrowser = ModelsVisitor::selectRaw('browser, count(*) as total')
-            ->groupBy('browser')
-            ->orderByDesc('total')
-            ->first()?->browser ?? 'N/A';
-
-        $this->topCompany = ModelsVisitor::selectRaw('company, count(*) as total')
-            ->groupBy('company')
-            ->orderByDesc('total')
-            ->first()?->company ?? 'N/A';
     }
 
     public function render()
@@ -76,8 +77,10 @@ class Visitor extends Component
             $query->where('browser', $this->browser);
         }
 
-        if ($this->month) {
-            $query->whereMonth('created_at', $this->month);
+        if ($this->start_date) {
+            $start = Carbon::parse($this->start_date)->startOfDay();
+            $end = Carbon::parse($this->end_date)->endOfDay();
+            $query->whereBetween("created_at", [$start, $end]);
         }
 
         $visitors = $query->latest()->paginate(10);

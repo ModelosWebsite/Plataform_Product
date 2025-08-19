@@ -62,10 +62,21 @@ class Adjust extends Component
     public function updateStatus()
     {
         $item = company::find(auth()->user()->company_id);
-        
-        // Atualiza o estado baseado no valor do checkbox
-        $item->status = $this->statusSite->status === 'active' ? 'inactive' : 'active';
-        $item->update();
+        $hasTermsPb = Termpb_has_Company::where('company_id', auth()->user()->company_id)->first();
+
+        if ($hasTermsPb->accept === 'yes') {
+            // Atualiza o estado baseado no valor do checkbox
+            $item->status = $this->statusSite->status === 'active' ? 'inactive' : 'active';
+            $item->update();
+        }else{
+            $this->alert('info', 'ATENÇÃO', [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => false,
+                'confirmButtonText' => 'OK',
+                'text' => 'Deve primeiro aceitar os termos e condições'
+            ]);
+        }
 
         $this->statusSite = company::where("id", auth()->user()->company_id)->first();
 

@@ -1,19 +1,19 @@
 <div>
     <!-- 🔹 Filtros -->
     <div class="row mb-3">
-        <div class="col-md-4">
-            <label>Empresa</label>
-            <select wire:model="companyselect" class="form-control">
+        <div class="col-md-3">
+            <label class="form-label">Empresa</label>
+            <select wire:model.live="companyselect" class="form-control shadow-none form-control-sm">
                 <option value="">Todas Empresas</option>
-                @foreach($companyList as $c)
-                    <option value="{{ $c->name }}">{{ $c->name }}</option>
+                @foreach($companyList as $company)
+                    <option value="{{ $company->companyname }}">{{ $company->companyname }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="col-md-4">
-            <label>Navegador</label>
-            <select wire:model="browser" class="form-control">
+        <div class="col-md-3">
+            <label class="form-label">Navegador</label>
+            <select wire:model.live="browser" class="form-control shadow-none form-control-sm">
                 <option value="">Todos Navegadores</option>
                 <option value="Edge">Edge</option>
                 <option value="Chrome">Chrome</option>
@@ -21,14 +21,14 @@
             </select>
         </div>
 
-        <div class="col-md-4">
-            <label>Mês</label>
-            <select wire:model="month" class="form-control">
-                <option value="">Todos Meses</option>
-                @for ($i = 1; $i <= 12; $i++)
-                    <option value="{{ $i }}">{{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}</option>
-                @endfor
-            </select>
+        <div class="col-md-3">
+            <label class="form-label">Inicio</label>
+            <input class="form-control shadow-none form-control-sm" type="date" wire:model.live="start_date"/>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Final</label>
+            <input class="form-control shadow-none form-control-sm" type="date" wire:model.live="end_date"/>
         </div>
     </div>
 
@@ -61,9 +61,9 @@
     </div>
 
     <!-- 🔹 Tabela -->
-    <div class="col-xl-12">
+    <div class="col-12">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>IP</th>
@@ -103,7 +103,7 @@
 
             <!-- Paginação -->
             <div class="mt-3">
-                {{ $visitors->links() }}
+                {{$visitors->links("livewire::simple-bootstrap")}}
             </div>
         </div>
     </div>
