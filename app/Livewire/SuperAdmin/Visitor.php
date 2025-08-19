@@ -2,7 +2,7 @@
 
 namespace App\Livewire\SuperAdmin;
 
-use App\Models\Company;
+use App\Models\company;
 use App\Models\Visitor as ModelsVisitor;
 use Livewire\Component;
 use Livewire\WithPagination;
