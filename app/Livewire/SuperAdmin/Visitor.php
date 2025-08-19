@@ -83,7 +83,7 @@ class Visitor extends Component
             $query->whereBetween("created_at", [$start, $end]);
         }
 
-        $visitors = $query->latest()->paginate(10);
+        $visitors = $query->latest()->get();
 
         return view('livewire.super-admin.visitor', [
             'visitors' => $visitors,

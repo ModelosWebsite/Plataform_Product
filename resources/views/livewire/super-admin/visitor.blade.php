@@ -101,10 +101,10 @@
                 </tbody>
             </table>
 
-            <!-- Paginação -->
+            {{-- <!-- Paginação -->
             <div class="mt-3">
                 {{$visitors->links("livewire::simple-bootstrap")}}
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
