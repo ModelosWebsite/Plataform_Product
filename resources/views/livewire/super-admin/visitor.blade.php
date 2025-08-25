@@ -51,61 +51,95 @@
     </div>
 
     <!-- 🔹 Tabela -->
-    <div class="col-12 row">
-        <div class="col-6">
-            <div class="table-responsive">
-                <table class="table table-bordered table-sm" id="dataTable" width="100%">
-                    <thead class="bg-primary text-white">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Total de Impressões</th>
+                        <th>Visitas Únicas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($visitsByCompany as $visitor)
                         <tr>
-                            <th>Empresa</th>
-                            <th>Total de Impressões</th>
-                            <th>Visitas Únicas</th>
+                            <td>{{ $visitor['company'] }}</td>
+                            <td>{{ $visitor['total_visits'] }}</td>
+                            <td>{{ $visitor['unique_visits'] }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($visitsByCompany as $visitor)
-                            <tr>
-                                <td>{{ $visitor['company'] }}</td>
-                                <td>{{ $visitor['total_visits'] }}</td>
-                                <td>{{ $visitor['unique_visits'] }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7">
-                                    <div class="col-md-12 d-flex justify-content-center align-items-center flex-column" style="height: 40vh">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                        </svg>
-                                        <p class="text-muted">Nenhum dado capturado dos visitantes</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                    @empty
+                        <tr>
+                            <td colspan="7">
+                                <div class="col-md-12 d-flex justify-content-center align-items-center flex-column" style="height: 40vh">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg>
+                                    <p class="text-muted">Nenhum dado capturado dos visitantes</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
-                {{-- <!-- Paginação -->
-                <div class="mt-3">
-                    {{$visitors->links("livewire::simple-bootstrap")}}
-                </div> --}}
-            </div>
+        {{-- <!-- Paginação -->
+        <div class="mt-3">
+            {{ $visitors->links("livewire::simple-bootstrap") }}
+        </div> --}}
         </div>
+    </div>
 
-        <div class="col-6">
-            <div>
+    <div class="row">
+    <!-- Navegador -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Visitas por Navegador
+            </div>
+            <div class="card-body">
                 <canvas id="browserChart"></canvas>
             </div>
-            <div>
+        </div>
+    </div>
+
+    <!-- Dia da semana -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Visitas por Dia da Semana
+            </div>
+            <div class="card-body">
                 <canvas id="weekDayChart"></canvas>
             </div>
-            <div>
+        </div>
+    </div>
+
+    <!-- Período do dia -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-dark">
+                Visitas por Período do Dia
+            </div>
+            <div class="card-body">
                 <canvas id="periodChart"></canvas>
             </div>
-            <div>
+        </div>
+    </div>
+
+    <!-- Dispositivo -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Visitas por Dispositivo
+            </div>
+            <div class="card-body">
                 <canvas id="deviceChart"></canvas>
             </div>
         </div>
     </div>
+</div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

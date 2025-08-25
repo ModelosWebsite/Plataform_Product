@@ -74,20 +74,14 @@ class Visitor extends Component
 
             // 1. Total de visitas por empresa
             $this->visitsByCompany = $this->baseQuery()
-                ->select('company', 
-                    DB::raw('count(*) as total_visits'), 
-                    DB::raw('count(distinct ip) as unique_visits'))
-                ->groupBy('company')
-                ->orderByDesc('total_visits')
-                ->get()
-                ->toArray();
+            ->select('company', DB::raw('count(*) as total_visits'), 
+            DB::raw('count(distinct ip) as unique_visits'))->groupBy('company')
+            ->orderByDesc('total_visits')->get()->toArray();
 
             // 2. Visitas por navegador
             $this->visitsByBrowser = $this->baseQuery()
-                ->select('browser', DB::raw('count(*) as total'))
-                ->groupBy('browser')
-                ->get()
-                ->toArray();
+            ->select('browser', DB::raw('count(*) as total'))
+            ->groupBy('browser')->get()->toArray();
 
             // 2. Visitas por dia da semana
             DB::statement("SET lc_time_names = 'pt_PT'");
