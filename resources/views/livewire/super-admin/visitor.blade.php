@@ -1,22 +1,12 @@
 <div>
     <!-- 🔹 Filtros -->
     <div class="row mb-3">
-        <div class="col-md-4">
-            <label class="form-label">Navegador</label>
-            <select wire:model.live="browser" class="form-control shadow-none form-control-sm">
-                <option value="">Todos Navegadores</option>
-                <option value="Edge">Edge</option>
-                <option value="Chrome">Chrome</option>
-                <option value="Firefox">Firefox</option>
-            </select>
-        </div>
-
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label class="form-label">Inicio</label>
             <input class="form-control shadow-none form-control-sm" type="date" wire:model.live="start_date"/>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label class="form-label">Final</label>
             <input class="form-control shadow-none form-control-sm" type="date" wire:model.live="end_date"/>
         </div>
