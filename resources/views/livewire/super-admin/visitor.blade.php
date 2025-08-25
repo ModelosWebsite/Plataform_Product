@@ -104,7 +104,7 @@
         </style>
 
         <div class="col-6">
-            <div class="card card-sm shadow-sm mb-3">
+            <div class="card shadow-sm mb-3">
                 <div class="card-header card-header-sm bg-primary text-white">
                     Visitas por Navegador
                 </div>
@@ -131,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="card card-sm shadow-sm mb-3">
+            <div class="card shadow-sm mb-3">
                 <div class="card-header card-header-sm bg-primary text-white">
                     Visitas por Dispositivo
                 </div>
