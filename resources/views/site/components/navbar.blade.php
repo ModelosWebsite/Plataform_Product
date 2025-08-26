@@ -5,7 +5,7 @@
     <!-- Logo -->
     <a href="{{ route('plataforma.produto.index', ['company' => $companyName->companyhashtoken]) }}" class="logo d-flex align-items-center me-auto me-lg-0">
       {{-- <img src="{{ asset('site/assets/img/logo.png') }}" alt="Logo" style="font-size: 2rem;"> --}}
-      <h1>{{ $companyName->companyname }}<span>.</span></h1>
+      <h1>{{ $companyName->companyname }}</h1>
     </a>
 
     <!-- Navbar -->

@@ -75,4 +75,9 @@ class company extends Model
     { 
         return $this->hasMany(Element::class, 'company_id'); 
     }
+
+    public function skills() 
+    { 
+        return $this->hasMany(Skill::class, 'company_id'); 
+    }
 }

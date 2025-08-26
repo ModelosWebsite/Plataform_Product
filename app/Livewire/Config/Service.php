@@ -2,25 +2,29 @@
 
 namespace App\Livewire\Config;
 
-use App\Models\Detail;
+use App\Models\Service as ModelsService;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Service extends Component
 {
-    public $mvv, $title, $description,$editMode = false, $mvvId;
+    public $getService, $title, $description,$editMode = false, $serviceId;
     use LivewireAlert;
 
     public function mount()
     {
-        $this->mvv = Detail::where("company_id", auth()->user()->company->id)->get(); // Carrega os serviços do banco
+        $this->getService = ModelsService::where("company_id", auth()->user()->company_id)->get(); // Carrega os serviços do banco
     }
 
     public function storeService()
     {
         try {
+            $this->validate([
+                'title' => 'required',
+                'description' => 'required',
+            ]);
     
-            Detail::create([
+            ModelsService::create([
                 'title' => $this->title,
                 'description' => $this->description,
                 "company_id" => auth()->user()->company_id,
@@ -50,18 +54,22 @@ class Service extends Component
 
     public function editService($id)
     {
-        $mvv = Detail::find($id);
-        $this->mvvId = $mvv->id;
-        $this->title = $mvv->title;
-        $this->description = $mvv->description;
+        $service = ModelsService::findOrFail($id);
+        $this->serviceId = $service->id;
+        $this->title = $service->title;
+        $this->description = $service->description;
         $this->editMode = true;
     }
 
     public function updateService()
     {
         try {
-
-            $service = Detail::find($this->mvvId);
+            $this->validate([
+                'title' => 'required',
+                'description' => 'required',
+            ]);
+    
+            $service = ModelsService::find($this->serviceId);
             $service->update([
                 'title' => $this->title,
                 'description' => $this->description,
@@ -90,7 +98,7 @@ class Service extends Component
 
     public function deleteService($id)
     {
-        Detail::destroy($id);
+        ModelsService::destroy($id);
         $this->mount(); // Atualiza a lista de serviços
     }
 

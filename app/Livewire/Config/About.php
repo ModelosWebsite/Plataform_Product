@@ -9,91 +9,68 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class About extends Component
 {
-    public $getAbout, $p1, $p2, $itemId;
+    public $getAbout, $p1, $p2, $itemId, $nome, $perfil;
     public $editMode = false;
     use WithFileUploads;
     use LivewireAlert;
 
-    public function mount()
+    public function toggleEditMode()
     {
-        $this->getAbout = ModelsAbout::where("company_id", auth()->user()->company_id)->get(); // Carrega os dados do banco
+        $this->editMode = !$this->editMode;
     }
 
-    public function storeAbout()
+    public function mount()
     {
-        try {
-            $this->validate(['p1' => 'required','p2' => 'required']);
-    
-            ModelsAbout::create([
-                'p1' => $this->p1,
-                'p2' => $this->p2,
-                'company_id' => auth()->user()->company_id
-            ]);
-    
-            $this->resetFields();
-            $this->mount(); // Atualiza a lista
-    
-            $this->alert('success', 'SUCESSO', [
-                'toast'=>false,
-                'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-                'text'=>'Informações Inseridas'
-            ]);
-        } catch (\Throwable $th) {
-            $this->alert('error', 'ERRO
-            ', [
-                'toast'=>false,
-                'position'=>'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-                'text'=>'Falha na Operação'
-            ]);
+        $getAbout = ModelsAbout::where("company_id", auth()->user()->company_id)->first();
+        if ($getAbout) {
+            $this->itemId = $getAbout->id;
+            $this->nome = $getAbout->nome;
+            $this->perfil = $getAbout->perfil;
+            $this->p1 = $getAbout->p1;
+            $this->p2 = $getAbout->p2;
+        } else {
+            // Defina valores padrão caso $user seja null (nenhum contato encontrado)
+            $this->itemId = null;
+            $this->nome = null;
+            $this->perfil = null;
+            $this->p1 = null;
+            $this->p2 = null;
         }
     }
 
-    public function editAbout($id)
-    {
-        $about = ModelsAbout::find($id);
-        $this->itemId = $about->id;
-        $this->p1 = $about->p1;
-        $this->p2 = $about->p2;
-        $this->editMode = true;
-    }
-
-    public function updateAbout()
+    public function save()
     {
         try {
-            $this->validate([
-                'p1' => 'required',
-                'p2' => 'required',
-            ]);
-    
-            $about = ModelsAbout::find($this->itemId);
-            $about->update([
-                'p1' => $this->p1,
-                'p2' => $this->p2,
-            ]);
-    
+            $getAbout = ModelsAbout::find($this->itemId);
+            if (!$getAbout) {
+                $getAbout = new ModelsAbout();
+            }
+
+            $getAbout->nome = $this->nome;
+            $getAbout->perfil = $this->perfil;
+            $getAbout->p1 = $this->p1;
+            $getAbout->p2 = $this->p2;
+            $getAbout->company_id = auth()->user()->company_id;
+
+            $getAbout->save();
+
             $this->alert('success', 'SUCESSO', [
-                'toast'=>false,
-                'position'=>'center',
+                'toast' => false,
+                'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text'=>'Sobre Actualizado'
+                'text' => 'Informação Criada'
             ]);
-    
-            $this->resetFields();
-            $this->mount(); // Atualiza a lista
-            $this->editMode = false;
+            
+            $this->toggleEditMode();
+        
         } catch (\Throwable $th) {
-            $this->alert('error', 'ERRO
-            ', [
-                'toast'=>false,
-                'position'=>'center',
+            $this->alert('error', 'ERRO', [
+                'toast' => false,
+                'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text'=>'Falha na operação'
+                'text' => 'Falha na operação: '
             ]);
         }
     }
@@ -102,13 +79,6 @@ class About extends Component
     {
         ModelsAbout::destroy($id);
         $this->mount(); // Atualiza a lista
-    }
-
-    public function resetFields()
-    {
-        $this->p1 = '';
-        $this->p2 = '';
-        $this->editMode = false;
     }
 
     public function render()

@@ -42,9 +42,10 @@ class SiteController extends Controller
 
             $data = $this->companyService->getCompanyDataForHome($company);
 
-            return view('site.pages.home', [
+            $dataView = [
                 'hero' => $company->heroes,
                 'products' => $company->products,
+                'skills' => $company->skills,
                 'info' => $company->infoWhy,
                 'details' => $company->details,
                 'about' => $company->about,
@@ -62,15 +63,28 @@ class SiteController extends Controller
                 'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
                 'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
                 'start' => $company->fundos->where('tipo', 'Start')->first()
-            ]);
+            ];
+            
+            switch ($company->companybusiness) {
+                case 'Portfolio':
+                    $view = "themes.default.app";
+                    break;
+                case 'Product':
+                    $view = "themes.default.landing";
+                    break;
+                default:
+                    $view = "site.pages.home";
+                    break;
+            }
+            
+            return view($view, $dataView);
 
         } catch (\Throwable $th) {
             Log::error('SiteController@index error: ', [
                 "message" => $th->getMessage(),
                 "file" => $th->getFile(),
                 "line" => $th->getLine(),
-            ]);
-            abort(404);
+            ]); abort(404);
         }
     }
 
@@ -98,6 +112,7 @@ class SiteController extends Controller
                 'phonenumber' => $company->contacts->first(),
                 'color' => $company->color
             ]);
+
         } catch (\Throwable $th) {
             Log::error('getShopping error: ' . $th->getMessage());
             abort(404);

@@ -3,6 +3,7 @@
 namespace App\Livewire\Definition;
 
 use Livewire\Component;
+use App\Models\company;
 
 class DefinitionGeneral extends Component
 {

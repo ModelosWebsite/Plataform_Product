@@ -4,8 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h6 class="modal-title" id="exampleModalLabel">Politicas da Entidade {{$companyName->companyname}}, NIF: {{$companyName->companynif}}</h6>
-          <button style="font-size: 30px" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">

@@ -14,8 +14,12 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->text("p1");
-            $table->text("p2");
+            $table->string("nome")->nullable();
+            $table->string("perfil")->nullable();
+            $table->string("image")->nullable();
+            $table->string("description")->nullable();
+            $table->text("p1")->nullable();
+            $table->text("p2")->nullable();
             $table->foreignIdFor(company::class);
             $table->timestamps();
         });

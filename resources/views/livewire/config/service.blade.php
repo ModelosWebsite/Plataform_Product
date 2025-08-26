@@ -1,48 +1,56 @@
 <div>
-    <h5>Missão, Visão e Valores</h5>
-    @if ($mvv->isNotEmpty() && !$editMode && count($mvv) == 3)
-        <div class="container">
-            <div class="row">
-                @forelse ($mvv as $item)
-                    <div class="col-md-12 mb-2">
-                        <div class="card shadow-sm border-0">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->title }}</h5>
-                                <p class="card-text text-wrap">{{ $item->description }}</p>
-                                <div class="d-flex gap-2 justify-content-lg-end">
-                                    <button class="btn btn-primary" wire:click="editService({{ $item->id }})">Editar</button>
-                                    <button class="btn btn-danger" wire:click="deleteService({{ $item->id }})">Excluir</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">Nenhum serviço encontrado.</p>
-                    </div>
-                @endforelse
-            </div>
+    <h3>Serviços</h3>
+    <!-- Formulário para Cadastrar ou Editar Serviços -->
+    <form wire:submit.prevent="{{ $editMode ? 'updateService' : 'storeService' }}">
+        <div class="form-group">
+            <h5 class="form-label">Nome do serviço</h5>
+            <input type="text" class="form-control" wire:model="title" name="title" placeholder="Insira o nome de um serviço...">
+            @error('title') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
 
-    @else
-        <!-- Formulário para Cadastrar ou Editar Serviços -->
-        <form wire:submit.prevent="{{ $editMode ? 'updateService' : 'storeService' }}">
-            <div class="form-group">
-                <h5 class="form-label">Titulo</h5>
-                <input type="text" class="form-control" wire:model="title" name="title" placeholder="Insira o nome de um serviço...">
-                @error('title') <span class="text-danger">{{ $message }}</span> @enderror
-            </div>
+        <div class="form-group">
+            <h5 class="form-label">Descrição:</h5>
+            <input type="text" class="form-control" wire:model="description" name="description" placeholder="Descreva o seu serviço...">
+            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
-            <div class="form-group">
-                <h5 class="form-label">Descrição:</h5>
-                <textarea cols="20" wire:model="description" rows="10" class="form-control"></textarea>
-                @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">{{ $editMode ? 'Atualizar' : 'Cadastrar' }}</button>
+            <a class="btn btn-primary mx-2" onclick="openTab(event, 'components')"> Proximo </a>
+        </div>
+    </form>
+    <!-- Listagem de Serviços -->
+    <hr>
+    <!-- Cards de Serviços com Bootstrap -->
+    <div class="row">
+        @forelse ($getService as $item)
+            <div class="col-md-5 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="card-title">{{ $item->title }}</h5>
+                            <p class="card-text">{{ $item->description }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button 
+                                class="btn btn-primary w-50 me-2"
+                                wire:click="editService({{ $item->id }})">
+                                Editar
+                            </button>
+                            <button 
+                                class="btn btn-danger w-50"
+                                wire:click="deleteService({{ $item->id }})">
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">{{ $editMode ? 'Atualizar' : 'Cadastrar' }}</button>
+        @empty
+            <div class="col-12 text-center text-muted">
+                Nenhum serviço encontrado
             </div>
-        </form>
-    @endif
+        @endforelse
+    </div>
 
 </div>
