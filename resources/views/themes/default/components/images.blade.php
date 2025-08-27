@@ -1,7 +1,7 @@
 <style>
     
     :root {
-        --hero: url('{{ isset($fundo->image) ? Storage::url("arquivos/background/".$fundo->image) : '' }}');
+        --hero: url('{{ isset($heroImage->image) ? Storage::url("arquivos/background/".$heroImage->image) : '' }}');
         --start: url('{{ isset($start->image) ? Storage::url("arquivos/background/".$start->image) : '' }}');
         --footer: url('{{ isset($footer->image) ? Storage::url("arquivos/background/".$footer->image) : '' }}');
         --shoppingCart: url('{{ isset($shoppingCart->image) ? Storage::url("/storage/".$shoppingCart->image) : '' }}');
@@ -19,5 +19,4 @@
     main .imgfooter {
         background-image: var(--footer);
     }
-
 </style>

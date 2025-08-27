@@ -51,12 +51,12 @@
 
     <div class="col-12">
         <div class="row">
-            <div class="d-flex justify-content-center align-items-center flex-column text-white text-center text-uppercase p-4">
-                <h1 class="display-3 display-md-1">Bem Vindo ao Website Clássico Produto</h1>
-                <p class="fs-4 fs-md-2">Para criar o seu Site ou entrar, clique no botão abaixo para fazer login</p>
+            <div class="d-flex justify-content-center align-items-center flex-column text-white text-center  p-4">
+                <h1 class="display-3 display-md-1 fw-bold">Bem-Vindo ao Website Clássico</h1>
+                <p class="fs-4 fs-md-2">Crie sua conta ou entre na sua já existente clicando em um dos botões abaixo</p>
                 <div>
-                    <a href="{{route('site.subscription')}}" style="width: 150px" class="btn btn-primary me-2 mb-2">Criar Website</a>
-                    <a href="{{route('plataform.product.login.view')}}" style="width: 150px" class="btn btn-primary mb-2">Entrar</a>
+                    <a href="{{route('site.subscription')}}" style="width: 150px" class="btn btn-primary me-2 mb-2 text-white">Criar Website</a>
+                    <a href="{{route('plataform.product.login.view')}}" style="width: 150px" class="btn btn-primary mb-2 text-white">Entrar</a>
                 </div>
             </div>
         </div>

@@ -34,7 +34,7 @@
                                         @foreach ($hero as $item)
                                         <div class="about-img">
                                             <img style="border-radius: 12rem;width: 13rem; height: 13rem;"
-                                                src="{{Storage::url("public/arquivos/{$item->img}")}}" class="img-fluid
+                                                src="{{ Storage::url("public/arquivos/hero/".$item->img) }}" class="img-fluid
                                             b-shadow-a" alt="">
                                         </div>
                                         @endforeach
@@ -59,13 +59,11 @@
                                             <p><span class="title-s">Perfil: </span> <span>{{$item->perfil ??
                                                     ""}}</span></p>
                                             @endforeach
-                                            {{--
-                                            @foreach ($contact as $item)
-                                            <p><span class="title-s">Email: </span> <span>{{$item->email}}</span></p>
-                                            <p><span class="title-s">Tel: </span> <span>+244 {{$item->telefone}}</span>
-                                            </p>
+                                            
+                                            @foreach ($contacts as $contact)
+                                                <p><span class="title-s">Email: </span> <span>{{$contact->email ?? ""}}</span></p>
+                                                <p><span class="title-s">Tel: </span> <span>+244 {{$contact->telefone ?? ""}}</span></p>
                                             @endforeach
-                                            --}}
                                         </div>
                                     </div>
                                 </div>
@@ -79,10 +77,9 @@
                                         </h5>
                                     </div>
                                     @forelse ($about as $item)
-                                    <p class="lead"> {{$item->p1 ?? ""}} </p>
-                                    <p class="lead"> {{$item->p2 ?? ""}} </p>
+                                        <p class="lead"> {{$item->p1 ?? ""}} </p>
+                                        <p class="lead"> {{$item->p2 ?? ""}} </p>
                                     @empty
-
                                     @endforelse
                                 </div>
                             </div>
@@ -109,21 +106,21 @@
                 </div>
             </div>
             <div class="row">
-                {{-- @foreach ($services as $service)
-                <div class="col-md-4">
-                    <div class="service-box">
-                        <div class="service-ico">
-                            <span class="ico-circle"><i class="bi bi-briefcase"></i></span>
-                        </div>
-                        <div class="service-content">
-                            <h2 class="s-title">{{$service->title}}</h2>
-                            <p class="s-description text-center">
-                                {{$service->description}}
-                            </p>
+                @foreach ($services as $service)
+                    <div class="col-md-4">
+                        <div class="service-box">
+                            <div class="service-ico">
+                                <span class="ico-circle"><i class="bi bi-briefcase"></i></span>
+                            </div>
+                            <div class="service-content">
+                                <h2 class="s-title">{{$service->title ?? ""}}</h2>
+                                <p class="s-description text-center">
+                                    {{$service->description ?? ""}}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endforeach --}}
+                @endforeach
             </div>
         </div>
     </section>
@@ -139,13 +136,11 @@
                         <div class="counter-ico">
                             <span class="ico-circle"><i class="bi bi-check"></i></span>
                         </div>
-                        {{-- @foreach ($works as $work)
                         <div class="counter-num">
-                            <p data-purecounter-start="0" data-purecounter-end="{{$work->level}}"
+                            <p data-purecounter-start="0" data-purecounter-end="{{$works->level ?? ""}}"
                                 data-purecounter-duration="5" class="counter purecounter"></p>
                             <span class="counter-text">Trabalhos Concluidos</span>
                         </div>
-                        @endforeach --}}
                     </div>
                 </div>
 
@@ -154,13 +149,11 @@
                         <div class="counter-ico">
                             <span class="ico-circle"><i class="bi bi-journal-richtext"></i></span>
                         </div>
-                        {{-- @foreach ($experience as $experienc)
                         <div class="counter-num">
-                            <p data-purecounter-start="0" data-purecounter-end="{{$experienc->level}}"
+                            <p data-purecounter-start="0" data-purecounter-end="{{$experiencia->level ?? ""}}"
                                 data-purecounter-duration="5" class="counter purecounter"></p>
                             <span class="counter-text">Anos de Experiência</span>
                         </div>
-                        @endforeach --}}
                     </div>
                 </div>
 
@@ -169,13 +162,11 @@
                         <div class="counter-ico">
                             <span class="ico-circle"><i class="bi bi-people"></i></span>
                         </div>
-                        {{-- @foreach ($clients as $client)
                         <div class="counter-num">
-                            <p data-purecounter-start="0" data-purecounter-end="{{$client->level}}"
+                            <p data-purecounter-start="0" data-purecounter-end="{{$clients->level ?? ""}}"
                                 data-purecounter-duration="5" class="counter purecounter"></p>
                             <span class="counter-text">Total de Clientes</span>
                         </div>
-                        @endforeach --}}
                     </div>
                 </div>
 
@@ -184,13 +175,11 @@
                         <div class="counter-ico">
                             <span class="ico-circle"><i class="bi bi-award"></i></span>
                         </div>
-                        {{-- @foreach ($premios as $premio)
                         <div class="counter-num">
-                            <p data-purecounter-start="0" data-purecounter-end="{{$premio->level}}"
+                            <p data-purecounter-start="0" data-purecounter-end="{{$premios->level ?? ""}}"
                                 data-purecounter-duration="5" class="counter purecounter"></p>
                             <span class="counter-text">Premios</span>
                         </div>
-                        @endforeach --}}
                     </div>
                 </div>
             </div>
@@ -216,7 +205,7 @@
                 </div>
             </div>
             <div class="row">
-                {{-- @foreach ($projects as $project)
+                @foreach ($portfolio as $project)
                 <div class="col-md-4">
                     <div class="work-box">
                         <a href="{{Storage::url("arquivos/{$project->image}")}}" data-gallery="portfolioGallery"
@@ -228,13 +217,13 @@
                         <div class="work-content">
                             <div class="row">
                                 <div class="col-sm-8">
-                                    <h2 class="w-title">{{$project->title}}</h2>
+                                    <h2 class="w-title">{{$project->title ?? ""}}</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                @endforeach --}}
+                @endforeach
             </div>
         </div>
     </section><!-- End Portfolio Section -->
@@ -255,20 +244,22 @@
                                         </h5>
                                     </div>
 
-                                    {{-- @foreach ($contact as $item)
+                                    @foreach ($contacts as $item)
                                     <div class="more-info">
                                         <p class="lead">
-                                            {{$item->atendimento}}
+                                            {{$item->atendimento ?? ""}}
                                         </p>
                                         <ul class="list-ico">
-                                            <li><span class="bi bi-geo-alt"></span>{{$item->endereco}}</li>
-                                            <li><span class="bi bi-phone"></span>+244 {{$item->telefone}}</li>
-                                            <li><span class="bi bi-envelope"></span>{{$item->email}}</li>
+                                            <li><span class="bi bi-geo-alt"></span>{{$item->endereco ?? ""}}</li>
+                                            <li><span class="bi bi-phone"></span>+244 {{$item->telefone ?? ""}}</li>
+                                            <li><span class="bi bi-envelope"></span>{{$item->email ?? ""}}</li>
                                         </ul>
                                     </div>
-                                    @endforeach --}}
+                                    @endforeach
                                 </div>
-                                @livewire("announcements.square")
+                                <div class="col-md-4">
+                                    @livewire("announcements.square")
+                                </div>
                             </div>
                         </div>
                     </div>

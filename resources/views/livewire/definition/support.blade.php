@@ -42,7 +42,7 @@
                             <tr class="tablinks" onclick="openTab(event, 'service')">
                                 <td><img src="{{ asset('wireframe/theme/portfolio/service.png') }}" width="400" height="100" alt=""></td>
                             </tr>
-                            <tr class="tablinks" onclick="openTab(event, 'components')">
+                            <tr class="tablinks" onclick="openTab(event, 'prove')">
                                 <td><img src="{{ asset('wireframe/theme/portfolio/Componentes.png') }}" width="400" height="100" alt=""></td>
                             </tr>
                             <tr class="tablinks" onclick="openTab(event, 'works')">
@@ -66,7 +66,7 @@
             <div id="footer" class="tabcontent">@livewire("config.footer")</div>
             <div id="value" class="tabcontent">@livewire("config.competence")</div>
             <div id="mvv" class="tabcontent">@livewire("config.mvv")</div>
-            {{-- <div id="works" class="tabcontent">@livewire("config.project")</div> --}}
+            <div id="works" class="tabcontent">@livewire("config.project")</div>
         </div>
         
     </div>

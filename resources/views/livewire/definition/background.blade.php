@@ -1,39 +1,71 @@
-<div class="d-flex justify-content-evenly row">
-    <div class="col-xl-6">
-        <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
-            
-            <div class="form-group">
-                <h5 class="form-label">Carregar Imagem</h5>
-                <input type="file" wire:model="image" name="image" class="form-control" placeholder="Insira a informação...">
-                @if ($fundoId && $currentImage)
-                    <img src="{{ Storage::url("arquivos/background/$currentImage") }}" style="width: 10rem; height: 5rem;" alt="Imagem Atual">
-                @endif
-            </div>
+<div class="row">
+    <!-- Formulário -->
+    <div class="col-md-5 mb-4">
+        <div class="card shadow-sm border-0 rounded h-100">
+            <div class="card-body">
+                <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
+                    
+                    <!-- Upload -->
+                    <div class="mb-3">
+                        <p class="form-label fw-bold">Carregar Imagem</p>
+                        <input type="file" wire:model="image" name="image" class="form-control">
 
-            <div class="form-group">
-                <h5 class="form-label">Secção</h5>
-                <select wire:model="type" class="form-control">
-                    <option selected disabled>Selecione uma secção para esta imagem</option>
-                    <option value="Start">Inicio</option>
-                    <option value="AboutMain">Sobre Principal</option>
-                    <option value="AboutSecund">Sobre Segundaria</option>
-                </select>
-            </div>
+                        @if ($fundoId && $currentImage)
+                            <div class="mt-2 text-center">
+                                <img src="{{ Storage::url("arquivos/background/$currentImage") }}"
+                                     class="img-thumbnail rounded"
+                                     style="width: 12rem; height: 7rem; object-fit: cover;"
+                                     alt="Imagem Atual">
+                                <p class="text-muted small mt-1">Imagem atual</p>
+                            </div>
+                        @endif
+                    </div>
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="{{ $fundoId ? 'Atualizar' : 'Cadastrar' }}">
+                    <!-- Secção -->
+                    <div class="mb-3">
+                        <p class="form-label fw-bold">Secção</p>
+                        <select wire:model="type" class="form-select shadow-none">
+                            <option selected>Selecione uma secção para esta imagem</option>
+                            <option value="Start">Início</option>
+                            <option value="AboutMain">Sobre Principal</option>
+                            <option value="AboutSecund">Sobre Secundária</option>
+                            <option value="Hero">Primeira Sessão</option>
+                        </select>
+                    </div>
+
+                    <!-- Botão -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            {{ $fundoId ? 'Atualizar' : 'Cadastrar' }}
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 
-    <div class="col-xl-6 d-flex justify-content-evenly flex-wrap">
-        @foreach ($fundo as $item)  
-            <div class="card p-1 border-0 rounded-full">
-                <div class="d-flex flex-column align-items-center">
-                    <img src="{{ Storage::url("arquivos/background/$item->image") }}" style="width: 7rem; height: 7rem; border-radius:50%;" alt="">
-                    <button class="btn btn-primary mt-3" wire:click="load({{ $item->id }})">Editar</button>
+    <!-- Lista de imagens -->
+    <div class="col-md-7">
+        <div class="row g-3">
+            @foreach ($fundo as $item)
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 rounded text-center h-100">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <img src="{{ Storage::url('arquivos/background/' . $item->image) }}"
+                                 class="rounded-circle mb-2"
+                                 style="width: 7rem; height: 7rem; object-fit: cover;"
+                                 alt="Imagem de Fundo">
+
+                            <h6 class="fw-bold mb-2">{{ $item->tipo }}</h6>
+
+                            <button class="btn btn-outline-primary btn-sm w-100 mt-auto"
+                                    wire:click="load({{ $item->id }})">
+                                Editar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 </div>

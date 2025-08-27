@@ -16,14 +16,13 @@ class Project extends Component
 
     public function render()
     {
-        return view('livewire.config.project');
+        return view('livewire.config.project', $this->getproject = ModelsProject::where("company_id", auth()->user()->company_id)->get());
     }
 
     public function storeOrUpdateProject()
     {
         $validatedData = $this->validate([
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
         ]);
 
         if ($this->projectId) {
@@ -32,8 +31,8 @@ class Project extends Component
                 $fileName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
                 $this->image->storeAs("public/arquivos",$fileName);
             }
-
             // Atualizar projeto
+            $project = ModelsProject::find($this->projectId);
             $project->update([
                 "title" => $this->title, 
                 "image" => $fileName
@@ -54,11 +53,11 @@ class Project extends Component
                 $this->image->storeAs("public/arquivos",$fileName);
             }
             // Adicionar novo projeto
-            // $project = ModelsProject::create([
-            //     "title" => $this->title, 
-            //     "company_id" => auth()->user()->company_id,
-            //     "image" => $fileName
-            // ]);
+            $project = ModelsProject::create([
+                "title" => $this->title, 
+                "company_id" => auth()->user()->company_id,
+                "image" => $fileName
+            ]);
 
             $this->alert('success', 
             'SUCESSO', [
@@ -76,7 +75,7 @@ class Project extends Component
 
     public function edit($id)
     {
-        // $component = ModelsProject::find($id);
+        $component = ModelsProject::find($id);
         $this->projectId = $component->id;
         $this->title = $component->title;
         $this->image = $component->image;
@@ -84,12 +83,12 @@ class Project extends Component
 
     public function getProjects()
     {
-        $this->getproject = [];
+        $this->getproject = ModelsProject::where("company_id", auth()->user()->company_id)->get();
     }
 
     public function deleteproject($id)
     {
-        // ModelsProject::find($id)->delete();
+        ModelsProject::find($id)->delete();
 
         $this->alert('success', 
         'ELIMINADO', [

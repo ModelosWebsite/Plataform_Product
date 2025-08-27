@@ -41,11 +41,13 @@ class SiteController extends Controller
             $this->visitorService->registerFromRequest($request, $company);
 
             $data = $this->companyService->getCompanyDataForHome($company);
-
+            
             $dataView = [
                 'hero' => $company->heroes,
                 'products' => $company->products,
                 'skills' => $company->skills,
+                'services' => $company->services,
+                'portfolio' => $company->projects,
                 'info' => $company->infoWhy,
                 'details' => $company->details,
                 'about' => $company->about,
@@ -54,6 +56,8 @@ class SiteController extends Controller
                 'experiencia' => $data['elements']['Experiência'] ?? null,
                 'parceiros' => $data['elements']['Parceiros'] ?? null,
                 'clients' => $data['elements']['Clientes'] ?? null,
+                'premios' => $data['elements']['Premios'] ?? null,
+                'works' => $data['elements']['Trabalhos'] ?? null,
                 'whatsapp' => $company->packages->where('is_active', true)->where('package_name', 'Whatsapp')->first(),
                 'phonenumber' => $company->contacts->first(),
                 'companies' => $company->termpbHasCompany ? $company->termpbHasCompany->load('termsPBs') : null,
@@ -61,6 +65,7 @@ class SiteController extends Controller
                 'companyName' => $company,
                 'color' => $company->color,
                 'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
+                'heroImage' => $company->fundos->where('tipo', 'Hero')->first(),
                 'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
                 'start' => $company->fundos->where('tipo', 'Start')->first()
             ];
@@ -70,11 +75,11 @@ class SiteController extends Controller
                     $view = "themes.default.app";
                     break;
                 case 'Product':
-                    $view = "themes.default.landing";
-                    break;
-                default:
                     $view = "site.pages.home";
                     break;
+                default:
+                    break;
+                    $view = "themes.default.landing";
             }
             
             return view($view, $dataView);

@@ -44,7 +44,7 @@ class CompanyService
                 'elements'
             ]);
 
-            $elements = $company->elements->whereIn('element', ['Produtos','Experiência','Parceiros','Clientes'])->keyBy('element');
+            $elements = $company->elements->whereIn('element', ['Produtos','Experiência','Parceiros','Clientes', 'Trabalhos', 'Premios'])->keyBy('element');
 
             return ['company' => $company, 'elements' => $elements];
         } catch (\Throwable $th) {

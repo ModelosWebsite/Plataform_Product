@@ -80,4 +80,14 @@ class company extends Model
     { 
         return $this->hasMany(Skill::class, 'company_id'); 
     }
+
+    public function services()
+    { 
+        return $this->hasMany(Service::class, 'company_id'); 
+    }
+
+    public function projects()
+    { 
+        return $this->hasMany(Project::class, 'company_id'); 
+    }
 }

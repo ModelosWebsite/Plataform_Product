@@ -58,7 +58,7 @@ class Background extends Component
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
                 $this->image->storeAs("public/arquivos/background", $fileName);
                 $fundo->image = $fileName;
-            } elseif (!$this->hero_id) {
+            } elseif (!$this->fundoId) {
                 $fundo->image = $this->img;
             }
 
@@ -76,6 +76,7 @@ class Background extends Component
             ]);
 
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             \Log::error("DefiniçõesGerais@Add Imagem", [
                 "message" => $th->getMessage(),
                 "file" => $th->getFile(),

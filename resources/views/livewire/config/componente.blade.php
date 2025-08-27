@@ -5,11 +5,12 @@
     <form wire:submit.prevent="storeOrUpdateComponent">
         <div class="form-group">
             <select wire:model="elements" name="elements" class="form-control">
-                <option disabled selected>Escolha a temática</option>
+                <option selected>Escolha a temática</option>
                 <option value="Trabalhos">Trabalhos Concluídos</option>
                 <option value="Experiência">Anos de Experiência</option>
                 <option value="Clientes">Total de Clientes</option>
                 <option value="Parceiros">Parceiros</option>
+                <option value="Premios">Premios</option>
             </select>
         </div>
 
