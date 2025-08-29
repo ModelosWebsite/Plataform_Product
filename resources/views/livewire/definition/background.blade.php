@@ -30,6 +30,7 @@
                             <option value="AboutMain">Sobre Principal</option>
                             <option value="AboutSecund">Sobre Secundária</option>
                             <option value="Hero">Primeira Sessão</option>
+                            <option value="Rodapé">Rodapé</option>
                         </select>
                     </div>
 

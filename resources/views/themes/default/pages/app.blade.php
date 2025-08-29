@@ -32,11 +32,9 @@
                                 <div class="row">
                                     <div class="col-sm-6 col-md-5">
                                         @foreach ($hero as $item)
-                                        <div class="about-img">
-                                            <img style="border-radius: 12rem;width: 13rem; height: 13rem;"
-                                                src="{{ Storage::url("arquivos/hero/".$item->img) }}" class="img-fluid
-                                            b-shadow-a" alt="">
-                                        </div>
+                                            <div class="about-img">
+                                                <img style="border-radius: 12rem;width: 13rem; height: 13rem;" src="{{ Storage::url("arquivos/hero/".$item->img) }}" class="img-fluid b-shadow-a" alt="">
+                                            </div>
                                         @endforeach
                                     </div>
                                     <div class="skill-mf">

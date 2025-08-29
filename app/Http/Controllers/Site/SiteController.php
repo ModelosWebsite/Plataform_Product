@@ -67,7 +67,8 @@ class SiteController extends Controller
                 'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
                 'heroImage' => $company->fundos->where('tipo', 'Hero')->first(),
                 'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
-                'start' => $company->fundos->where('tipo', 'Start')->first()
+                'start' => $company->fundos->where('tipo', 'Start')->first(),
+                'footer' => $company->fundos->where('tipo', 'Rodapé')->first()
             ];
             
             switch ($company->companybusiness) {
