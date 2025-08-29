@@ -10,12 +10,8 @@
         .gradient-custom {
         /* fallback for old browsers */
         background: #6a11cb;
-
         /* Chrome 10-25, Safari 5.1-6 */
         background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
         }
     </style>
 </head>
@@ -27,12 +23,12 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
               <div class="card bg-dark text-white" style="border-radius: 1rem;">
                 <div class="card-body p-4">
-                  <div class="mt-md-4 ">
-                    <h3 class="fw-bold  text-uppercase text-center">Login</h3>
+                  <div class="">
+                    <h3 class="fw-bold text-center">Início de sessão</h3>
       
                    <form action="{{route("plataform.product.login")}}" method="post">
                         @csrf
-                        <div class="form-outline form-white mb-4">
+                        <div class="form-outline form-white mb-2">
                           <label class="form-label" for="typeEmailX">Email</label>
                             <input name="email" type="email" id="typeEmailX" class="form-control" required/>
                         </div>
@@ -41,16 +37,17 @@
                           <label class="form-label" for="typePasswordX">Password</label>
                             <input name="password" type="password" id="typePasswordX" class="form-control" required/>
                         </div>
-                        
-                        <button class="btn btn-outline-light px-5 btn-sm" type="submit">Login</button>  
 
+                        <div class="text-center">
+                          <button class="btn btn-outline-light px-5 btn-sm" type="submit">Login</button>
+                        </div>
                    </form>
                   </div>
                 </div>
 
                 <div class="card-footer text-center ">
-                  <a href="{{route("auth.reset.password")}}" class="text-white" >Recuperar senha</a> <br>
-                  <a href="{{route('site.subscription')}}" class="text-white">Criar Website</a>
+                  <a href="{{route("auth.reset.password")}}" class="btn btn-outline-light" >Recuperar Senha</a>  
+                  <a href="{{route('site.subscription')}}" class="btn btn-outline-light text-decoration-none">Criar Website</a>
                 </div>
 
               </div>

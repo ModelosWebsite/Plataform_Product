@@ -15,6 +15,7 @@
                                     </div>
 
                                     <button class="btn btn-outline-light btn-sm px-5" type="submit">Recuperar</button>
+                                    <a href="/" class="btn btn-outline-light btn-sm px-5">Voltar</a>
                                 </form>
                             </div>
                         </div>
