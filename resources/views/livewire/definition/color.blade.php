@@ -49,7 +49,7 @@
                                         @if($theme->id == $theme_id)
                                             <span class="badge bg-primary">Selecionado</span>
                                         @else
-                                            <button class="btn btn-outline-primary btn-sm mt-2">
+                                            <button wire:click="setTheme({{ $theme->id }})" class="btn btn-outline-primary btn-sm mt-2">
                                                 Usar este tema
                                             </button>
                                         @endif
