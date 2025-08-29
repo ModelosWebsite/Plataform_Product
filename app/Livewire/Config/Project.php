@@ -29,7 +29,7 @@ class Project extends Component
     {
         if ($this->image && !is_string($this->image)) {
             $fileName = uniqid() . '.' . $this->image->getClientOriginalExtension();
-            $this->image->storeAs("public/arquivos", $fileName);
+            $this->image->storeAs("arquivos", $fileName);
             return $fileName;
         }
 
