@@ -160,7 +160,7 @@ class Encomenda extends Component
                 'text'=>'A PROCESSAR DOWNLOAD...'
             ]);
             
-            return response()->download(storage_path('app/public/public/recibos/' . $receipt));
+            return response()->download(storage_path('recibos/' . $receipt));
 
         } catch (\Throwable $th) {
             \Log::error("Encomenda@download", [
