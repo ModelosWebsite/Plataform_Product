@@ -60,6 +60,11 @@ class Hability extends Component
             $this->refreshHabilities();
 
         } catch (\Throwable $th) {
+            \Log::error("Habilidade@Criar/Atualizar", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine()
+            ]);
             $this->showAlert('error', 'Falha na operação');
         }
     }
