@@ -9,7 +9,7 @@
     }
 
     .overlay-itro{
-        background: var(--background);
+        background-color: var(--background);
     }
 
     .buttons button{
