@@ -2,7 +2,7 @@ on:
   push:
     branches:
     - feature/newArchitecture
-name: 🚀 Deploy website classico modelo produto app on push
+name: 🚀 Deploy website classico produto app on push
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -17,12 +17,3 @@ jobs:
          server: ${{secrets.HOST}}
          username: ${{secrets.USER}}
          password: ${{secrets.PASSWORD}}
-
-
-
-
-
-
-
-
-

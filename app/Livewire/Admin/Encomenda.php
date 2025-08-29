@@ -72,7 +72,7 @@ class Encomenda extends Component
 
             // Chamada à API para obter a entrega
             $response = Http::withHeaders($headers)
-                ->get("https://kytutes.com/api/deliveries?reference=$id");
+            ->get("https://kytutes.com/api/deliveries?reference=$id");
 
             $delivery = collect(json_decode($response, true));
 
