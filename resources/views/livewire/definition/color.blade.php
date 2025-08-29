@@ -37,14 +37,11 @@
                     <div class="row g-3">
                         @foreach($themes as $theme)
                             <div class="col-md-4">
-                                <div 
-                                    class="card h-100 shadow-sm border 
+                                <div class="card h-100 shadow-sm border 
                                     @if($theme->id == $theme_id) border-primary @endif" style="cursor:pointer;">
 
                                     {{-- Imagem de preview do tema --}}
-                                    <img src="{{ asset('image/2525.png') }}" 
-                                        class="card-img-top" 
-                                        alt="Preview {{ $theme->name }}">
+                                    <img src="{{ $theme->image ? asset('storage/theme/'.$theme->image) : asset('image/2525.png') }}" class="card-img-top" alt="Imagem">
 
                                     <div class="card-body text-center">
                                         <h6 class="card-title">{{ $theme->name }}</h6>
