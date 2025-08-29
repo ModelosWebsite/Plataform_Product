@@ -8,6 +8,10 @@
         background: var(--background);
     }
 
+    .overlay-itro{
+        background: var(--background);
+    }
+
     .buttons button{
         background: #ffffff;
         color: var(--background);
