@@ -20,7 +20,7 @@ class ResetPassword extends Component
     }
 
     public function resetPassword()
-{
+    {
     if (empty($this->email)) {
         $this->alert('warning', 'AVISO', [
             'toast' => false,
