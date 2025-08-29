@@ -4,12 +4,6 @@
         --color: {{$color->letra ?? "#127"}};
     }
 
-    #checkout .modal-header,
-    #checkout .card-header,
-    #checkout .modal-footer button {
-        background-color: var(--background);
-    }
-
     .wrapper{
         background: var(--background);
     }

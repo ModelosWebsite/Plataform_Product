@@ -2,7 +2,7 @@
 <div wire:ignore.self class="modal fade" id="checkout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header" style="background: var(--color); color:#fff;">
+        <div class="modal-header" style="background: var(--background); color:#fff !important;">
           <h5 class="modal-title" id="exampleModalLabel">Finalizar Encomenda</h5>
           <span style="font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">
             &times;
@@ -13,7 +13,7 @@
             <div class="accordion" id="accordionExample">
               @if($package && $package->is_active)
                   <div class="card">
-                  <div class="card-header" style="background: var(--color);" id="headingTwo">
+                  <div class="card-header" style="background: var(--background);" id="headingTwo">
                     <h2 class="mb-0">
                       <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         Pagamento Por Transferência
@@ -40,7 +40,7 @@
                 </div>
               @else
                 <div class="card">
-                  <div class="card-header" style="background: var(--color);" id="headingOne">
+                  <div class="card-header" style="background: var(--background);" id="headingOne">
                     <h2 class="mb-0">
                       <button class="btn btn-block text-left" type="button" data-bs-toggle="collapse" style="color: #fff;" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Pagamento Por Referência
@@ -138,7 +138,7 @@
             <div class="modal-footer col-md-12 d-flex justify-content-between align-items-start">
                 <h4>Total: {{number_format(abs($totalFinal), 2, '.', ' ')}} Kz</h4>
                 <button class="btn btn-primary text-uppercase text-white" type="button" wire:click='checkout("{{ session('companytoken') }}")'
-                style="background: var(--color); color:#fff; border: none;">
+                style="background: var(--background); color:#fff; border: none;">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading wire:target='checkout("{{ session('companytoken') }}")'></span>
                   Encomendar         
                 </button>

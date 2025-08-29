@@ -1,6 +1,7 @@
 <style>
     :root{
         --color: {{$color->codigo ?? ""}};
+        --background: {{$color->codigo ?? ""}};
         --letra: {{$color->letra ?? ""}};
         --aboutg: url({{ isset($fundoAbout->image) ? Storage::url("arquivos/background/".$fundoAbout->image) : 'none' }});
         --aboutp: url({{ isset($fundo->image) ? Storage::url("arquivos/background/".$fundo->image) : 'none' }});

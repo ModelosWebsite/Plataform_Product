@@ -4,8 +4,8 @@
             <div class="container-fluid px-3 px-md-3 px-lg-4">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="table responsive">
-                            <table class="table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
                                 <thead class="text-white" style="background-color: var(--background) !important;">
                                     <tr>
                                         <th>Produto</th>
@@ -18,18 +18,24 @@
                                 <tbody>
                                    @forelse ($cartContent as $key=> $item)
                                     <tr>
-                                        <td class="d-flex">
-                                            <div class="mr-3">
-                                                @if ($item->attributes->image != null)
-                                                    <img style="width: 60px" src="{{asset('storage/items/'.$item->attributes->image)}}" class="img-fluid product-thumbnail">
-                                                @else 
-                                                    <img style="width: 60px" src="{{asset("notfound.png")}}" class="menu-img img-fluid" alt="">
-                                                @endif
-                                            </div>
-                                            <div class="mt-3">
-                                                <h6>{{ $item->name }}</h6>
-                                            </div>
-                                        </td>
+<td>
+    <div class="d-flex align-items-center">
+        <div class="me-3">
+            <img 
+                src="{{ $item->attributes->image 
+                        ? asset('storage/items/'.$item->attributes->image) 
+                        : asset('notfound.png') }}" 
+                alt="{{ $item->name }}" 
+                class="img-fluid product-thumbnail" 
+                style="width: 60px"
+            >
+        </div>
+        <div>
+            <h6 class="mb-0">{{ $item->name }}</h6>
+        </div>
+    </div>
+</td>
+
                                         <td>
                                             <div class="text-end">
                                                 {{ number_format($item->price, 2,'.', ' ') }} kz
@@ -75,7 +81,7 @@
                         <div class="cart__discount">
                             <form wire:submit.prevent='cuponDiscount'>
                                 <input required type="text" wire:model="code" name="cupon" placeholder="Insira o codigo do cupon">   
-                                <button  type="submit" style="background: var(--color); color:#fff; border: none;">Aplicar</button>
+                                <button  type="submit" style="background: var(--background); color:#fff; border: none;">Aplicar</button>
                             </form>
                         </div>
                         <div class="cart__total">
@@ -104,7 +110,7 @@
                             @endif
                             
                             <button type="button" {{count($cartContent) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
-                                style="background: var(--color); color:#fff; border: none;" data-bs-toggle="modal"
+                                style="background: var(--background); color:#fff; border: none;" data-bs-toggle="modal"
                                 data-bs-target="#checkout" id="getLocationButton">Finalizar Compra
                             </button>
                              @include("livewire.site.checkout")
