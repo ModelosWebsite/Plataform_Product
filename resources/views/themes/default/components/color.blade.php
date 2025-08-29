@@ -8,8 +8,8 @@
         background: var(--background);
     }
 
-    .overlay-itro{
-        background-color: var(--background);
+    #hero .overlay-itro{
+        background-color: var(--background) !important;
     }
 
     .buttons button{
