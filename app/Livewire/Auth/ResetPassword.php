@@ -36,8 +36,6 @@ class ResetPassword extends Component
     try {
         $userFinded = User::where('email', '=', $this->email)->first();
 
-        dd($userFinded);
-
         if (!$userFinded) {
             $this->alert('warning', 'AVISO', [
                 'toast' => false,
