@@ -34,7 +34,7 @@
                                         @foreach ($hero as $item)
                                         <div class="about-img">
                                             <img style="border-radius: 12rem;width: 13rem; height: 13rem;"
-                                                src="{{ Storage::url("public/arquivos/hero/".$item->img) }}" class="img-fluid
+                                                src="{{ Storage::url("arquivos/hero/".$item->img) }}" class="img-fluid
                                             b-shadow-a" alt="">
                                         </div>
                                         @endforeach
