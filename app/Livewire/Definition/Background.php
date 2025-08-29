@@ -56,7 +56,7 @@ class Background extends Component
                 // $fundo->image = $upload->sendFile();
 
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos/background", $fileName);
+                $this->image->storeAs("arquivos/background", $fileName);
                 $fundo->image = $fileName;
             } elseif (!$this->fundoId) {
                 $fundo->image = $this->img;
