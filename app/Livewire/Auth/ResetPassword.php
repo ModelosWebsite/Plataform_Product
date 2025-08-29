@@ -76,6 +76,7 @@ class ResetPassword extends Component
         }
         
     } catch (\Throwable $th) {
+        \Log::error('Erro ao resetar a senha: ' . $th->getMessage());
         DB::rollBack();
         $this->alert('error', 'ERRO', [
             'toast' => false,
