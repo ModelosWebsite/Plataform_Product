@@ -73,8 +73,7 @@ class ResetPassword extends Component
                 'confirmButtonText' => 'OK',
                 'text' => 'Falha ao enviar o email com a nova senha. Tente novamente.'
             ]);
-        }
-        
+        }    
     } catch (\Throwable $th) {
         \Log::error('Erro ao resetar a senha: ' . $th->getMessage());
         DB::rollBack();
@@ -86,5 +85,5 @@ class ResetPassword extends Component
             'text' => 'Falha ao realizar operação. Erro: ' . $th->getMessage()
         ]);
     }
-}
+    }
 }

@@ -75,7 +75,7 @@ class Home extends Component
             $fileName = null;
             if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
                 $fileName = uniqid(). "." . $this->image->getClientOriginalExtension();
-                $path = $this->image->storeAs("public/arquivos/company", $fileName);
+                $path = $this->image->storeAs("arquivos/company", $fileName);
             }
 
             // Criação de token único para a empresa
