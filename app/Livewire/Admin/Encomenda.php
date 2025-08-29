@@ -159,8 +159,8 @@ class Encomenda extends Component
                 'timerProgressBar'=> true,
                 'text'=>'A PROCESSAR DOWNLOAD...'
             ]);
-            
-            return response()->download(storage_path('recibos/' . $receipt));
+
+            return response()->download(storage_path('storage/recibos/' . $receipt));
 
         } catch (\Throwable $th) {
             \Log::error("Encomenda@download", [
