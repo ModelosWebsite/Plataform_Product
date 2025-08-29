@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - main
+    - feature/newArchitecture
 name: 🚀 Deploy website classico modelo produto app on push
 jobs:
   web-deploy:
