@@ -9,76 +9,83 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Project extends Component
 {
+    use LivewireAlert, WithFileUploads;
+
     public $title, $image, $getproject, $projectId = null;
 
-    use LivewireAlert;
-    use WithFileUploads;
+    public function mount()
+    {
+        $this->getProjects();
+    }
 
     public function render()
     {
-        return view('livewire.config.project', $this->getproject = ModelsProject::where("company_id", auth()->user()->company_id)->get());
+        return view('livewire.config.project', [
+            'projects' => $this->getproject,
+        ]);
+    }
+
+    private function handleFileUpload(): ?string
+    {
+        if ($this->image && !is_string($this->image)) {
+            $fileName = uniqid() . '.' . $this->image->getClientOriginalExtension();
+            $this->image->storeAs("public/arquivos", $fileName);
+            return $fileName;
+        }
+
+        return is_string($this->image) ? $this->image : null;
+    }
+
+    private function showAlert(string $type, string $title): void
+    {
+        $this->alert($type, strtoupper($title), [
+            'toast' => false,
+            'position' => 'center',
+            'showConfirmButton' => false,
+            'confirmButtonText' => 'OK',
+        ]);
     }
 
     public function storeOrUpdateProject()
     {
-        $validatedData = $this->validate([
+        $this->validate([
             'title' => 'required|string|max:255',
         ]);
 
+        $fileName = $this->handleFileUpload();
+
         if ($this->projectId) {
-            //manipulacao de arquivo;
-            if ($this->image != null and !is_string($this->image)) {
-                $fileName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos",$fileName);
-            }
-            // Atualizar projeto
-            $project = ModelsProject::find($this->projectId);
+            // Atualizar
+            $project = ModelsProject::findOrFail($this->projectId);
             $project->update([
-                "title" => $this->title, 
-                "image" => $fileName
+                'title' => $this->title,
+                'image' => $fileName,
             ]);
 
-            $this->alert('success', 
-            'ACTUALIZADO', [
-                'toast' => false,
-                'position' => 'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-            ]);
-
+            $this->showAlert('success', 'Atualizado');
         } else {
-            //manipulacao de arquivo;
-            if ($this->image != null and !is_string($this->image)) {
-                $fileName = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/arquivos",$fileName);
-            }
-            // Adicionar novo projeto
-            $project = ModelsProject::create([
-                "title" => $this->title, 
-                "company_id" => auth()->user()->company_id,
-                "image" => $fileName
+            // Criar
+            ModelsProject::create([
+                'title' => $this->title,
+                'company_id' => auth()->user()->company_id,
+                'image' => $fileName,
             ]);
 
-            $this->alert('success', 
-            'SUCESSO', [
-                'toast' => false,
-                'position' => 'center',
-                'showConfirmButton' => false,
-                'confirmButtonText' => 'OK',
-            ]);
+            $this->showAlert('success', 'Sucesso');
         }
 
-        // Limpar campos
         $this->reset(['title', 'image', 'projectId']);
-        $this->getProjects(); // Para atualizar a lista de projetos
+        $this->getProjects();
     }
 
     public function edit($id)
     {
-        $component = ModelsProject::find($id);
-        $this->projectId = $component->id;
-        $this->title = $component->title;
-        $this->image = $component->image;
+        $project = ModelsProject::find($id);
+        if ($project) {
+            $this->projectId = $project->id;
+            $this->title     = $project->title;
+            $this->image     = $project->image;
+        }
     }
 
     public function getProjects()
@@ -86,16 +93,11 @@ class Project extends Component
         $this->getproject = ModelsProject::where("company_id", auth()->user()->company_id)->get();
     }
 
-    public function deleteproject($id)
+    public function deleteProject($id)
     {
         ModelsProject::find($id)->delete();
 
-        $this->alert('success', 
-        'ELIMINADO', [
-            'toast' => false,
-            'position' => 'center',
-            'showConfirmButton' => false,
-            'confirmButtonText' => 'OK',
-        ]);
+        $this->showAlert('success', 'Eliminado');
+        $this->getProjects();
     }
 }

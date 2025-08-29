@@ -12,7 +12,7 @@
                                 <label for="tab1">Personalizar Website </label>
                                     
                                 <input id="tab2" type="radio" name="tabs">
-                                <label for="tab2">Paleta de Cores</label>
+                                <label for="tab2">Temas</label>
                                     
                                 <input id="tab3" type="radio" name="tabs">
                                 <label for="tab3">Fotos de Fundo</label>

@@ -1,4 +1,9 @@
 <div>
+    <style>
+        .tablinks {
+            cursor: pointer;
+        }
+    </style>
     <!-- Card Body -->
     <div class="row">
         <!-- Sidebar com Imagens -->
@@ -31,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="#" class="tablinks" onclick="openTab(event, 'competencias')">
+                                    <a href="#" class="tablinks" onclick="openTab(event, 'hability')">
                                         <img src="{{ asset('wireframe/theme/portfolio/Competencias.png') }}" width="200" height="100" />
                                     </a>
                                     <a href="#" class="tablinks" onclick="openTab(event, 'about')">
@@ -62,6 +67,7 @@
             <div id="hero" class="tabcontent" style="display: block;">@livewire("config.inicial")</div>
             <div id="about" class="tabcontent">@livewire("config.about")</div>
             <div id="prove" class="tabcontent">@livewire("config.componente")</div>
+            <div id="hability" class="tabcontent"><livewire:config.hability/></div>
             <div id="service" class="tabcontent">@livewire("config.service")</div>
             <div id="footer" class="tabcontent">@livewire("config.footer")</div>
             <div id="value" class="tabcontent">@livewire("config.competence")</div>
@@ -71,9 +77,6 @@
         
     </div>
 
-    <!-- External Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/tabs.css') }}" />
-
-    <!-- External JavaScript -->
-    <script src="{{ asset('js/tabs.js') }}"></script>
 </div>
+<!-- External JavaScript -->
+<script src="{{ asset('js/tabs.js') }}"></script>

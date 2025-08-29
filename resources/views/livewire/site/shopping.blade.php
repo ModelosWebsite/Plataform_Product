@@ -16,20 +16,20 @@
           </div>
 
           <ul>
-            <li><button class="category {{ $category === null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button></li>
-            @if ($categories && isset($categories) && count($categories) > 0)
-                @foreach ($categories as $item)
-                    <li>
-                        @if (isset($item['reference']) && $item['category'] != "Pratos" && $item['category'] != "Prato do Dia" && $item['category'] != "Bebidas")
-                            <button class="category {{ $category === $item['category'] ? 'active' : '' }}" wire:click="getItems('{{ $item['category'] ?? '' }}')">
-                                {{ $item['category'] ?? '' }}
-                            </button>
-                        @endif
-                    </li>
-                @endforeach
-            @endif
-        </ul>
-        
+              <li><button class="category {{ $category === null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button></li>
+              @if ($categories && isset($categories) && count($categories) > 0)
+                  @foreach ($categories as $item)
+                      <li>
+                          @if (isset($item['reference']) && $item['category'] != "Pratos" && $item['category'] != "Prato do Dia" && $item['category'] != "Bebidas")
+                              <button class="category {{ $category === $item['category'] ? 'active' : '' }}" wire:click="getItems('{{ $item['category'] ?? '' }}')">
+                                  {{ $item['category'] ?? '' }}
+                              </button>
+                          @endif
+                      </li>
+                  @endforeach
+              @endif
+          </ul>
+          
           <div class="iconChevron-right active">
             <i>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
@@ -37,7 +37,6 @@
               </svg>
             </i>
           </div>
-
         </div>
       </div>
     </div>

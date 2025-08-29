@@ -1,12 +1,13 @@
-@extends('layouts.site.app')
-@section('title', 'Carrinho de Compra')
-@section('content')
-@include('site.components.style')
-@include('site.components.navbar')
+@extends("themes.default.layout.app")
+@section("title", "Portfolio Site")
+@section("content")
+@include("themes.default.components.navbar")
+@include("themes.default.components.images")
+@include("themes.default.components.color")
 @include("sweetalert::alert")
 
     {{-- Start Import Component livewire loja online  --}}
-    <main id="menu" class="menu" style="margin-top: 8rem">
+    <main style="margin-top: 9rem;">
         <livewire:site.shoppingcart />
     </main>
     {{-- End Import Component livewire loja online --}}

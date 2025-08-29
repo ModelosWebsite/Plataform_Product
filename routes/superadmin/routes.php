@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\SuperAdmin\{DocumentationController, PacoteController, RegisterCompanyController, VisitorController};
 use App\Http\Controllers\SuperAdmin\{SuperAdminController, TermosController, UserController};
-use App\Livewire\SuperAdmin\FunctionalityPlusComponent;
+use App\Livewire\SuperAdmin\{FunctionalityPlusComponent, ThemeComponent};
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth")->prefix("/super/admin")->group(function()
@@ -43,4 +43,5 @@ Route::middleware("auth")->prefix("/super/admin")->group(function()
     });
 
     Route::get("/recursos", FunctionalityPlusComponent::class)->name("super.admin.functionality.plus");
+    Route::get("/get/temas", ThemeComponent::class)->name("super.admin.gest.theme");
 });

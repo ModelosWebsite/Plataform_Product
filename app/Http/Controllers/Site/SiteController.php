@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Services\CompanyService;
 use App\Services\VisitorService;
-use Darryldecode\Cart\Facades\CartFacade;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Darryldecode\Cart\Facades\CartFacade;
 
 class SiteController extends Controller
 {
@@ -29,7 +29,7 @@ class SiteController extends Controller
         try {
 
             $company = $this->companyService->getByHash($companyHash);
-            
+
             if ($company->status !== 'active') {
                 return view('disable.App');
             }
@@ -72,7 +72,7 @@ class SiteController extends Controller
             
             switch ($company->companybusiness) {
                 case 'Portfolio':
-                    $view = "themes.default.app";
+                    $view = "themes.default.pages.app";
                     break;
                 case 'Product':
                     $view = "site.pages.home";
@@ -110,13 +110,46 @@ class SiteController extends Controller
             $shopping = $company->packages->firstWhere('pacote', 'Shopping');
             $whatsapp = $company->packages->firstWhere('pacote', 'WhatsApp');
 
-            return view('site.pages.shopping', [
-                'companyName' => $company,
-                'shopping' => $shopping,
-                'WhatsApp' => $whatsapp,
+            $dataView = [
+                'hero' => $company->heroes,
+                'products' => $company->products,
+                'skills' => $company->skills,
+                'services' => $company->services,
+                'portfolio' => $company->projects,
+                'info' => $company->infoWhy,
+                'details' => $company->details,
+                'about' => $company->about,
+                'contacts' => $company->contacts,
+                'product' => $data['elements']['Produtos'] ?? null,
+                'experiencia' => $data['elements']['Experiência'] ?? null,
+                'parceiros' => $data['elements']['Parceiros'] ?? null,
+                'clients' => $data['elements']['Clientes'] ?? null,
+                'premios' => $data['elements']['Premios'] ?? null,
+                'works' => $data['elements']['Trabalhos'] ?? null,
+                'whatsapp' => $company->packages->where('is_active', true)->where('package_name', 'Whatsapp')->first(),
                 'phonenumber' => $company->contacts->first(),
-                'color' => $company->color
-            ]);
+                'companies' => $company->termpbHasCompany ? $company->termpbHasCompany->load('termsPBs') : null,
+                'termos' => $company->termsCompany,
+                'companyName' => $company,
+                'color' => $company->color,
+                'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
+                'heroImage' => $company->fundos->where('tipo', 'Hero')->first(),
+                'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
+                'start' => $company->fundos->where('tipo', 'Start')->first()
+            ];
+
+            switch ($company->companybusiness) {
+                case 'Portfolio':
+                    $view = "themes.default.pages.shopping";
+                    break;
+                case 'Product':
+                    $view = "site.pages.shopping";
+                    break;
+                default:
+                    $view = "themes.default.landing";
+            }
+
+            return view($view, $dataView);
 
         } catch (\Throwable $th) {
             Log::error('getShopping error: ' . $th->getMessage());
@@ -137,16 +170,48 @@ class SiteController extends Controller
                 return redirect()->route('plataforma.produto.shopping', ['company' => $company->companyhashtoken]);
             }
 
-            $shopping = $company->packages->firstWhere('pacote', 'Shopping');
-            $whatsapp = $company->packages->firstWhere('pacote', 'WhatsApp');
-
-            return view('site.pages.carrinho', [
-                'companyName' => $company,
-                'shopping' => $shopping,
-                'WhatsApp' => $whatsapp,
+            
+            $dataView = [
+                'hero' => $company->heroes,
+                'products' => $company->products,
+                'skills' => $company->skills,
+                'services' => $company->services,
+                'portfolio' => $company->projects,
+                'info' => $company->infoWhy,
+                'details' => $company->details,
+                'about' => $company->about,
+                'contacts' => $company->contacts,
+                'product' => $data['elements']['Produtos'] ?? null,
+                'experiencia' => $data['elements']['Experiência'] ?? null,
+                'parceiros' => $data['elements']['Parceiros'] ?? null,
+                'clients' => $data['elements']['Clientes'] ?? null,
+                'premios' => $data['elements']['Premios'] ?? null,
+                'works' => $data['elements']['Trabalhos'] ?? null,
+                'whatsapp' => $company->packages->where('is_active', true)->where('package_name', 'Whatsapp')->first(),
                 'phonenumber' => $company->contacts->first(),
-                'color' => $company->color
-            ]);
+                'companies' => $company->termpbHasCompany ? $company->termpbHasCompany->load('termsPBs') : null,
+                'termos' => $company->termsCompany,
+                'companyName' => $company,
+                'color' => $company->color,
+                'fundoAbout' => $company->fundos->where('tipo', 'AboutMain')->first(),
+                'heroImage' => $company->fundos->where('tipo', 'Hero')->first(),
+                'fundo' => $company->fundos->where('tipo', 'AboutSecund')->first(),
+                'start' => $company->fundos->where('tipo', 'Start')->first()
+            ];
+
+            switch ($company->companybusiness) {
+                case 'Portfolio':
+                    $view = "themes.default.pages.shopping-cart";
+                    break;
+                case 'Product':
+                    $view = "site.pages.carrinho";
+                    break;
+                default:
+                    $view = "themes.default.landing";
+            }
+
+            return view($view, $dataView);
+
         } catch (\Throwable $th) {
             Log::error('getShoppingCart error: ' . $th->getMessage());
             abort(404);

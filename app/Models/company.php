@@ -28,7 +28,6 @@ class company extends Model
     public function heroes() 
     { 
         return $this->hasMany(hero::class, 'company_id'); 
-    
     }
     public function products() 
     { 
@@ -70,24 +69,24 @@ class company extends Model
     { 
         return $this->hasMany(Termpb_has_Company::class, 'company_id'); 
     }
-
     public function elements() 
     { 
         return $this->hasMany(Element::class, 'company_id'); 
     }
-
     public function skills() 
     { 
         return $this->hasMany(Skill::class, 'company_id'); 
     }
-
     public function services()
     { 
         return $this->hasMany(Service::class, 'company_id'); 
     }
-
     public function projects()
     { 
         return $this->hasMany(Project::class, 'company_id'); 
+    }
+    public function themeActive()
+    { 
+        return $this->hasMany(ThemeHasCompany::class, 'company_id'); 
     }
 }

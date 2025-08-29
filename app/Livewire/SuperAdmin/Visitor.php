@@ -104,8 +104,8 @@ class Visitor extends Component
 
             // 5. Visitas por dispositivo
             $this->visitsByDevice = $this->baseQuery()
-                ->select('device', DB::raw('count(*) as total'))
-                ->groupBy('device')
+                ->select('typedevice', DB::raw('count(*) as total'))
+                ->groupBy('typedevice')
                 ->get()
                 ->toArray();
 

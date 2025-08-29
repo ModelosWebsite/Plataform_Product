@@ -42,7 +42,7 @@
                             <input name="password" type="password" id="typePasswordX" class="form-control" required/>
                         </div>
                         
-                        <button class="btn btn-outline-light px-5" type="submit">Login</button>  
+                        <button class="btn btn-outline-light px-5 btn-sm" type="submit">Login</button>  
 
                    </form>
                   </div>

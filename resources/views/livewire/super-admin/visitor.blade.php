@@ -177,7 +177,7 @@
         new Chart(document.getElementById("deviceChart"), {
             type: 'doughnut',
             data: {
-                labels: @json(array_column($visitsByDevice, 'device')),
+                labels: @json(array_column($visitsByDevice, 'typedevice')),
                 datasets: [{
                     data: @json(array_column($visitsByDevice, 'total'))
                 }]

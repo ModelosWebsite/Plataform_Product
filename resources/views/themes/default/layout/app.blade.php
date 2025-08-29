@@ -20,28 +20,6 @@
 <body>
 
   @yield('content')
-
-  <!-- ======= Footer ======= -->
-  <footer>
-    <div class="container-fluid px-3 px-md-3 px-lg-4">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="copyright-box">
-            <p class="copyright">&copy; Copyright <a href="https://fortcodedev.com" target="_blank" class="text-white"><strong>Fort-Code</strong></a>. Direitos autorais reservados</p>
-            <!-- Button trigger modal termos de cprivacidades e condições-->
-            <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#privacity">
-              Politicas de Privacidade |  
-            </a>
-            <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#conditions">
-              Termos e Condições   |
-            </a>
-            <a class="text-white" href="">Fazer Login</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- End  Footer -->
   
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center">

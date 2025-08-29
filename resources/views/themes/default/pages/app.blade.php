@@ -42,7 +42,7 @@
                                     <div class="skill-mf">
                                         <p class="title-s">Habilidades</p>
                                         @foreach ($skills as $skill)
-                                        <span>{{$skill->description}}</span> <span class="pull-right">{{$skill->level ??
+                                        <span>{{$skill->hability}}</span> <span class="pull-right">{{$skill->level ??
                                             ""}}%</span>
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar"
@@ -90,7 +90,7 @@
         </div>
     </section>
     <!-- End About Section -->
-    @livewire("announcements.rectangle")
+    <livewire:announcements.rectangle />
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services-mf pt-5 route">
@@ -188,7 +188,7 @@
 
     <!-- End Counter Section -->
     <div class="mt-5">
-        @livewire("announcements.rectangle")
+        <livewire:announcements.rectangle />
     </div>
 
     <!-- ======= Portfolio Section ======= -->
@@ -258,7 +258,7 @@
                                     @endforeach
                                 </div>
                                 <div class="col-md-4">
-                                    @livewire("announcements.square")
+                                    <livewire:announcements.square />
                                 </div>
                             </div>
                         </div>
@@ -268,7 +268,31 @@
         </div>
     </section><!-- End Contact Section -->
 </main>
-<!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="container-fluid px-3 px-md-3 px-lg-4">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="copyright-box">
+            <p class="copyright">&copy; Copyright <a href="https://fortcodedev.com" target="_blank" class="text-white"><strong>Fort-Code</strong></a>. Direitos autorais reservados</p>
+            <!-- Button trigger modal termos de cprivacidades e condições-->
+            <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#privacity">
+              Politicas de Privacidade |  
+            </a>
+            <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#conditions">
+              Termos e Condições   |
+            </a>
+            <a class="text-white" href="{{route('plataform.product.login.view')}}">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End  Footer -->
+
+    <!-- End #main -->
+    @include('pacote.whatsapp')
     @include("site.rules.privacy")
     @include("site.rules.conditions")
 @endsection
