@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V\CreateWebsiteController;
+use App\Http\Controllers\API\V\CreateWebsiteController;
 use App\Http\Controllers\API\V\PaymentUpdateController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
