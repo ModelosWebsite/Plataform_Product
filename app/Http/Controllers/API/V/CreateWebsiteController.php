@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V;
 use App\Http\Controllers\Controller;
 use App\Models\{company, User};
 use Illuminate\Http\Request;
+use App\Mail\SendAccount;
 use Illuminate\Support\Facades\{DB, Hash, Http, Validator};
 
 class CreateWebsiteController extends Controller
@@ -52,6 +53,16 @@ class CreateWebsiteController extends Controller
                 'company_id' => $company->id,
                 'email_verified_at' => now()
             ]);
+
+                        //FAZER ENVIO DE EMAIL
+            $data = [
+                'name' => $company->companyname,
+                'message' => 'Bem-vindo ao website clássico! Sua empresa ' . $request->name . ' foi registada com sucesso. aqui segui os seus dados de acesso',
+                'email' => $user->email,
+                'password' => $request->password,
+            ];
+
+            Mail::to($request->email)->send(new SendAccount($data));
 
             DB::commit();
 
