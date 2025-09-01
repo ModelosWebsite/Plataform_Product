@@ -6,7 +6,7 @@
   {{-- Listagem dos produtos e categorias --}}
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class="container-scroll" style="background: var(--color);">
+        <div class="container-scroll">
           <div class="iconChevron-left">
             <i>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
@@ -16,7 +16,7 @@
           </div>
 
           <ul>
-              <li><button class="category {{ $category === null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button></li>
+              <li><button id="categoryAll" class="category {{ $category === null ? 'active' : '' }}" wire:click="getItems(null)">Todos</button></li>
               @if ($categories && isset($categories) && count($categories) > 0)
                   @foreach ($categories as $item)
                       <li>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="untree_co-section product-section before-footer-section" style="margin-top: 3rem;">
+    <div class="untree_co-section product-section before-footer-section" style="margin-top: 2rem;">
       <div class="container">
           <div class="row">
             @if ($getCollectionsItens && isset($getCollectionsItens) && count($getCollectionsItens) > 0)
@@ -50,7 +50,7 @@
                         <div class="col-12 col-md-4 col-lg-3 mb-5">
                             <span class="product-item">
                                 @if (isset($item['image']))
-                                    <div class="mb-2" style="width: 253px; height: 300px; overflow: hidden;">
+                                    <div class="mb-2" style="height: 300px;">
                                       <img src="{{ asset('storage/items/'.$item['image']) }}"
                                         class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;"
                                         data-bs-toggle="modal" data-bs-target="#detail{{ $item['reference'] ?? '' }}">
@@ -81,7 +81,6 @@
         </div>
       </div>
     </div>
-
 
   {{-- Codigo CSS --}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

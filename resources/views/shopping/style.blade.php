@@ -1,68 +1,71 @@
 <style>
-    .container-scroll {
-        background: #ddd;
-        max-width: 900px;
-        border-radius: 30px;
-        overflow: hidden;
-        position: relative;
+.container-scroll {
+    background: #ddd;
+    max-width: 900px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.container-scroll i {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+
+.container-scroll i:hover {
+    background: var(--background);
+    color: #fff;
+}
+
+.container-scroll ul {
+    display: flex;
+    flex-wrap: nowrap !important;  /* impede quebra dos <li> */
+    gap: 16px;
+    padding: 12px 24px;
+    margin: 0;
+    list-style: none;
+    overflow-x: scroll;            /* scroll horizontal */
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.container-scroll ul.dragging {
+    scroll-behavior: auto;
+}
+
+.container-scroll ul::-webkit-scrollbar {
+    display: none;
+}
+
+.container-scroll button {
+    color: #333;
+    font-weight: 500;
+    background: #fff;
+    padding: 4px 24px;
+    border-radius: 30px;
+    transition: background 0.3s, color 0.3s;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;   /* 🔥 impede quebra de texto */
+    display: inline-block; /* garante que se ajusta ao conteúdo */
+}
+
+.container-scroll button:hover,
+.container-scroll button.active {
+    background: var(--background);
+    color: #fff;
     }
-  
-    .container-scroll i {
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #333;
-        border-radius: 50%;
-        pointer-events: auto;
-    }
-  
-    .container-scroll i:hover {
-        background: var(--background);
-        color: #fff;
-    }
-  
-    .container-scroll ul {
-        display: flex;
-        gap: 16px;
-        padding: 12px 24px;
-        margin: 0;
-        list-style: none;
-        overflow-x: scroll;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
-    }
-  
-    .container-scroll ul.dragging {
-        scroll-behavior: auto;
-    }
-  
-    .container-scroll ul::-webkit-scrollbar {
-        display: none;
-    }
-  
-    .container-scroll button {
-        color: #333;
-        font-weight: 500;
-        background: #fff;
-        padding: 4px 24px;
-        border-radius: 30px;
-        transition: background 0.3s, color 0.3s;
-        border: none;
-        cursor: pointer;
-    }
-  
-    .container-scroll button:hover,
-    .container-scroll button.active {
-        background: var(--background);
-        color: #fff;
-    }
-  
-    .iconChevron-left,
-    .iconChevron-right {
-        position: absolute;
+
+.iconChevron-left,
+.iconChevron-right {
+    position: absolute;
         height: 100%;
         width: 100px;
         top: 0;

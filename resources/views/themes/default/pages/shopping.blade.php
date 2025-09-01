@@ -5,12 +5,12 @@
 @include("themes.default.components.images")
 @include("themes.default.components.color")
 
-  <section id="menu" class="menu" style="margin-top: 8rem">
+  <section style="margin-top: 8rem">
       <livewire:site.shopping />
 
     <a href="{{route('produto.shoppingcart', ['company' => $companyName->companyhashtoken])}}" 
             id="cartcout" 
-        style="color: #111111; background: var(--color); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; position: fixed; right: 20px; bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+        style="color: #ffffff; background: var(--background); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; position: fixed; right: 15px; bottom: 65px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
         class="cartcout relative">
         
         <div style="position: relative;">

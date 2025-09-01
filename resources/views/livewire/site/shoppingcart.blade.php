@@ -18,23 +18,21 @@
                                 <tbody>
                                    @forelse ($cartContent as $key=> $item)
                                     <tr>
-<td>
-    <div class="d-flex align-items-center">
-        <div class="me-3">
-            <img 
-                src="{{ $item->attributes->image 
-                        ? asset('storage/items/'.$item->attributes->image) 
-                        : asset('notfound.png') }}" 
-                alt="{{ $item->name }}" 
-                class="img-fluid product-thumbnail" 
-                style="width: 60px"
-            >
-        </div>
-        <div>
-            <h6 class="mb-0">{{ $item->name }}</h6>
-        </div>
-    </div>
-</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3" style="border-radius: 6px;">
+                                                    <img src="{{ $item->attributes->image 
+                                                        ? asset('storage/items/'.$item->attributes->image) 
+                                                        : asset('notfound.png') }}" 
+                                                        alt="{{ $item->name }}" 
+                                                        class="img-fluid product-thumbnail" 
+                                                        style="width: 50px">
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">{{ $item->name }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
 
                                         <td>
                                             <div class="text-end">
