@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{company, User};
 use Illuminate\Http\Request;
 use App\Mail\SendAccount;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\{DB, Hash, Http, Validator};
 
 class CreateWebsiteController extends Controller
@@ -45,7 +46,7 @@ class CreateWebsiteController extends Controller
             ]);
 
             // CRIAR USUARIO ADMINISTRADOR DA EMPRESA
-            User::create([
+            $user = User::create([
                 'name' => $request->name . ' ' . $request->lastname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -70,7 +71,7 @@ class CreateWebsiteController extends Controller
             
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json(['message' => 'Erro ao criar a empresa e o usuário administrador.','error' => $th->getMessage(),], 500);
+            return response()->json(['message' => 'Erro ao criar a empresa e o usuário administrador.','error' => $th->getMessage(),'file' => $th->getFile(), 'line' => $th->getLine()], 500);
         }
     }
 
