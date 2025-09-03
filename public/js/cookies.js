@@ -15,7 +15,7 @@ class Cookies {
 
     get template() {
         return `
-            <div id="cookies" class="wrapper" style="background-color: var(--color)">
+            <div id="cookies" class="wrapper" style="background-color: var(--background)">
                 <div class="content">
                     <header>Política de Cookies</header>
                     <p>
@@ -23,8 +23,8 @@ class Cookies {
                         Ao aceitar este banner, você concorda com o uso de tais cookies.
                     </p>
                     <div class="buttons">
-                        <button class="item" style="color: var(--color)" id="cookies-accept">Aceitar</button>
-                        <button class="item" style="color: var(--color)" id="cookies-reject">Rejeitar</button>
+                        <button class="item" style="color: var(--background)" id="cookies-accept">Aceitar</button>
+                        <button class="item" style="color: var(--background)" id="cookies-reject">Rejeitar</button>
                     </div>
                 </div>
             </div>
