@@ -96,7 +96,7 @@ src="https://www.facebook.com/tr?id=1508892043601451&ev=PageView&noscript=1"
       .buttons .item{
         margin: 0 10px;
         background: #ffffff;
-        color: var(--color);
+        color: var(--background);
       }
   </style>
 <!-- End Meta Pixel Code -->
