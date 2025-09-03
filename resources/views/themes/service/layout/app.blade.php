@@ -56,8 +56,7 @@ src="https://www.facebook.com/tr?id=1508892043601451&ev=PageView&noscript=1"
     @include("themes.service.component.footer")
   @endif
   <!-- footer section -->
-  <!-- footer section -->
-  
+  <script src="{{asset("js/cookies.js")}}"></script>
   <!-- jQery -->
   <script type="text/javascript" src="{{asset("theme/service/site/js/jquery-3.4.1.min.js")}}"></script>
   <!-- popper js -->

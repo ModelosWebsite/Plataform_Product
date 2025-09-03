@@ -18,8 +18,7 @@ class Square extends Component
     public function announcements()
     {
         try {
-            $url = 'https://publicidade.fortcodedev.com/api/announcements';
-            //$url = 'http://127.0.0.2:8000/api/announcements';
+            $url = 'https://xzero.live/api/announcements';
             $response = Http::get($url)->json();
 
             if ($response != null) {

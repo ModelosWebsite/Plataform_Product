@@ -30,6 +30,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route("plataforma.produto.shopping", ["company" => $companyName->companyhashtoken]) }}">Loja</a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('plataforma.produto.delivery.status', ['company' => $companyName->companyhashtoken]) }}">Encomenda</a></li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route("plataforma.produto.index", ["company" => $companyName->companyhashtoken]) }}#contact">Contacto </a>
                 </li>

@@ -53,6 +53,7 @@ src="https://www.facebook.com/tr?id=1508892043601451&ev=PageView&noscript=1"
 
   <!-- Template Main JS File -->
   <script src="{{ asset('theme/default/js/main.js') }}"></script>
+  <script src="{{ asset("js/cookies.js") }}"></script>
   {{-- Caso necessário, descomente cookies.js depois de corrigir declarações duplicadas de Cookies --}}
   
   <!-- jQuery -->

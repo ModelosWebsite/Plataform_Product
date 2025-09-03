@@ -30,6 +30,11 @@
   </section>
   <!-- end about section -->
 
+  <!-- End Counter Section -->
+  <div class="mt-4 mb-4">
+      <livewire:announcements.rectangle />
+  </div>
+
   <!-- service section -->
   <section class="service_section layout_padding" id="service">
     <div class="service_container">
@@ -81,6 +86,10 @@
     </div>
   </section>
   <!-- end track section -->
+
+  <div class="mt-4 mb-4">
+      <livewire:announcements.rectangle />
+  </div>
 
   <!-- info section -->
   <section class="info_section layout_padding2" id="bgfooter">
