@@ -25,7 +25,7 @@
   <link href="{{asset("theme/service/site/css/style.css")}}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{{asset("theme/service/site/css/responsive.css")}}" rel="stylesheet" />
-  <!-- Meta Pixel Code -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -35,11 +35,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1115710790513108');
+fbq('init', '1508892043601451');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1115710790513108&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1508892043601451&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
   @livewireStyles
