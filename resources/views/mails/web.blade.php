@@ -47,7 +47,7 @@
                                 &copy; {{ date('Y') }} Website Clássico. Todos os direitos reservados.
                             </p>
                             <p style="font-size: 14px; color: #777777; margin: 5px 0;">
-                                <a href="https://on.xzero.live" style="color: #282828; text-decoration: none;">Visite nosso site</a>
+                                <a href="https://on.xzero.live" style="color: #000dff; text-decoration: none;">Visite nosso site</a>
                             </p>
                         </td>
                     </tr>

@@ -57,6 +57,23 @@
                                 <td><img src="{{ asset('wireframe/theme/portfolio/footer.png') }}" width="400" height="100" alt=""></td>
                             </tr> 
                     @break
+                    @case("Service")
+                        <tr class="tablinks active" onclick="openTab(event, 'hero')">
+                            <td><img class="img-fluid" src="{{ asset('theme/service/frame/Hero.jpg') }}" width="400" height="80" alt=""></td>
+                        </tr>
+                        <tr class="tablinks" onclick="openTab(event, 'about')">
+                            <td><img class="img-fluid" src="{{ asset('theme/service/frame/wire_02.png') }}" width="400" height="80" /></td>
+                        </tr>
+                        <tr class="tablinks" onclick="openTab(event, 'service')">
+                            <td><img class="img-fluid" src="{{ asset('theme/service/frame/Serviços.png') }}" width="400" height="80" alt=""></td>
+                        </tr>
+                        <tr class="tablinks" onclick="openTab(event, 'value')">
+                            <td><img class="img-fluid" src="{{ asset('theme/service/frame/Componentes.png') }}" width="400" height="80" alt=""></td>
+                        </tr>
+                        <tr class="tablinks" onclick="openTab(event, 'footer')">
+                            <td><img class="img-fluid" src="{{ asset('theme/service/frame/wire_06.png') }}" width="400" height="80" alt=""></td>
+                        </tr>
+                    @break
                     @default
                 @endswitch
             </table>

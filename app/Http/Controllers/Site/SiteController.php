@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use Illuminate\Http\Request;
-use App\Services\CompanyService;
-use App\Services\VisitorService;
+use App\Services\{VisitorService, CompanyService};
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Darryldecode\Cart\Facades\CartFacade;
@@ -13,6 +12,7 @@ class SiteController extends Controller
 {
     protected CompanyService $companyService;
     protected VisitorService $visitorService;
+    protected DataService $dataService;
 
     public function __construct(CompanyService $companyService, VisitorService $visitorService)
     {
@@ -77,6 +77,9 @@ class SiteController extends Controller
                     break;
                 case 'Product':
                     $view = "site.pages.home";
+                    break;
+                case 'Service':
+                    $view = "themes.service.pages.home";
                     break;
                 default:
                     break;
@@ -146,6 +149,9 @@ class SiteController extends Controller
                 case 'Product':
                     $view = "site.pages.shopping";
                     break;
+                case 'Service':
+                    $view = "themes.service.pages.shopping";
+                    break;
                 default:
                     $view = "themes.default.landing";
             }
@@ -203,6 +209,9 @@ class SiteController extends Controller
             switch ($company->companybusiness) {
                 case 'Portfolio':
                     $view = "themes.default.pages.shopping-cart";
+                    break;
+                case 'Service':
+                    $view = "themes.service.pages.shopping-cart";
                     break;
                 case 'Product':
                     $view = "site.pages.carrinho";

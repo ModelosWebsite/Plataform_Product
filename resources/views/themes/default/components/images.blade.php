@@ -1,5 +1,4 @@
 <style>
-    
     :root {
         --hero: url('{{ isset($heroImage->image) ? Storage::url("arquivos/background/".$heroImage->image) : '' }}');
         --start: url('{{ isset($start->image) ? Storage::url("arquivos/background/".$start->image) : '' }}');
