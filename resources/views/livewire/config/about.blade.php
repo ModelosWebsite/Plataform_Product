@@ -18,7 +18,11 @@
 
     </div>
 
-    <form wire:submit.prevent="{{ $editMode ? 'updateAbout' : 'storeAbout' }}">
+    <form wire:submit.prevent="{{ $editMode ? 'updateAbout' : 'storeAbout' }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <h5 class="form-label">Carregar Imagem:</h5>
+            <input type="file" wire:model="image" {{ $editMode ? '' : 'disabled' }} class="form-control">
+        </div>
         <div class="form-group">
             <h5 class="form-label">Nome:</h5>
             <input type="text" class="form-control" {{ $editMode ? '' : 'disabled' }} wire:model.defer="nome" name="nome" placeholder="Insira o seu nome...">

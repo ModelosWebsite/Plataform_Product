@@ -106,12 +106,19 @@
                                     @endforeach
                                 @endif
                             @endif
-                            
-                            <button type="button" {{count($cartContent) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
-                                style="background: var(--background); color:#fff; border: none;" data-bs-toggle="modal"
-                                data-bs-target="#checkout" id="getLocationButton">Finalizar Compra
-                            </button>
-                             @include("livewire.site.checkout")
+
+                            @if($companyType === 'Service')
+                                <button type="button" {{count($cartContent) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
+                                    style="background: var(--background); color:#fff; border: none;" data-toggle="modal"
+                                    data-target="#checkout" id="getLocationButton">Finalizar Compra
+                                </button>
+                            @else  
+                                <button type="button" {{count($cartContent) > 0 ? '':'disabled'}} class="primary-btn btn btn-primary mt-2"
+                                    style="background: var(--background); color:#fff; border: none;" data-bs-toggle="modal"
+                                    data-bs-target="#checkout" id="getLocationButton">Finalizar Compra
+                                </button>                              
+                            @endif
+                            @include("livewire.site.checkout")
                         </div>
                     </div>
                 </div>

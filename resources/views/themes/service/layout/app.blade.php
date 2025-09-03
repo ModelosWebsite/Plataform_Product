@@ -28,7 +28,6 @@
   @livewireStyles
 </head>
 <body>
-
   <!-- hero section -->
   @include("themes.service.component.navbar")
   <!-- End hero section -->
@@ -36,9 +35,10 @@
   <!-- content center section -->
   @yield("content")
   <!-- content center end section -->
-
+  @if ((Route::Current()->getName() == 'plataforma.produto.index'))
+    @include("themes.service.component.footer")
+  @endif
   <!-- footer section -->
-  @include("themes.service.component.footer")
   <!-- footer section -->
   
   <!-- jQery -->

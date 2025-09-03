@@ -81,15 +81,15 @@
 
         <!-- Conteúdo Dinâmico -->
         <div class="col-md-7 mt-3">
-            <div id="hero" class="tabcontent" style="display: block;">@livewire("config.inicial")</div>
-            <div id="about" class="tabcontent">@livewire("config.about")</div>
-            <div id="prove" class="tabcontent">@livewire("config.componente")</div>
+            <div id="hero" class="tabcontent" style="display: block;"><livewire:config.inicial/></div>
+            <div id="about" class="tabcontent"><livewire:config.about/></div>
+            <div id="prove" class="tabcontent"><livewire:config.componente/></div>
             <div id="hability" class="tabcontent"><livewire:config.hability/></div>
-            <div id="service" class="tabcontent">@livewire("config.service")</div>
-            <div id="footer" class="tabcontent">@livewire("config.footer")</div>
-            <div id="value" class="tabcontent">@livewire("config.competence")</div>
-            <div id="mvv" class="tabcontent">@livewire("config.mvv")</div>
-            <div id="works" class="tabcontent">@livewire("config.project")</div>
+            <div id="service" class="tabcontent"><livewire:config.service/></div>
+            <div id="footer" class="tabcontent"><livewire:config.footer/></div>
+            <div id="value" class="tabcontent"><livewire:config.competence/></div>
+            <div id="mvv" class="tabcontent"><livewire:config.mvv/></div>
+            <div id="works" class="tabcontent"><livewire:config.project/></div>
         </div>
         
     </div>

@@ -4,9 +4,15 @@
       <div class="modal-content">
         <div class="modal-header" style="background: var(--background); color:#fff !important;">
           <h5 class="modal-title" id="exampleModalLabel">Finalizar Encomenda</h5>
-          <span style="font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">
-            &times;
-          </span>
+            @if($companyType === "Service")
+              <span style="font-size: 25px; cursor: pointer;" data-dismiss="modal" aria-label="Close">
+                &times;
+              </span>
+            @else
+              <span style="font-size: 25px; cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">
+                &times;
+              </span>
+            @endif
         </div>
         <div class="modal-body">
           <div>

@@ -51,9 +51,18 @@
                             <span class="product-item">
                                 @if (isset($item['image']))
                                     <div class="mb-2" style="height: 300px;">
-                                      <img src="{{ asset('storage/items/'.$item['image']) }}"
+                                      @if($companyType === 'Service')
+                                        <img src="{{ asset('storage/items/'.$item['image']) }}"
+                                        class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;"
+                                        data-toggle="modal" data-target="#detail{{ $item['reference'] ?? '' }}">
+                                      @else
+
+                                        <img src="{{ asset('storage/items/'.$item['image']) }}"
                                         class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;"
                                         data-bs-toggle="modal" data-bs-target="#detail{{ $item['reference'] ?? '' }}">
+                                        
+                                      @endif
+
                                     </div>
                                 @else 
                                     <img src="{{asset('notfound.png')}}" class="menu-img img-fluid" alt="">

@@ -17,7 +17,8 @@ class Shopping extends Component
     {
         return view('livewire.site.shopping',[
             "getCollectionsItens" => $this->getItems($this->category),
-            'categories' => $this->getCategories()
+            'categories' => $this->getCategories(),
+            'companyType' => $this->getCompany()->companybusiness
         ]);
     }
 
@@ -97,7 +98,6 @@ class Shopping extends Component
             ->get("https://kytutes.com/api/items?description=$itemid");
 
             $product = Collect(json_decode($getItemCart,true));
-            
 
             Cart::add(array(
                 'id' => $product[0]["reference"],

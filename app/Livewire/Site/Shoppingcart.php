@@ -24,13 +24,14 @@ class Shoppingcart extends Component
     $latitude, $longitude, $referenceNumber, $paymentType, $bankAccount, $package,$cart =0;
 
     // Guarda apenas o ID da empresa
-    public $companyId, $cartQuantities = [];
+    public $companyId, $cartQuantities = [], $companyType;
 
     protected $listeners = ["updateQuantity", "setLocation"];
 
     public function mount()
     {
         $company = company::where("companyhashtoken", session("tokencompany"))->firstOrFail();
+        $this->companyType = $company->companybusiness;
         $this->companyId = $company->id;
 
         $this->paymentType  = $company->payment_type;
