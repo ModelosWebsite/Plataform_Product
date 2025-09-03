@@ -61,7 +61,7 @@ class About extends Component
                 $fileName = date('YmdHis') . "." . $this->image->getClientOriginalExtension();
                 $this->image->storeAs("arquivos/background", $fileName);
                 $getAbout->image = $fileName;
-            } elseif (!$this->fundoId) {
+            } elseif (!$this->itemId) {
                 $getAbout->image = $this->image;
             }
 
@@ -85,6 +85,7 @@ class About extends Component
             $this->toggleEditMode();
         
         } catch (\Throwable $th) {
+            \Log::error('Error saving About information: ' . $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast' => false,
                 'position' => 'center',

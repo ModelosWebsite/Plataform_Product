@@ -44,7 +44,7 @@
                                     <img src="{{ $theme->image ? asset('storage/theme/'.$theme->image) : asset('image/2525.png') }}" class="card-img-top" alt="Imagem">
 
                                     <div class="card-body text-center">
-                                        <h6 class="card-title">{{ $theme->name }}</h6>
+                                        <h6 class="card-title">{{ $theme->description }}</h6>
                                         
                                         @if($theme->id == $theme_id)
                                             <span class="badge bg-primary">Selecionado</span>
