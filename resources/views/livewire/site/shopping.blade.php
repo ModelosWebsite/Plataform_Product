@@ -74,7 +74,16 @@
                                 </div>
 
 
-                                <span class="icon-cross" wire:click="addToCart('{{ $item['name'] ?? '' }}')">
+                                <span class="icon-cross"  wire:click="addToCart('{{ $item['name'] ?? '' }}')"
+                                fbq('track', 'AddToCart', {
+                                  content_ids: ['123'],
+                                  content_name: 'Produto X',
+                                  content_type: 'product',
+                                  value: 49.90,
+                                  currency: 'Kz'
+                                });
+                                
+                                >
                                     <img src="{{asset('cross.svg')}}" class="img-fluid">
                                 </span>
                             </span>
