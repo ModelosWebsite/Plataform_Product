@@ -10,22 +10,22 @@
                             <main>
                                 <input id="tab2" type="radio" name="tabs" checked>
                                 <label for="tab2">Temas</label>
-                                
+
                                 <input id="tab1" type="radio" name="tabs">
                                 <label for="tab1">Personalizar Website </label>
                         
                                     
                                 <input id="tab3" type="radio" name="tabs">
                                 <label for="tab3">Fotos de Fundo</label>
+
+                                <input id="tab6" type="radio" name="tabs">
+                                <label for="tab6">Pagamento/Entrega</label>
                                     
                                 <input id="tab4" type="radio" name="tabs">
                                 <label for="tab4">Habilitar Website</label>
                                 
                                 <input id="tab5" type="radio" name="tabs">
                                 <label for="tab5">Minha Conta</label>
-                                
-                                <input id="tab6" type="radio" name="tabs">
-                                <label for="tab6">Pagamento/Entrega</label>
 
                                 <section id="content1">@livewire("definition.support")</section>
                                 <section id="content2">@livewire("definition.color") </section>
