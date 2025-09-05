@@ -44,7 +44,7 @@
                             <div class="card">
                                 <div class="card-header" id="headingmarketing">
                                 <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#marketing" aria-expanded="false" aria-controls="marketing">
-                                    Serviços de marketing
+                                    Como o website clássico conecta-se com o xZero?
                                 </h6>
                                 </div>
                                 <div id="marketing" class="collapse" aria-labelledby="marketing" data-parent="#accordionExample">
@@ -72,7 +72,7 @@
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
                                     <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
-                                        Serviço de Anúncio
+                                        Como posso adicionar anúncios no meu website?
                                     </h6>
                                 </div>
                                 <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
