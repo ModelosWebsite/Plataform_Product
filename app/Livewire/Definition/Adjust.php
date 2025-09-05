@@ -28,7 +28,6 @@ class Adjust extends Component
 
     //Create - save terms and privacity
     public function myConditionsCreate(){
-        DB::beginTransaction();
         try {
 
             TermsCompany::create([
@@ -37,7 +36,6 @@ class Adjust extends Component
                 'company_id' => auth()->user()->company_id
             ]);
 
-            DB::commit();
 
             $this->alert('success', 'SUCESSO', [
                 'toast' => false,
