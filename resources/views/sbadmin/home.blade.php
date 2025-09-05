@@ -68,6 +68,21 @@
                                 </div>
                                 </div>
                             </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headingpremium">
+                                <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#premium" aria-expanded="false" aria-controls="premium">
+                                    O que é o ecossistema xZero?
+                                </h6>
+                                </div>
+                                <div id="premium" class="collapse" aria-labelledby="premium" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>
+                                        Elementos Premium
+                                    </p>
+                                </div>
+                                </div>
+                            </div>
                 
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
