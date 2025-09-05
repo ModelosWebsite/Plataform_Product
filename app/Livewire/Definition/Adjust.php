@@ -48,6 +48,7 @@ class Adjust extends Component
             ]);            
             
         } catch (\Throwable $th) {
+            \Log::error('Error creating terms: ' . $th->getMessage());
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
@@ -195,6 +196,7 @@ class Adjust extends Component
                 ]);
             }
         } catch (\Throwable $th) {
+            \Log::error('Error updating terms: ' . $th->getMessage());
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
