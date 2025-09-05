@@ -15,7 +15,7 @@
                                 <label for="tab1">Conteúdo</label>
                          
                                 <input id="tab3" type="radio" name="tabs">
-                                <label for="tab3">Fotos de Fundo</label>
+                                <label for="tab3">Fotos</label>
 
                                 <input id="tab6" type="radio" name="tabs">
                                 <label for="tab6">Pagamento/Entrega</label>
