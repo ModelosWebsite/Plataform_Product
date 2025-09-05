@@ -197,6 +197,8 @@ input:checked + label {
 
 input:checked + .slider::before {
     content: "Padrão";
+    margin-right: 2rem;
+
 }
 
 .slider:after {
@@ -240,6 +242,7 @@ input:checked + .slider:after {
 
 input:checked + .sliderHability::before {
     content: "Disponivel";
+    margin-right: 2rem;
 }
 
 .sliderHability:after {

@@ -1,49 +1,78 @@
-<div class="container-fluid p-4">
+<div class="container-fluid">
     <div class="row g-4">
         <div class="col-md-6">
-            <div class="form-group mb-4">
-                <h5>Habilitar site</h5>
-                <div>
-                    <div class="item">
-                        <label class="switchHability">
-                            <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}>
-                            <span class="sliderHability"></span>
-                        </label>
-                    </div>                
+            <div class="card shadow-sm rounded p-4">
+                <h5 class="mb-3">Habilitar Website</h5>
+
+                {{-- Exibir link do site habilitado --}}
+                @if ($statusSite->status === 'active')
+                    <p class="text-success mb-2">
+                        Website ativo: 
+                        <a href="{{ url('/' . Str::lower(auth()->user()->company->companyhashtoken)) }}" target="_blank" class="text-decoration-underline">
+                            {{ url('/' . Str::lower(auth()->user()->company->companyhashtoken)) }}
+                        </a>
+                    </p>
+                @endif
+
+                <div class="form-group d-flex align-items-center mb-4">
+                    <label class="switchHability">
+                        <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }} @if(!isset($terms) || $terms->accept !== 'yes') disabled @endif>
+                        <span class="sliderHability"></span>
+                    </label>
                 </div>
-            </div>
-    
-            <div class="form-group">
-                <h5>Termos e Politicas</h5>
-                <div>
+
+                <h5 class="mt-4">Termos e Políticas</h5>
+                <div class="form-group">
                     <div class="item">
                         <label class="switch">
                             <input type="checkbox" wire:change="termoStatus" {{ isset($this->terms) && $this->terms->accept === 'yes' ? 'checked' : '' }}>
                             <span class="slider"></span>
                         </label>
 
-                        @if (isset($terms) && isset($terms->accept) && $terms->accept === 'yes')
+                        {{-- Se não aceitou termos, mostrar opções --}}
+                        @if (!isset($terms) || $terms->accept !== 'yes')
+                            <div class="mt-3 d-flex flex-wrap gap-2">
+                                <button data-toggle="modal" data-target="#termsCompany"
+                                        class="btn btn-outline-primary">
+                                    Cadastrar meus termos
+                                </button>
 
-                        @else
-                            <div class="mt-2 d-flex">
-                                <button data-toggle="modal" data-target="#termsCompany" class=" btn btn-primary bg-white text-primary">Cadastrar meus termos</button> <br>                           
-                                <button data-toggle="modal" data-target="#readMyTerms" class=" btn btn-primary bg-white text-primary mx-3" wire:click="loadTerms()">Ler meus termos</button>
+                                <button data-toggle="modal" data-target="#readMyTerms"
+                                        class="btn btn-outline-secondary"
+                                        wire:click="loadTerms()">
+                                    Ler meus termos
+                                </button>
                             </div>
                         @endif
-                        <br class="mb-3">
-                        <button data-toggle="modal" data-target="#read" class="btn btn-primary bg-white text-primary">Ler termos e condições padrão</button> <br>
 
-                        <svg data-toggle="modal" data-target="#exampleModal" style="color: #fff; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                        </svg>
+                        {{-- Botão termos padrão Pacheco Barroso --}}
+                        <div class="mt-3">
+                            <a href="https://www.pachecobarroso.com/pb-terms-conditions" target="_blank"
+                            class="btn btn-success w-100">
+                                Ao aceitar os termos padrão, aceita os termos e condições da Pacheco Barroso
+                            </a>
+                        </div>
 
-                        @include("site.create")
-                        @include("modals.read")
-                        @include("modals.readmyterms") 
+                        <div class="mt-3">
+                            <button data-toggle="modal" data-target="#read" class="btn btn-outline-dark w-100">
+                                Ler termos e condições padrão
+                            </button>
+                        </div>
+
+                        <div class="mt-3 text-muted small">
+                            <i class="bi bi-exclamation-circle"></i> 
+                            Sem termos e políticas aceitos, o site não pode ser habilitado.
+                        </div>
                     </div>
                 </div>
+
+                {{-- Modais --}}
+                @include("site.create")
+                @include("modals.read")
+                @include("modals.readmyterms") 
             </div>
         </div>
+
     
         <div class="col-md-6">
             <div class="form-group">
