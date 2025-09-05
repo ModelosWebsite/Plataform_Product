@@ -50,7 +50,6 @@ class Adjust extends Component
         } catch (\Throwable $th) {
             \Log::error('Error creating terms: ', [
                 'message' => $th->getMessage(),
-                'trace' => $th->getTraceAsString(),
                 'line' => $th->getLine(),
                 'file' => $th->getFile()
             ]);
@@ -203,7 +202,6 @@ class Adjust extends Component
         } catch (\Throwable $th) {
             \Log::error('Error updating terms: ', [
                 'message' => $th->getMessage(),
-                'trace' => $th->getTraceAsString(),
                 'line' => $th->getLine(),
                 'file' => $th->getFile()
             ]);
