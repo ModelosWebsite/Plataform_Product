@@ -37,6 +37,7 @@
                             <h6 class="text-capitalize">Titular: {{ $nameCompany ?? '' }}</h6>
                           </div>
                           <div class="col-6">
+                            <h1>Tetse</h1>
                           </div>
                         <div>
                       @empty
