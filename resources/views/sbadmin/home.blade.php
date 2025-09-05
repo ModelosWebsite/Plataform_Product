@@ -30,7 +30,7 @@
                             <div class="card">
                                 <div class="card-header" id="headinghopping">
                                 <h6 style="cursor: pointer;" class="mb-0" data-toggle="collapse" data-target="#hopping" aria-expanded="true" aria-controls="hopping">
-                                    1) Como adicionar itens na loja?
+                                    Como adicionar itens na loja?
                                 </h6>
                                 </div>
                             
@@ -44,7 +44,7 @@
                             <div class="card">
                                 <div class="card-header" id="headingmarketing">
                                 <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#marketing" aria-expanded="false" aria-controls="marketing">
-                                    2) Serviços de marketing
+                                    Serviços de marketing
                                 </h6>
                                 </div>
                                 <div id="marketing" class="collapse" aria-labelledby="marketing" data-parent="#accordionExample">
@@ -57,7 +57,7 @@
                             <div class="card">
                                 <div class="card-header" id="headingpremium">
                                 <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#premium" aria-expanded="false" aria-controls="premium">
-                                    3) O que são elementos premium?
+                                    O que são elementos premium?
                                 </h6>
                                 </div>
                                 <div id="premium" class="collapse" aria-labelledby="premium" data-parent="#accordionExample">
@@ -72,7 +72,7 @@
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
                                     <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
-                                        4) Serviço de Anúncio
+                                        Serviço de Anúncio
                                     </h6>
                                 </div>
                                 <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
@@ -92,7 +92,7 @@
                           <div class="card">
                               <div class="card-header" id="headingOne">
                                   <h6 style="cursor: pointer;" class="mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                      1) Posso mudar o conteúdo do meu website?
+                                      Posso mudar o conteúdo do meu website?
                                   </h6>
                               </div>
                               <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -105,7 +105,7 @@
                           <div class="card">
                               <div class="card-header" id="headingError">
                                   <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseTwoError" aria-expanded="true" aria-controls="collapseTwo">
-                                      2) Existem alguns erros no conteúdo do meu website, por quê?
+                                      Existem alguns erros no conteúdo do meu website, por quê?
                                   </h6>
                               </div>
                               <div id="collapseTwoError" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
@@ -118,7 +118,7 @@
                           <div class="card">
                               <div class="card-header" id="headingThree">
                                   <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                      3) Como posso adicionar WhatsApp no meu website?
+                                      Como posso adicionar WhatsApp no meu website?
                                   </h6>
                               </div>
                               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
@@ -131,7 +131,7 @@
                           <div class="card">
                               <div class="card-header" id="headingFour">
                                   <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                      4) Existem outros elementos que gostaria de adicionar - como faço?
+                                      Existem outros elementos que gostaria de adicionar - como faço?
                                   </h6>
                               </div>
                               <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
@@ -144,7 +144,7 @@
                           <div class="card">
                               <div class="card-header" id="headingmodify">
                                   <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#modify" aria-expanded="true" aria-controls="modify">
-                                      5) Como posso modificar a estrutura do meu website?
+                                      Como posso modificar a estrutura do meu website?
                                   </h6>
                               </div>
                               <div id="modify" class="collapse" aria-labelledby="modify" data-parent="#accordionExample">
@@ -157,7 +157,7 @@
                           <div class="card">
                               <div class="card-header" id="headinghelp">
                                   <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#help" aria-expanded="true" aria-controls="help">
-                                      6) Preciso de ajuda - como posso receber ajuda?
+                                      Preciso de ajuda - como posso receber ajuda?
                                   </h6>
                               </div>
                               <div id="help" class="collapse" aria-labelledby="help" data-parent="#help">
