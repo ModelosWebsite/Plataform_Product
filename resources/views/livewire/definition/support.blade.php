@@ -8,6 +8,7 @@
     <div class="row">
         <!-- Sidebar com Imagens -->
         <div class="col-md-5 table-responsive">
+            <h6>Selecione uma seção para editar conteúdo do site</h6>
             <table class="tab">
                 @switch($dataCompanies->companybusiness)
                     @case('Product')

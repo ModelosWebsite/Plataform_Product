@@ -5,9 +5,9 @@
                 <h5>Habilitar site</h5>
                 <div>
                     <div class="item">
-                        <label class="switch">
+                        <label class="switchHability">
                             <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}>
-                            <span class="slider"></span>
+                            <span class="sliderHability"></span>
                         </label>
                     </div>                
                 </div>

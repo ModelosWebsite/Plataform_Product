@@ -1,13 +1,17 @@
-<nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow d-flex justify-content-end">
+<nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
 
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-5">
-        <i class="fa fa-bars" style="color: #0080ff;"></i>
+    <!-- Botão Toggle (visível apenas em telas menores) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3 bg-white shadow-sm">
+        <i class="fa fa-bars text-primary"></i>
     </button>
 
-    <!-- Nav Item - User Information -->
-    <li class="nav-item">
-        <span class="h1 mr-2 d-none d-lg-inline text-white small">{{auth()->user()->name}}</span>
-    </li>
+    <!-- Espaço flexível para empurrar conteúdo para a direita -->
+    <div class="ml-auto d-flex align-items-center">
 
+        <!-- Informações do Usuário -->
+        <span class="h5 mb-0 text-white font-weight-bold">
+            {{ auth()->user()->name ?? "" }}
+        </span>
+        
+    </div>
 </nav>

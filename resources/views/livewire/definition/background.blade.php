@@ -3,8 +3,8 @@
     <div class="col-md-5 mb-4">
         <div class="card shadow-sm border-0 rounded h-100">
             <div class="card-body">
+                <h6 class="card-title">Caro utilizador é obrigatorio adicionar todas as imagens</h6>
                 <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
-                    
                     <!-- Upload -->
                     <div class="mb-3">
                         <p class="form-label fw-bold">Carregar Imagem</p>

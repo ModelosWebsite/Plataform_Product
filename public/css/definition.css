@@ -1,1 +1,371 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);@import url(https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css);.checkbox-rect input[type=checkbox],.tabcontent,.toggle-pill-color input[type=checkbox],input,section{display:none}h1,label{text-align:center}.checkbox-rect input[type=checkbox]+label,.toggle-pill-color input[type=checkbox]+label{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;cursor:pointer}*,:after,:before{margin:0;padding:0;box-sizing:border-box}body,html{height:100%}body{font:14px/1 'Open Sans',sans-serif;color:#555;background:#eee}h1,label:before{font-weight:400}h1{padding:50px 0}p{margin:0 0 20px;line-height:1.5}main{padding:5px;margin:0 auto;background:#fff;width:100%}section{padding:20px 0 0;border-top:1px solid #ddd}.switch,label{display:inline-block}label{margin:0 0 -1px;padding:15px 25px;font-weight:600;color:#bbb;border:1px solid transparent}label:before{font-family:fontawesome;margin-right:10px}label[for*='1']:before,label[for*='2']:before,label[for*='3']:before,label[for*='4']:before,label[for*='5']:before,label[for*='6']:before{content:'\f05d'}label:hover{color:#888;cursor:pointer}input:checked+label{color:#555;border:1px solid #ddd;border-top:2px solid #2e4eff;border-bottom:1px solid #fff}#tab1:checked~#content1,#tab2:checked~#content2,#tab3:checked~#content3,#tab4:checked~#content4,#tab5:checked~#content5,#tab6:checked~#content6{display:block}.toggle-pill-color input[type=checkbox]+label{width:9em;border-radius:1em;background:#e84d4d;box-shadow:inset 0 0 5px rgba(0,0,0,.3);-webkit-transition:background .1s ease-in-out;transition:background .1s ease-in-out}.toggle-pill-color input[type=checkbox]+label:before{content:"";display:block;width:1.2em;height:1.2em;border-radius:1em;background:#fff;box-shadow:2px 0 5px rgba(0,0,0,.2);position:absolute;left:.2em;top:.1em;-webkit-transition:.2s ease-in-out;transition:.2s ease-in-out}.toggle-pill-color input[type=checkbox]:checked+label{background:#47cf73;display:block}.toggle-pill-color input[type=checkbox]:checked+label:before{box-shadow:-2px 0 5px rgba(0,0,0,.2);left:7em}.tablinks.active img{border:2px solid #007bff}@media screen and (max-width:650px){label{font-size:0}label:before{margin:0;font-size:18px}}@media screen and (max-width:400px){label{padding:15px}}.checkbox-rect input[type=checkbox]+label{padding-left:35px;font:14px/20px "Open Sans",Arial,sans-serif}@media (max-width:768px){.toggle-pill-color input[type=checkbox]+label{width:7em}.toggle-pill-color input[type=checkbox]+label:before{width:1em;height:1em;left:.2em}.toggle-pill-color input[type=checkbox]:checked+label:before{left:5.8em}}@media (max-width:480px){.toggle-pill-color input[type=checkbox]+label{width:6em}.toggle-pill-color input[type=checkbox]+label:before{width:.9em;height:.9em;left:.15em}.toggle-pill-color input[type=checkbox]:checked+label:before{left:4.8em}}@media (max-width:768px){label,main{padding:10px}label{font-size:12px}main{width:95%}.toggle-pill-color input[type=checkbox]+label{width:7em}.toggle-pill-color input[type=checkbox]:checked+label:before{left:5.5em}}@media (max-width:576px){label{font-size:10px;padding:8px}.toggle-pill-color input[type=checkbox]+label{width:6em}.toggle-pill-color input[type=checkbox]:checked+label:before{left:4.5em}}@media (max-width:400px){h1{font-size:16px;padding:10px 0}label{font-size:0}label:before{margin:0;font-size:18px}main{padding:10px}}.switch{position:relative;width:130px;height:34px}.slider,.slider:after{position:absolute;transition:.4s}.switch input{opacity:0;width:0;height:0}.slider{cursor:pointer;top:0;left:0;right:0;bottom:0;border-radius:34px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Arial,sans-serif;font-size:14px;font-weight:700;padding:0 10px;background-color:#ae001d}.slider::before{content:"Personalizado"}input:checked+.slider::before{content:"Padrão"}.slider:after{content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;border-radius:50%}input:checked+.slider{background-color:#4caf50}input:checked+.slider:after{transform:translateX(98px)}
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+@import url(https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css);
+
+/* Reset */
+*,
+:after,
+:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+body {
+    font: 14px/1 'Open Sans', sans-serif;
+    color: #555;
+    background: #eee;
+}
+
+h1 {
+    padding: 50px 0;
+    text-align: center;
+    font-weight: 400;
+}
+
+p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+main {
+    padding: 5px;
+    margin: 0 auto;
+    background: #fff;
+    width: 100%;
+}
+
+section {
+    display: none;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+input {
+    display: none;
+}
+
+h1,
+label {
+    text-align: center;
+}
+
+.switch,
+label {
+    display: inline-block;
+}
+
+label {
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    color: #bbb;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+label:before {
+    font-weight: 400;
+    font-family: fontawesome;
+    margin-right: 10px;
+}
+
+label[for*='1']:before,
+label[for*='2']:before,
+label[for*='3']:before,
+label[for*='4']:before,
+label[for*='5']:before,
+label[for*='6']:before {
+    content: '\f05d';
+}
+
+label:hover {
+    color: #888;
+}
+
+input:checked + label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 2px solid #2e4eff;
+    border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4,
+#tab5:checked ~ #content5,
+#tab6:checked ~ #content6 {
+    display: block;
+}
+
+/* Checkbox retangular */
+.checkbox-rect input[type=checkbox],
+.toggle-pill-color input[type=checkbox] {
+    display: none;
+}
+
+.checkbox-rect input[type=checkbox] + label {
+    display: block;
+    padding-left: 35px;
+    font: 14px/20px "Open Sans", Arial, sans-serif;
+    user-select: none;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Toggle pill */
+.toggle-pill-color input[type=checkbox] + label {
+    display: block;
+    width: 9em;
+    border-radius: 1em;
+    background: #e84d4d;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .3);
+    transition: background .1s ease-in-out;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-pill-color input[type=checkbox] + label:before {
+    content: "";
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 1em;
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, .2);
+    position: absolute;
+    left: .2em;
+    top: .1em;
+    transition: .2s ease-in-out;
+}
+
+.toggle-pill-color input[type=checkbox]:checked + label {
+    background: #47cf73;
+}
+
+.toggle-pill-color input[type=checkbox]:checked + label:before {
+    box-shadow: -2px 0 5px rgba(0, 0, 0, .2);
+    left: 7em;
+}
+
+.tablinks.active img {
+    border: 2px solid #007bff;
+}
+
+/* Switch custom termos e condições */
+.switch {
+    position: relative;
+    width: 145px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider, .sliderHability {
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px;
+    background-color: #ae001d;
+    position: absolute;
+    transition: .4s;
+}
+
+.slider::before {
+    content: "Personalizado";
+    margin-left: 1.2rem;
+}
+
+input:checked + .slider::before {
+    content: "Padrão";
+}
+
+.slider:after {
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #4caf50;
+}
+
+input:checked + .slider:after {
+    transform: translateX(110px);
+}
+
+/* Switch custom habilitação do website */
+.switchHability {
+    position: relative;
+    width: 145px;
+    height: 34px;
+}
+
+.switchHability input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.sliderHability::before {
+    content: "Indisponivel";
+    margin-left: 1.2rem;
+}
+
+input:checked + .sliderHability::before {
+    content: "Disponivel";
+}
+
+.sliderHability:after {
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    transition: .4s;
+}
+
+input:checked + .sliderHability {
+    background-color: #4caf50;
+}
+
+input:checked + .sliderHability:after {
+    transform: translateX(110px);
+}
+
+/* Media queries */
+@media screen and (max-width: 650px) {
+    label {
+        font-size: 0;
+    }
+
+    label:before {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    label {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .toggle-pill-color input[type=checkbox] + label {
+        width: 7em;
+    }
+
+    .toggle-pill-color input[type=checkbox] + label:before {
+        width: 1em;
+        height: 1em;
+        left: .2em;
+    }
+
+    .toggle-pill-color input[type=checkbox]:checked + label:before {
+        left: 5.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .toggle-pill-color input[type=checkbox] + label {
+        width: 6em;
+    }
+
+    .toggle-pill-color input[type=checkbox] + label:before {
+        width: .9em;
+        height: .9em;
+        left: .15em;
+    }
+
+    .toggle-pill-color input[type=checkbox]:checked + label:before {
+        left: 4.8em;
+    }
+}
+
+@media (max-width: 768px) {
+    label,
+    main {
+        padding: 10px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    .toggle-pill-color input[type=checkbox] + label {
+        width: 7em;
+    }
+
+    .toggle-pill-color input[type=checkbox]:checked + label:before {
+        left: 5.5em;
+    }
+}
+
+@media (max-width: 576px) {
+    label {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .toggle-pill-color input[type=checkbox] + label {
+        width: 6em;
+    }
+
+    .toggle-pill-color input[type=checkbox]:checked + label:before {
+        left: 4.5em;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    label {
+        font-size: 0;
+    }
+
+    label:before {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    main {
+        padding: 10px;
+    }
+}
