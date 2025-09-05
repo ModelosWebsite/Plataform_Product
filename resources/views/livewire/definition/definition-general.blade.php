@@ -8,11 +8,12 @@
                     <div class="card-body">
                         <div class="row">
                             <main>
-                                <input id="tab1" type="radio" name="tabs">
-                                <label for="tab1">Personalizar Website </label>
-                                    
                                 <input id="tab2" type="radio" name="tabs" checked>
                                 <label for="tab2">Temas</label>
+                                
+                                <input id="tab1" type="radio" name="tabs">
+                                <label for="tab1">Personalizar Website </label>
+                        
                                     
                                 <input id="tab3" type="radio" name="tabs">
                                 <label for="tab3">Fotos de Fundo</label>
