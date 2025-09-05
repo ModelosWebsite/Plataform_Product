@@ -132,7 +132,7 @@ class Premium extends Component
                     'icon' => 'warning',
                     'position' => 'center',
                     'toast' => false,
-                    'text' => "Deseja adquerir ". $this->element->title ." ? "." Clique confirmar para prosseguir",
+                    'text' => "Deseja activar ". $this->element->title ." ? "." Clique confirmar para prosseguir",
                     'showConfirmButton' => true,
                     'showCancelButton' => true,
                     'cancelButtonText' => 'Cancelar',
