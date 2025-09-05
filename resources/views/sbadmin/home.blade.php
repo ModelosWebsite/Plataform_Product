@@ -83,12 +83,28 @@
                                 </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header" id="headingpremium">
+                                <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#premium" aria-expanded="false" aria-controls="premium">
+                                    
+                                    Como o website clássico funciona dentro do ecosistema xZero?
+
+
+                                </h6>
+                                </div>
+                                <div id="premium" class="collapse" aria-labelledby="premium" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>
+                                        Elementos Premium
+                                    </p>
+                                </div>
+                                </div>
+                            </div>
                 
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
                                     <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
-                                        Como posso publicitar a minha empresa no ecossistema xZero?
-                                    </h6>
+Como posso publicitar a minha marca no ecosistema xZero?                                    </h6>
                                 </div>
                                 <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
                                     <div class="card-body">
