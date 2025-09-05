@@ -12,9 +12,8 @@
                                 <label for="tab2">Temas</label>
 
                                 <input id="tab1" type="radio" name="tabs">
-                                <label for="tab1">Personalizar Website </label>
-                        
-                                    
+                                <label for="tab1">Conteúdo</label>
+                         
                                 <input id="tab3" type="radio" name="tabs">
                                 <label for="tab3">Fotos de Fundo</label>
 
