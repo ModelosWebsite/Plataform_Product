@@ -104,7 +104,21 @@
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
                                     <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
-Como posso publicitar a minha marca no ecosistema xZero?                                    </h6>
+                                    Como posso publicitar a minha marca no ecosistema xZero?                                    </h6>
+                                </div>
+                                <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p>
+                                        No painel de administrador vá para “[Nome da secção da Loja]” e adira ao elemento premiums que deseja. Todos elementos premium têm um custo. Se não encontrar o que precisa use a secção de Ajuda no painel (canto superior XXX) e a nossa equipa ajudará assim que possível.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headinganuncio">
+                                    <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
+                                    Como recebo pagamentos das vendas da loja?                                    </h6>
                                 </div>
                                 <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
                                     <div class="card-body">
