@@ -72,7 +72,7 @@
                             <div class="card">
                                 <div class="card-header" id="headinganuncio">
                                     <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#anuncio" aria-expanded="false" aria-controls="anuncio">
-                                        Como posso adicionar anúncios no meu website?
+                                        Como posso publicitar a minha empresa no ecossistema xZero?
                                     </h6>
                                 </div>
                                 <div id="anuncio" class="collapse" aria-labelledby="anuncio" data-parent="#accordionExample">
