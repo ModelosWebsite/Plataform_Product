@@ -51,7 +51,7 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                1) Funcionamento do mecanismo de aceitação de termos PB.
+                                1) Funcionamento do mecanismo de aceitação de termos e politicas.
                             </h6>
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
