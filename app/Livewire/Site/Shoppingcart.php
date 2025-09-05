@@ -113,7 +113,7 @@ class Shoppingcart extends Component
         return [
             "Accept"        => "application/json",
             "Content-Type"  => "application/json",
-            "Authorization" => $this->getCompany()->companytokenapi,
+            "Authorization" => "Bearer ".$this->getCompany()->companytokenapi,
         ];
     }
 
