@@ -49,7 +49,7 @@
     <li class="nav-item {{(Route::current()->getName() == "admin.general.shopping") ? "bg-white" : ""}}">
         <a class="nav-link {{(Route::current()->getName() == "admin.general.shopping") ? "text-primary" : ""}}" href="{{route("admin.general.shopping")}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>loja Produtos</span>
+            <span>Loja/Produtos</span>
         </a>
     </li>
 
