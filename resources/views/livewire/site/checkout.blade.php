@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header" style="background: var(--background); color:#fff !important;">
-          <h5 class="modal-title" id="exampleModalLabel">Finalizar Encomenda</h5>
+          <h5 style="color:#fff !important;" class="modal-title" id="exampleModalLabel">Finalizar Encomenda</h5>
             @if($companyType === "Service")
               <span style="font-size: 25px; cursor: pointer;" data-dismiss="modal" aria-label="Close">
                 &times;
