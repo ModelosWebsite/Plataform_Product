@@ -44,7 +44,7 @@
                             <div class="card">
                                 <div class="card-header" id="headingmarketing">
                                 <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#marketing" aria-expanded="false" aria-controls="marketing">
-                                    1) Serviços de marketing
+                                    2) Serviços de marketing
                                 </h6>
                                 </div>
                                 <div id="marketing" class="collapse" aria-labelledby="marketing" data-parent="#accordionExample">
@@ -57,7 +57,7 @@
                             <div class="card">
                                 <div class="card-header" id="headingpremium">
                                 <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#premium" aria-expanded="false" aria-controls="premium">
-                                    3) Elementos premium
+                                    3) O que são elementos premium?
                                 </h6>
                                 </div>
                                 <div id="premium" class="collapse" aria-labelledby="premium" data-parent="#accordionExample">
