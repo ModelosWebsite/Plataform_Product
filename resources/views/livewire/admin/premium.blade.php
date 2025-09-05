@@ -1,8 +1,8 @@
 <div class="container-fluid col-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title text-center mb-3">Adquira Elementos Premium</h5>
-            <p class="text-center text-muted">Melhore seu site com recursos avançados</p>
+            <h5 class="card-title text-center mb-3">Active Elementos Premium</h5>
+            <p class="text-center text-muted">Melhore o seu site com recursos avançados</p>
         </div>
         
         <div class="card-body">
