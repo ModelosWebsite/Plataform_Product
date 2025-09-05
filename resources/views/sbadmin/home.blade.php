@@ -30,7 +30,7 @@
                             <div class="card">
                                 <div class="card-header" id="headinghopping">
                                 <h6 style="cursor: pointer;" class="mb-0" data-toggle="collapse" data-target="#hopping" aria-expanded="true" aria-controls="hopping">
-                                    1) Como Adicionar itens na loja?
+                                    1) Como adicionar itens na loja?
                                 </h6>
                                 </div>
                             
