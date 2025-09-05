@@ -29,7 +29,7 @@ class Encomenda extends Component
             $headers = [
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
-                "Authorization" => "{$this->company->companytokenapi}",
+                "Authorization" => "Bearer {$this->company->companytokenapi}",
             ];
     
             //Chamada a API
