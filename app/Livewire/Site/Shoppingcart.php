@@ -80,6 +80,7 @@ class Shoppingcart extends Component
             }
 
             $this->bankAccount = \App\Services\Request::getCompany($company->companynif);
+            \Log::info("BankAccount", ["data" => $this->bankAccount]);
 
             foreach ($this->cartContent as $item) {
                 $this->cartQuantities[$item->id] = $item->quantity;
