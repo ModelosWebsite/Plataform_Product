@@ -48,7 +48,12 @@ class Adjust extends Component
             ]);            
             
         } catch (\Throwable $th) {
-            \Log::error('Error creating terms: ' . $th->getMessage());
+            \Log::error('Error creating terms: ', [
+                'message' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+                'line' => $th->getLine(),
+                'file' => $th->getFile()
+            ]);
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
@@ -178,7 +183,7 @@ class Adjust extends Component
         DB::beginTransaction();
         try {
             
-            $readMyterms = TermsCompany::find($this->readMyterms)->first();
+            $readMyterms = TermsCompany::find($this->readMyterms);
 
             if ($readMyterms) {
                 $readMyterms->privacity = $this->privacity;
@@ -196,7 +201,12 @@ class Adjust extends Component
                 ]);
             }
         } catch (\Throwable $th) {
-            \Log::error('Error updating terms: ' . $th->getMessage());
+            \Log::error('Error updating terms: ', [
+                'message' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+                'line' => $th->getLine(),
+                'file' => $th->getFile()
+            ]);
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
