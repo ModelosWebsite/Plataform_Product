@@ -20,7 +20,7 @@
                 <div class="row col-xl-12 d-flex justify-content-center align-content-center">
                   
                     <div class="text-center mb-2">
-                        <h2 class="text-lg text-sm">Bem vindo ao painel administrativo do seu site <span class="text-primary">{{auth()->user()->name}}</span></h2>
+                        <h2 class="text-lg text-sm">Bem-vindo ao painel administrativo do seu site <span class="text-primary">{{auth()->user()->name}}</span></h2>
                         <h5 class="text-lg text-sm">Link de acesso do seu site para partilhar nas redes socias: <a id="share-link" target="_blank" href="{{ env('APP_URL') }}/{{ Str::lower(auth()->user()->company->companyhashtoken) }}">{{ env('APP_URL') }}/{{Str::lower(auth()->user()->company->companyhashtoken)}}</a></h5>
                         <button id="copy-btn" class="btn btn-outline-primary" onclick="copyToClipboard()">Copiar</button>
                     </div>
