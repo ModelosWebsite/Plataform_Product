@@ -73,17 +73,7 @@
                                     <strong class="product-price">{{ number_format($item['price'] ?? 0, 2, '.', ' ') }} kz</strong>
                                 </div>
 
-
-                                <span class="icon-cross"  wire:click="addToCart('{{ $item['name'] ?? '' }}')"
-                                fbq('track', 'AddToCart', {
-                                  content_ids: ['123'],
-                                  content_name: 'Produto X',
-                                  content_type: 'product',
-                                  value: 49.90,
-                                  currency: 'Kz'
-                                });
-                                
-                                >
+                                <span class="icon-cross"  wire:click="addToCart('{{ $item['name'] ?? '' }}')">
                                     <img src="{{asset('cross.svg')}}" class="img-fluid">
                                 </span>
                             </span>

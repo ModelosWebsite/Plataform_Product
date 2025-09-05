@@ -37,7 +37,7 @@
                     @if (auth()->user()->company->status == "active")
                         <h5>xZero disponivel, Já Podes Emitir as facturas</h5>
                     @else
-                        <h5> Quando o seu website for ativado, vais poder emitir factura no xzero </h5>
+                        <h5> Quando o seu website for ativado, vai poder emitir facturas no xZero </h5>
                     @endif
                 </a>
             </div>
