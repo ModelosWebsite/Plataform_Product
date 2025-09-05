@@ -31,7 +31,7 @@
                             </div>
                         @endif
                         <br class="mb-3">
-                        <button data-toggle="modal" data-target="#read" class="btn btn-primary bg-white text-primary">Ler termos da Pacheco Barroso</button> <br>
+                        <button data-toggle="modal" data-target="#read" class="btn btn-primary bg-white text-primary">Ler termos e condições</button> <br>
 
                         <svg data-toggle="modal" data-target="#exampleModal" style="color: #fff; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
@@ -51,7 +51,7 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                1) Funcionamento do Mecanismo de Aceitação de Termos PB.
+                                1) Funcionamento do mecanismo de aceitação de termos PB.
                             </h6>
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -64,7 +64,7 @@
                     <div class="card">
                         <div class="card-header" id="headingTwo">
                             <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#politica" aria-expanded="false" aria-controls="collapseTwo">
-                                2) Opção de Aceitação ou Recusa.
+                                2) Opção de aceitação ou recusa.
                             </h6>
                         </div>
                         <div id="politica" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
@@ -77,7 +77,7 @@
                     <div class="card">
                         <div class="card-header" id="headingThree">
                             <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                3) Bloqueio de Acesso sem Aceitação.
+                                3) Bloqueio de acesso sem aceitação.
                             </h6>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
@@ -90,7 +90,7 @@
                     <div class="card">
                         <div class="card-header" id="headingFour">
                             <h6 class="mb-0" style="cursor: pointer;" data-toggle="collapse" data-target="#quetion1" aria-expanded="false" aria-controls="collapseThree">
-                                4) Ativação do Website com Aceitação.
+                                4) Ativação do website com aceitação.
                             </h6>
                         </div>
                         <div id="quetion1" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
