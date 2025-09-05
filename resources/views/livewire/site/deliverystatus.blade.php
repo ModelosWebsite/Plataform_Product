@@ -127,7 +127,7 @@
                     @endif
                 </div>
               </div>
-                <h5 class="text-center">Caro cliente informamos que, temos outras lojas disponiveis. by@grupo xZero - in Website Cássico</h5>
+                <h5 class="text-center">Ver outras lojas online, enquanto espera.</h5>
             </div>
           </div>
         </div>
