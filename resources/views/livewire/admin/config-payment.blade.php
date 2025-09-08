@@ -8,7 +8,7 @@
 
         @if($company->payment_type === "Transferência")
             <h6 class="fw-bold mt-3">Detalhes Bancários  <a class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#infoXzero">Adicionar Informações Bancarias</a></h6>
-            @php  $nameCompany = $detailsXzero["Company"]  @endphp
+            @php  $nameCompany = $detailsXzero["Company"] ?? ""  @endphp
             @forelse($detailsXzero['bankAccounts'] as $bankAccount)
                 <div class="p-3 mb-3 bg-light rounded border">
                     <p class="mb-1"><strong>Banco:</strong> {{ $bankAccount['bank'] }}</p>

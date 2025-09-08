@@ -8,16 +8,18 @@ use Livewire\Component;
 
 class Color extends Component
 {
-    public $codigo, $letra, $themes, $theme_id;
+    public $codigo, $letra, $themes, $theme_id, $themeSelected;
     use LivewireAlert;
 
     public function mount()
     {
+        $this->themeSelected = ThemeHasCompany::with('theme')->where('company_id', auth()->user()->company->id)->first();
         $this->themes = Theme::query()->orderBy('name', 'asc')->get();
     }
 
     public function render()
     {
+        $this->mount();
         return view('livewire.definition.color');
     }
 
@@ -86,6 +88,8 @@ class Color extends Component
                 ['company_id' => $company->id],
                 ['theme_id' => $theme->id]
             );
+
+            $this->mount();
 
             // Alerta de sucesso
             $this->alert('success', 'SUCESSO', [

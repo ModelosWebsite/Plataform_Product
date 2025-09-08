@@ -10,18 +10,18 @@
                     <p class="mb-3">Selecione as cores que deseja usar no website:</p>
                     <form wire:submit.prevent="storecolor" class="d-grid gap-3">
                         
-                        <div>
-                            <p class="form-label small fw-bold">Cor de Fundo</p>
+                        <div class="form-group">
+                            <p class="form-label fw-bold">Cor de Fundo</p>
                             <input type="color" wire:model="codigo" name="codigo" class="form-control form-control-sm">
                         </div>
 
-                        <div>
-                            <p class="form-label small fw-bold">Cor do Texto</p>
+                        <div class="form-group">
+                            <p class="form-label fw-bold">Cor do Texto</p>
                             <input type="color" wire:model="letra" name="letra" class="form-control form-control-sm">
                         </div>
 
-                        <div>
-                            <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-sm">
                                 Cadastrar
                             </button>
                         </div>
@@ -38,7 +38,9 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-3">Selecione o tema que deseja usar no website:</p>
-                    
+                    @php
+                        $theme_id = $themeSelected ? $themeSelected->theme->id : null;
+                    @endphp
                     <div class="row g-3">
                         @foreach($themes as $theme)
                             <div class="col-6 col-md-4">
@@ -54,9 +56,9 @@
                                         <h6 class="card-title text-truncate">{{ $theme->description }}</h6>
                                         
                                         @if($theme->id == $theme_id)
-                                            <span class="badge bg-primary">Selecionado</span>
+                                            <span class="badge bg-primary text-white p-2" style="font-size: 1rem">Selecionado</span>
                                         @else
-                                            <button wire:click="setTheme({{ $theme->id }})" class="btn btn-outline-primary btn-sm mt-2 w-100">
+                                            <button wire:click="setTheme({{ $theme->id }})" class="btn btn-outline-primary mt-2">
                                                 Usar este tema
                                             </button>
                                         @endif

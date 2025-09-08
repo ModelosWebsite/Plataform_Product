@@ -50,7 +50,9 @@
             <h5 class="modal-title" id="infoXzeroLabel">
             <i class="bi bi-exclamation-circle me-2"></i> Atenção!
             </h5>
-            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Fechar"></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             <p class="mb-3">

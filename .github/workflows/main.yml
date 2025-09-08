@@ -2,7 +2,7 @@ on:
   push:
     branches:
     - feature/newArchitecture
-name: 🚀 Deploy website classico produto app on push
+name: 🚀 Deploy plataforma website clássico app on push
 jobs:
   web-deploy:
     name: 🎉 Deploy
