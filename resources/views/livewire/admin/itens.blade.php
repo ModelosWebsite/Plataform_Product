@@ -11,7 +11,8 @@
             </div>
         </div>
         <!-- Card Body -->
-        <table class="table table-striped table-responsive-md">
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead class="text-white" style="background: rgb(0, 74, 222)">
               <tr>
                 <th scope="col">Item</th>
@@ -77,6 +78,7 @@
                 @endif
             </tbody>
         </table>
+        </div>
     </div>
     {{-- modal Start --}}
     @include("modals.create_itens")

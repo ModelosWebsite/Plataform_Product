@@ -1,63 +1,62 @@
 <div>
-    <h3>Hero Inicial</h3>
-    <div>
-        @if ($hero->isNotEmpty() && !$hero_id)
-            <div>
-                @foreach ($hero as $item)
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $item->title }}</h4>
-                            <p class="card-text">{{ $item->description }}</p>
+    <h3 class="mb-4">Hero Inicial</h3>
 
-                            <div class="text-center mb-3">
-                                <div class="image-container" style="width: 10rem; height: 10rem; border-radius: 50%;">
-                                    <img src="{{ Storage::url("arquivos/hero/".$item->img) }}" alt="{{ $item->title }}" class="img-fluid">
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary" wire:click="loadHeroData({{ $item->id }})">
-                                Editar
-                            </button>
-                        </div>
-                    </div>
-                @endforeach
+    @if ($hero->isNotEmpty() && !$hero_id)
+        @php $item = $hero->first(); @endphp
+        <div class="card shadow-sm border-0 text-center p-4">
+            <!-- Imagem circular -->
+            <div class="d-flex justify-content-center mb-3">
+                <div class="" style="width: 10rem; height: 10rem;">
+                    <img src="{{ Storage::url("arquivos/hero/".$item->img) }}" 
+                         alt="{{ $item->title }}" 
+                         class="img-fluid h-100 w-100 object-fit-cover">
+                </div>
             </div>
 
-        @else
-            {{-- Formulário de Criação/Edição --}}
-            <form wire:submit.prevent="heroSave" enctype="multipart/form-data">
-                <div class="form-group">
-                    <h5 for="image" class="form-label">Fotografia</h5>
-                    <input type="file" id="image" name="image" wire:model="image" class="form-control">
-                    @error('image') <span class="text-danger">{{ $message }}</span> @enderror
-                    
-                    {{-- Pré-visualização da imagem existente ao editar --}}
-                    @if ($img && !$image)
-                        <div class="mt-2">
-                            <img src="{{ Storage::url($img) }}" alt="Imagem atual" class="img-thumbnail" style="max-width: 150px;">
-                        </div>
-                    @endif
-                </div>
+            <!-- Conteúdo -->
+            <h4 class="fw-bold">{{ $item->title }}</h4>
+            <p class="text-muted mb-4">{{ $item->description }}</p>
 
-                <div class="form-group">
-                    <h5 for="title" class="form-label">Título</h5>
-                    <input type="text" id="title" name="title" wire:model.defer="title" class="form-control" placeholder="Insira a informação...">
-                    @error('title') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+            <!-- Botão Editar -->
+            <button class="btn btn-primary px-4" wire:click="loadHeroData({{ $item->id }})">
+                <i class="bi bi-pencil-square me-1"></i> Editar
+            </button>
+        </div>
+    @else
+        {{-- Formulário de Criação/Edição --}}
+        <form wire:submit.prevent="heroSave" enctype="multipart/form-data" class="card shadow-sm border-0 p-4">
+            
+            <!-- Upload de Imagem -->
+            <div class="mb-2">
+                <p for="image" class="form-label fw-bold">Fotografia</p>
+                <input type="file" id="image" name="image" wire:model="image" class="form-control">
+                @error('image') <span class="text-danger small">{{ $message }}</span> @enderror
 
-                <div class="form-group">
-                    <h5 for="description" class="form-label">Descrição</h5>
-                    <textarea id="description" name="description" wire:model.defer="description" class="form-control" cols="30" rows="8" placeholder="Insira uma descrição..."></textarea>
-                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                @if ($img && !$image)
+                    <p>Imagem atual: {{ $img }}</p>
+                @endif
+            </div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        {{ $hero_id ? 'Atualizar' : 'Cadastrar' }}
-                    </button>
-                </div>
-            </form>
-        @endif
+            <!-- Título -->
+            <div class="mb-2">
+                <p for="title" class="form-label fw-bold">Título</p>
+                <input type="text" id="title" name="title" wire:model.defer="title" class="form-control" placeholder="Insira a informação...">
+                @error('title') <span class="text-danger small">{{ $message }}</span> @enderror
+            </div>
 
-    </div>
+            <!-- Descrição -->
+            <div class="mb-2">
+                <p for="description" class="form-label fw-bold">Descrição</p>
+                <textarea id="description" name="description" wire:model.defer="description" class="form-control" rows="5" placeholder="Insira uma descrição..."></textarea>
+                @error('description') <span class="text-danger small">{{ $message }}</span> @enderror
+            </div>
+
+            <!-- Botão -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    {{ $hero_id ? 'Atualizar' : 'Cadastrar' }}
+                </button>
+            </div>
+        </form>
+    @endif
 </div>

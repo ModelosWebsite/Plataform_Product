@@ -36,9 +36,6 @@
                             <h6 class="text-capitalize">Banco: {{ $bankAccount['bank'] }}  |  IBAN: AO06 {{ trim(chunk_split($bankAccount['ibam'], 4, ' ')) ?? ''}}</h6>
                             <h6 class="text-capitalize">Titular: {{ $nameCompany ?? '' }}</h6>
                           </div>
-                          <div class="col-6">
-                            <h1>Tetse</h1>
-                          </div>
                         <div>
                       @empty
                       @endforelse

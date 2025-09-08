@@ -3,8 +3,7 @@
         <!-- Card Header - Dropdown -->
         <div class="card-header flex-row align-items-center justify-content-between col-xl-12">
             <div class="col-xl-12 d-flex justify-content-between">
-                <div>
-                </div>
+                <div></div>
                 <div>
                     <button class="btn text-white btn-sm" style="background: rgb(0, 74, 222)" data-toggle="modal" data-target="#addcategory">Adicionar</button>
                 </div> 
@@ -13,7 +12,7 @@
         <!-- Card Body -->
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="text-white" style="background: rgb(0, 74, 222)">
+                <thead class="text-white bg-primary">
                   <tr>
                     <th scope="col">Categoria</th>
                     <th scope="col">Acções</th>

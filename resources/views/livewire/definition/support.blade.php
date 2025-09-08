@@ -1,15 +1,11 @@
 <div>
-    <style>
-        .tablinks {
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
     <!-- Card Body -->
     <div class="row">
         <!-- Sidebar com Imagens -->
         <div class="col-md-5 table-responsive">
             <h6>Selecione uma seção para editar conteúdo do site</h6>
-            <table class="tab">
+            <table class="tab table">
                 @switch($dataCompanies->companybusiness)
                     @case('Product')
                             <tr class="tablinks active" onclick="openTab(event, 'hero')">
@@ -81,7 +77,7 @@
         </div>
 
         <!-- Conteúdo Dinâmico -->
-        <div class="col-md-7 mt-3">
+        <div class="col-md-7 mt-3" id="tabsContent">
             <div id="hero" class="tabcontent" style="display: block;"><livewire:config.inicial/></div>
             <div id="about" class="tabcontent"><livewire:config.about/></div>
             <div id="prove" class="tabcontent"><livewire:config.componente/></div>

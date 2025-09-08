@@ -49,17 +49,48 @@
 
 <body>
 
-    <div class="col-12">
-        <div class="row">
-            <div class="d-flex justify-content-center align-items-center flex-column text-white text-center  p-4">
-                <h1 class="display-3 display-md-1 fw-bold">Bem-Vindo ao Website Clássico</h1>
-                <p class="fs-4 fs-md-2">Crie sua conta ou entre na sua já existente clicando em um dos botões abaixo</p>
-                <div>
-                    <a href="{{route('site.subscription')}}" style="width: 150px" class="btn btn-primary me-2 mb-2 text-white">Criar Website</a>
-                    <a href="{{route('plataform.product.login.view')}}" style="width: 150px" class="btn btn-primary mb-2 text-white">Entrar</a>
-                </div>
+<div class="container py-5 text-white">
+    <div class="row align-items-center">
+        
+        <!-- Coluna Esquerda -->
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h1 class="fw-bold display-5 mb-3">
+                Como criar seu Website Clássico
+            </h1>
+            <p class="fs-5 mb-4">
+                Siga estes 3 passos simples e tenha o seu <strong>Website Clássico</strong> 
+                ativo hoje mesmo.
+            </p>
+            
+            <!-- Botões -->
+            <div class="d-flex gap-3">
+                <a href="{{route('site.subscription')}}" 
+                   class="btn btn-primary px-4 py-2 fw-semibold shadow-sm rounded-pill">
+                   Criar Website
+                </a>
+                <a href="{{route('plataform.product.login.view')}}" 
+                   class="btn btn-primary px-4 py-2 fw-semibold rounded-pill">
+                   Já tenho conta
+                </a>
             </div>
         </div>
-    </div>    
+        
+        <!-- Coluna Direita -->
+        <div class="col-md-6">
+            <ol class="list-unstyled fs-6">
+                <li class="mb-3">
+                    <strong>1. Crie sua conta:</strong> Cadastre-se no Website Clássico e escolha um modelo pronto.
+                </li>
+                <li class="mb-3">
+                    <strong>2. Personalize facilmente:</strong> Ajuste cores, logotipo e conteúdos ao seu estilo.
+                </li>
+                <li class="mb-3">
+                    <strong>3. Publique e cresça:</strong> Ative sua loja online e use recursos de SEO e marketing já integrados.
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+ 
 </body>
 </html>

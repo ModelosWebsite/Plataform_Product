@@ -1,0 +1,12 @@
+.tablinks.active img {
+    border: 2px solid #007bff; /* destaque na aba ativa */
+    border-radius: 5px;
+}
+
+.tablinks {
+    cursor: pointer;
+}
+
+#tabsContent .tabcontent {
+    display: none; /* removido !important */
+}

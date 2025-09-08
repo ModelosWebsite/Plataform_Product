@@ -1,7 +1,47 @@
 <div class="container-fluid">
     <div class="row g-4">
         <div class="col-md-6">
-            <div class="card shadow-sm rounded p-4">
+            <div class="card border-0 rounded">
+                <h5 class="mt-3">Termos e Políticas</h5>
+                <div class="form-group">
+                    <div class="mb-2 text-muted">
+                        <i class="fa fa-exclamation-circle"></i> 
+                        Sem termos e políticas aceitos ou cadastradas, o seu site não pode ser habilitado.
+                    </div>
+                    <div class="item">
+                        <label class="switch">
+                            <input type="checkbox" wire:change="termoStatus" {{ isset($this->terms) && $this->terms->accept === 'yes' ? 'checked' : '' }}>
+                            <span class="slider"></span>
+                        </label>
+
+                        {{-- Se não aceitou termos, mostrar opções --}}
+                        @if (!isset($terms) || $terms->accept !== 'yes')
+                            <div class="mt-3 d-flex flex-wrap gap-2">
+                                <button data-toggle="modal" data-target="#termsCompany" class="btn btn-outline-primary">
+                                    Cadastrar meus termos
+                                </button>
+
+                                <button data-toggle="modal" data-target="#readMyTerms" class="btn btn-outline-secondary" wire:click="loadTerms()">
+                                    Ler meus termos
+                                </button>
+                            </div>
+                        @endif
+
+                        {{-- Botão termos padrão Pacheco Barroso --}}
+                        <div class="mt-3">
+                            <a href="https://www.pachecobarroso.com/pb-terms-conditions" target="_blank" class="btn btn-success w-100">
+                                Ao aceitar os termos padrão, aceita os termos e condições da Pacheco Barroso
+                            </a>
+                        </div>
+
+                        <div class="mt-3">
+                            <button data-toggle="modal" data-target="#read" class="btn btn-outline-dark w-100">
+                                Ler termos e condições padrão
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <h5 class="mb-3">Habilitar Website</h5>
 
                 {{-- Exibir link do site habilitado --}}
@@ -16,54 +56,10 @@
 
                 <div class="form-group d-flex align-items-center mb-4">
                     <label class="switchHability">
-                        <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }} @if(!isset($terms) || $terms->accept !== 'yes') disabled @endif>
+                        <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}
+                        @if($terms && $terms->accept !== 'yes' || $readMyterms) disabled @endif>
                         <span class="sliderHability"></span>
                     </label>
-                </div>
-
-                <h5 class="mt-4">Termos e Políticas</h5>
-                <div class="form-group">
-                    <div class="item">
-                        <label class="switch">
-                            <input type="checkbox" wire:change="termoStatus" {{ isset($this->terms) && $this->terms->accept === 'yes' ? 'checked' : '' }}>
-                            <span class="slider"></span>
-                        </label>
-
-                        {{-- Se não aceitou termos, mostrar opções --}}
-                        @if (!isset($terms) || $terms->accept !== 'yes')
-                            <div class="mt-3 d-flex flex-wrap gap-2">
-                                <button data-toggle="modal" data-target="#termsCompany"
-                                        class="btn btn-outline-primary">
-                                    Cadastrar meus termos
-                                </button>
-
-                                <button data-toggle="modal" data-target="#readMyTerms"
-                                        class="btn btn-outline-secondary"
-                                        wire:click="loadTerms()">
-                                    Ler meus termos
-                                </button>
-                            </div>
-                        @endif
-
-                        {{-- Botão termos padrão Pacheco Barroso --}}
-                        <div class="mt-3">
-                            <a href="https://www.pachecobarroso.com/pb-terms-conditions" target="_blank"
-                            class="btn btn-success w-100">
-                                Ao aceitar os termos padrão, aceita os termos e condições da Pacheco Barroso
-                            </a>
-                        </div>
-
-                        <div class="mt-3">
-                            <button data-toggle="modal" data-target="#read" class="btn btn-outline-dark w-100">
-                                Ler termos e condições padrão
-                            </button>
-                        </div>
-
-                        <div class="mt-3 text-muted small">
-                            <i class="bi bi-exclamation-circle"></i> 
-                            Sem termos e políticas aceitos, o site não pode ser habilitado.
-                        </div>
-                    </div>
                 </div>
 
                 {{-- Modais --}}
@@ -72,7 +68,6 @@
                 @include("modals.readmyterms") 
             </div>
         </div>
-
     
         <div class="col-md-6">
             <div class="form-group">
@@ -131,6 +126,5 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </div>

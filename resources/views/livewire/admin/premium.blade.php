@@ -136,7 +136,6 @@
                                 </button>
                             </div>
                         </div>
-                        <p class="package-description">{{ Str::limit($package->description, 50) ?? '' }}</p>
                         <span class="package-price">
                             {{ number_format($package->amount, 2, '.', ' ') }} kz Por mês
                         </span>
