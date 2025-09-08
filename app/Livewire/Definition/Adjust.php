@@ -64,32 +64,33 @@ class Adjust extends Component
 
     public function updateStatus()
     {
-        $item = company::find(auth()->user()->company_id);
-        $hasTermsPb = Termpb_has_Company::where('company_id', auth()->user()->company_id)->first();
+        DB::beginTransaction();
+        try {
+            $item = company::find(auth()->user()->company_id);
+            $hasTermsPb = Termpb_has_Company::where('company_id', auth()->user()->company_id)->first();
 
-        if ($hasTermsPb->accept === 'yes') {
             // Atualiza o estado baseado no valor do checkbox
             $item->status = $this->statusSite->status === 'active' ? 'inactive' : 'active';
             $item->update();
-        }else{
-            $this->alert('info', 'ATENÇÃO', [
+
+            $this->statusSite = company::where("id", auth()->user()->company_id)->first();
+            DB::commit();
+            $this->alert('success', 'SUCESSO', [
                 'toast' => false,
                 'position' => 'center',
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
-                'text' => 'Deve primeiro aceitar os termos e condições'
+                'text' => 'Estado atualizado com sucesso!'
             ]);
+        } catch (\Throwable $th) {
+            \Log::error('Error updating status: ', [
+                'message' => $th->getMessage(),
+                'line' => $th->getLine(),
+                'file' => $th->getFile()
+            ]);
+            DB::rollBack();
+            return;
         }
-
-        $this->statusSite = company::where("id", auth()->user()->company_id)->first();
-
-        $this->alert('success', 'SUCESSO', [
-            'toast' => false,
-            'position' => 'center',
-            'showConfirmButton' => false,
-            'confirmButtonText' => 'OK',
-            'text' => 'Estado atualizado com sucesso!'
-        ]);
     }
 
     public function termoStatus()

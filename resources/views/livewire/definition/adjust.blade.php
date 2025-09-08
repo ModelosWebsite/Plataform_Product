@@ -43,7 +43,6 @@
                 </div>
 
                 <h5 class="mb-3">Habilitar Website</h5>
-
                 {{-- Exibir link do site habilitado --}}
                 @if ($statusSite->status === 'active')
                     <p class="text-success mb-2">
@@ -53,14 +52,15 @@
                         </a>
                     </p>
                 @endif
-
+                {{-- Só habilitar se aceitou os termos --}}
+                @if($readMyterms || (isset($terms) && $terms->accept === 'yes'))
                 <div class="form-group d-flex align-items-center mb-4">
                     <label class="switchHability">
-                        <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}
-                        @if($terms && $terms->accept !== 'yes' || $readMyterms) disabled @endif>
+                        <input type="checkbox" wire:change="updateStatus" {{ $statusSite->status === 'active' ? 'checked' : '' }}>
                         <span class="sliderHability"></span>
                     </label>
                 </div>
+                @endif
 
                 {{-- Modais --}}
                 @include("site.create")
