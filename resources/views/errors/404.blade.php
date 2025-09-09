@@ -113,7 +113,7 @@
         <a href="{{route('site.subscription')}}" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-500 transition">Comece Agora</a>
       </div>
       <div>
-        <img src="https://source.unsplash.com/600x400/?website,technology" alt="Website clássico" class="rounded-2xl shadow-lg">
+        <img src="{{ asset('image/bg-web.png') }}" alt="Website clássico" class="rounded-2xl shadow-lg">
       </div>
     </div>
   </section>
