@@ -9,7 +9,7 @@
             <!-- Topbar -->
             @include('sbadmin.includes.topbar')
             <!-- End of Topbar -->
-            <div class="container-fluid my-2">
+            <div class="container-fluid">
             <div class="row justify-content-center">
             @include('sbadmin.active.app')
 
@@ -26,7 +26,7 @@
                     {{ env('APP_URL') }}/{{ Str::lower(auth()->user()->company->companyhashtoken) }}
                     </a>
                 </p>
-                <button id="copy-btn" class="btn btn-primary btn-sm shadow-sm rounded-pill px-4" onclick="copyToClipboard()">
+                <button id="copy-btn" class="btn btn-primary shadow-sm rounded-pill" onclick="copyToClipboard()">
                     Copiar Link
                 </button>
             </div>
@@ -37,7 +37,7 @@
                     
                     <!-- 1 -->
                     <div class="shadow-sm rounded-3">
-                        <div class="card-header d-flex justify-content-between align-items-center rounded-top-3"
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center rounded-top-3"
                             id="heading1" style="cursor:pointer;" data-toggle="collapse" data-target="#collapse1"
                             aria-expanded="true" aria-controls="collapse1">
                             <h6 class="mb-0 fw-semibold text-dark">Como adicionar itens na Loja?</h6>

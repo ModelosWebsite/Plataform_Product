@@ -16,6 +16,7 @@
                     background: #fff;
                     border-radius: 10px;
                     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                    transition: transform 0.2s ease;
                 }
 
                 .package-img {
@@ -38,6 +39,7 @@
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: -1rem;
+                    gap: 10px;
                 }
 
                 .package-description {
@@ -81,12 +83,10 @@
                     transition: all 0.2s ease;
                 }
 
-                .package-btn-secondary:hover {
-                    background-color: #0071e3;
-                    color: white;
-                }
 
-                /* Responsivo */
+                /* Responsividade */
+
+                /* Mobile até 576px */
                 @media (max-width: 576px) {
                     .package-item {
                         flex-direction: column;
@@ -106,17 +106,75 @@
                         width: 100%;
                     }
                 }
+
+                /* Tablets (576px até 768px) */
+                @media (min-width: 577px) and (max-width: 768px) {
+                    .package-item {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                    .package-img {
+                        width: 120px;
+                        height: 120px;
+                    }
+                    .package-title {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                }
+
+                /* Tablets maiores / pequenos notebooks (769px até 992px) */
+                @media (min-width: 769px) and (max-width: 992px) {
+                    .package-img {
+                        width: 100px;
+                        height: 100px;
+                    }
+                    .package-title {
+                        font-size: 1.1rem;
+                    }
+                }
+
+                /* Notebooks / desktops médios (993px até 1200px) */
+                @media (min-width: 993px) and (max-width: 1200px) {
+                    .package-item {
+                        gap: 20px;
+                    }
+                    .package-img {
+                        width: 110px;
+                        height: 110px;
+                    }
+                }
+
+                /* Telas muito grandes (acima de 1400px) */
+                @media (min-width: 1400px) {
+                    .package-item {
+                        padding: 20px;
+                        gap: 25px;
+                    }
+                    .package-img {
+                        width: 130px;
+                        height: 130px;
+                    }
+                    .package-title {
+                        font-size: 1.2rem;
+                    }
+                    .package-price {
+                        font-size: 1rem;
+                    }
+                }
             </style>
 
-        <div class="package-list col-12 row">
+
+        <div class="package-list row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
             @forelse($packages as $package)
                 <div class="package-item col-6 mb-3">
                     <img src="{{ asset('storage/premium/'.$package->image) }}" class="package-img">
 
                     <div class="package-info">
                         <div class="package-title">
-                            <span>{{ $package->view_description ?? '' }}</span>
-                            <div class="d-flex flex-column">
+                            <span >{{ $package->view_description ?? '' }}</span>
+                            <div class="d-flex flex-column mb-4">
                                 @php
                                     $isActive = $packagesExtras->contains('functionality_plus_id', $package->id);
                                 @endphp

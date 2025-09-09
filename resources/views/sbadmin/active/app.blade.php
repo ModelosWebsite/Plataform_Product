@@ -58,7 +58,7 @@
                     <i class="fas fa-file-invoice fa-2x bg-opacity-25 p-2 rounded-circle fs-1"></i>
                 </div>
                 <div class="flex-grow-1">
-                    <a href="https://www.xzero.ao/" target="_blank" class="stretched-link text-white text-decoration-none">
+                    <a href="https://www.xzero.live/login" target="_blank" class="stretched-link text-white text-decoration-none">
                         @if (auth()->user()->company->status == "active")
                             <h6 class="fw-bold mb-0">xZero disponível</h6>
                             <small>Já pode emitir as facturas</small>

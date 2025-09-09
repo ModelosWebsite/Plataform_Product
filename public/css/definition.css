@@ -74,25 +74,6 @@ label:before {
     margin-right: 10px;
 }
 
-label[for*='1']:before{
-    content: '2';
-}
-
-label[for*='2']:before{
-    content: '1';
-}
-label[for*='3']:before{
-    content: '3';
-}
-label[for*='4']:before{
-    content: '5';
-}
-label[for*='5']:before{
-    content: '6';
-}
-label[for*='6']:before {
-    content: '4';
-}
 
 label:hover {
     color: #888;

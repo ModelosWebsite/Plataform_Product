@@ -1,5 +1,30 @@
 <div class="col-md-12">
-    <table class="table table-striped table-responsive-md">
+    <style>
+/* Evita quebra de conteúdo */
+.nowrap-table th,
+.nowrap-table td {
+    white-space: nowrap;
+}
+
+/* Ajustes mobile */
+@media (max-width: 576px) {
+
+    .no-items-message {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .card-header h5 {
+        font-size: 16px;
+    }
+
+    .card-header button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
+</style>
+    <table class="table table-striped table-responsive-md align-middle nowrap-table">
         <thead class="bg-primary text-white">
             <tr>
                 <th>Cliente</th>
@@ -26,17 +51,17 @@
                         <td>
                             @switch($data['status'])
                                 @case('PENDENTE')
-                                    <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" style="cursor: pointer; font-size:15px; font-weight:bold" class="badge badge-info p-2">
+                                    <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" style="cursor: pointer; font-size:15px; font-weight:bold" class="badge badge-info p-1">
                                         <i class="fa fa-spinner fa-spin-pulse"></i> {{ $data['status'] }}
                                     </span>
                                     @break
                                 @case('ACEITE')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-success p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-success p-1" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-thumbs-up"></i> {{ $data['status'] }}
                                         </span>
                                     @break
                                 @case('FINALIZADO')
-                                        <span class="badge badge-primary p-2" style="font-size:15px; font-weight:bold">
+                                        <span class="badge badge-primary p-1" style="font-size:15px; font-weight:bold">
                                             <i class="fa fa-flag-checkered"></i> {{ $data['status'] }}
                                         </span>
                                         @break

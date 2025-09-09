@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tela de Login</title>
-    <link rel="stylesheet" href="{{asset("site/bootstrap.min.css")}}">
-    <style>
-        .gradient-custom {
-        /* fallback for old browsers */
-        background: #6a11cb;
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tela de Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    @include("sweetalert::alert")
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                <div class="card-body p-4">
-                  <div class="">
-                    <h3 class="fw-bold text-center">Início de sessão</h3>
+<body class="min-h-screen bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 flex items-center justify-center p-6">
+
+  @include("sweetalert::alert")
+
+  <div class="w-full max-w-md">
+    <div class="bg-gray-900 text-gray-200 rounded-2xl shadow-xl p-8">
       
-                   <form action="{{route("plataform.product.login")}}" method="post">
-                        @csrf
-                        <div class="form-outline form-white mb-2">
-                          <label class="form-label" for="typeEmailX">Email</label>
-                            <input name="email" type="email" id="typeEmailX" class="form-control" required/>
-                        </div>
-        
-                        <div class="form-outline form-white mb-4">
-                          <label class="form-label" for="typePasswordX">Password</label>
-                            <input name="password" type="password" id="typePasswordX" class="form-control" required/>
-                        </div>
-
-                        <div class="text-center">
-                          <button class="btn btn-outline-light px-5 btn-sm" type="submit">Login</button>
-                        </div>
-                   </form>
-                  </div>
-                </div>
-
-                <div class="card-footer text-center ">
-                  <a href="{{route("auth.reset.password")}}" class="btn btn-outline-light" >Recuperar Senha</a>  
-                  <a href="{{route('site.subscription')}}" class="btn btn-outline-light text-decoration-none">Criar Website</a>
-                </div>
-
-              </div>
-            </div>
-          </div>
+      <!-- Título -->
+      <h2 class="text-2xl font-bold text-center mb-6">Início de sessão</h2>
+      
+      <!-- Form -->
+      <form action="{{route('plataform.product.login')}}" method="post" class="space-y-5">
+        @csrf
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium mb-1">Email</label>
+          <input id="email" name="email" type="email" required 
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
-      </section>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium mb-1">Password</label>
+          <input id="password" name="password" type="password" required 
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <!-- Botão Login -->
+        <div class="text-center">
+          <button type="submit" 
+            class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg font-semibold shadow-md transition">
+            Login
+          </button>
+        </div>
+      </form>
+
+      <!-- Footer -->
+      <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+        <a href="{{route('auth.reset.password')}}" 
+           class="w-full sm:w-auto text-center border border-gray-700 hover:border-blue-500 px-4 py-2 rounded-lg font-medium transition">
+           Recuperar Senha
+        </a>
+        <a href="{{route('site.subscription')}}" 
+           class="w-full sm:w-auto text-center border border-gray-700 hover:border-blue-500 px-4 py-2 rounded-lg font-medium transition">
+           Criar Website
+        </a>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>

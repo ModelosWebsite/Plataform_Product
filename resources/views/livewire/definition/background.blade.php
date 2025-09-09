@@ -2,6 +2,9 @@
     <!-- Formulário -->
     <div class="col-md-5 mb-4">
         <div class="card shadow-sm border-0 rounded h-100">
+            <div class="card-header bg-primary text-white">
+                <h6 class="card-title mb-0 fw-bold">Adicionar Imagem de Fundo</h6>
+            </div>
             <div class="card-body">
                 <h6 class="card-title">Caro utilizador é obrigatorio adicionar todas as imagens</h6>
                 <form wire:submit.prevent="imagebackgroundstore" enctype="multipart/form-data">
@@ -24,7 +27,7 @@
                     <!-- Secção -->
                     <div class="mb-3">
                         <p class="form-label fw-bold">Secção</p>
-                        <select wire:model="type" class="form-select shadow-none">
+                        <select wire:model="type" class="form-control shadow-none">
                             <option selected>Selecione uma secção para esta imagem</option>
                             <option value="Start">Início</option>
                             <option value="AboutMain">Sobre Principal</option>

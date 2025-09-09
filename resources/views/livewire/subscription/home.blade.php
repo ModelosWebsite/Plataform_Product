@@ -1,116 +1,148 @@
 @section("title", "Tela de Inscrição")
-<div class="col-md-12 d-flex justify-content-center align-items-center flex-wrap">
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 p-6">
     
-    <div class="card col-md-8 bg-dark text-white mt-5" id="signup">
-        <div class="card-header text-center">
-            <h4 class="card-title">Crie aqui o seu Website Clássico</h4>
+    <!-- Card -->
+    <div class="w-full max-w-5xl bg-gray-900 text-gray-200 rounded-2xl shadow-xl overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-800 text-center">
+            <h2 class="text-2xl font-bold">Crie aqui o seu <span class="text-blue-400">Website Clássico</span></h2>
         </div>
         
-        <div class="card-body mt-5 mt-lg-0">
-            <form wire:submit.prevent="createAccountSite">
-
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="name" class="form-label">Nome<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='name' type="text" id="name" placeholder="Informe o Nome" autocomplete="off">
-                        @error('name')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-    
-                    <div class="form-group col-md-4">
-                        <label for="lastname" class="form-label">Sobrenome<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='lastname' type="text" id="lastname" placeholder="Informe o Sobrenome" autocomplete="off">
-                        @error('lastname')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='email' type="email" id="email" placeholder="Informe o Email" autocomplete="off">
-                        @error('email')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
+        <!-- Body -->
+        <div class="p-8">
+            <form wire:submit.prevent="createAccountSite" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Nome -->
+                <div>
+                    <label for="name" class="block text-sm font-medium mb-1">Nome<span class="text-red-500">*</span></label>
+                    <input wire:model="name" type="text" id="name" placeholder="Informe o Nome"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('name') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="companynif" class="form-label">NIF<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='companynif' type="text" id="companynif" placeholder="Informe o NIF" autocomplete="off">
-                        @error('companynif')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="image" class="form-label">Imagem<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='image' type="file" id="image" autocomplete="off">
-                        @error('image')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="password" class="form-label">Crie uma senha<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='password' type="password" id="password" placeholder="Crie uma senha" autocomplete="off">
-                        @error('password')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
+                <!-- Sobrenome -->
+                <div>
+                    <label for="lastname" class="block text-sm font-medium mb-1">Sobrenome<span class="text-red-500">*</span></label>
+                    <input wire:model="lastname" type="text" id="lastname" placeholder="Informe o Sobrenome"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('lastname') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="confirmpassword" class="form-label">Confirme a senha<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='confirmpassword' type="password" id="confirmpassword" placeholder="Confirme a senha" autocomplete="off">
-                        @error('confirmpassword')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="phone" class="form-label">Telefone<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='phone' type="text" id="phone" placeholder="999999999" autocomplete="off">
-                        @error('phone')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="province" class="form-label">Província<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='province' type="text" id="province" placeholder="Província" autocomplete="off">
-                        @error('province')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium mb-1">Email<span class="text-red-500">*</span></label>
+                    <input wire:model="email" type="email" id="email" placeholder="Informe o Email"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('email') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="municipality" class="form-label">Município<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='municipality' type="text" id="municipality" placeholder="Município" autocomplete="off">
-                        @error('municipality')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="address" class="form-label">Endereço<span class="text-danger">*</span></label>
-                        <input class="form-control" wire:model='address' type="text" id="address" placeholder="Endereço" autocomplete="off">
-                        @error('address')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="" class="form-label">Localização da sua Loja</label>
-                        @if (isset($locationMap) and count($locationMap) > 0)
-                            <select wire:model="mylocation" class="form-control selectLocation2" id="location-select">
-                                <option value="">--Selecionar--</option>
-                                @foreach ($locationMap as $locationValue)
-                                    <option value="{{ $locationValue['location'] ?? "" }}">{{ $locationValue['location'] ?? "" }}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                        @error('mylocation')<span class="text-danger">{{$message}}</span>@enderror
-                    </div>
+                <!-- NIF -->
+                <div>
+                    <label for="companynif" class="block text-sm font-medium mb-1">NIF<span class="text-red-500">*</span></label>
+                    <input wire:model="companynif" type="text" id="companynif" placeholder="Informe o NIF"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('companynif') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group pt-4 col-md-12">
-                    <button class="btn btn-block" style="background-color: #ffffff; color:#242424 !important" type="submit">Registrar minha Conta</button>
+                <!-- Imagem -->
+                <div>
+                    <label for="image" class="block text-sm font-medium mb-1">Imagem<span class="text-red-500">*</span></label>
+                    <input wire:model="image" type="file" id="image"
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('image') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
+                <!-- Senha -->
+                <div>
+                    <label for="password" class="block text-sm font-medium mb-1">Crie uma senha<span class="text-red-500">*</span></label>
+                    <input wire:model="password" type="password" id="password" placeholder="Crie uma senha"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('password') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div>
+                    <label for="confirmpassword" class="block text-sm font-medium mb-1">Confirme a senha<span class="text-red-500">*</span></label>
+                    <input wire:model="confirmpassword" type="password" id="confirmpassword" placeholder="Confirme a senha"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('confirmpassword') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Telefone -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium mb-1">Telefone<span class="text-red-500">*</span></label>
+                    <input wire:model="phone" type="text" id="phone" placeholder="999999999"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('phone') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Província -->
+                <div>
+                    <label for="province" class="block text-sm font-medium mb-1">Província<span class="text-red-500">*</span></label>
+                    <input wire:model="province" type="text" id="province" placeholder="Província"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('province') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Município -->
+                <div>
+                    <label for="municipality" class="block text-sm font-medium mb-1">Município<span class="text-red-500">*</span></label>
+                    <input wire:model="municipality" type="text" id="municipality" placeholder="Município"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('municipality') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Endereço -->
+                <div>
+                    <label for="address" class="block text-sm font-medium mb-1">Endereço<span class="text-red-500">*</span></label>
+                    <input wire:model="address" type="text" id="address" placeholder="Endereço"
+                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                    @error('address') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Localização -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Localização da sua Loja</label>
+                    @if (isset($locationMap) and count($locationMap) > 0)
+                        <select wire:model="mylocation"
+                            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="">--Selecionar--</option>
+                            @foreach ($locationMap as $locationValue)
+                                <option value="{{ $locationValue['location'] ?? '' }}">
+                                    {{ $locationValue['location'] ?? '' }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
+                    @error('mylocation') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Botão Registrar -->
+                <div class="md:col-span-3 pt-4">
+                    <button type="submit"
+                        class="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-semibold shadow-md transition">
+                        Registrar minha Conta
+                    </button>
+                </div>
             </form>
         </div>
 
-        <div class="card-footer text-center">
-            <p class="lead">Já tem uma conta? <a style="color: #ffffff !important;" href="{{route("plataform.product.login.view")}}" class="text-secondary">Fazer Login.</a></p>
+        <!-- Footer -->
+        <div class="p-6 border-t border-gray-800 text-center">
+            <p>Já tem uma conta?
+                <a href="{{route('plataform.product.login.view')}}" class="text-blue-400 hover:underline">
+                    Fazer Login
+                </a>
+            </p>
         </div>
     </div>
 
-    <div class="full-screen-loader d-none" wire:loading.class="d-flex" wire:loading.class.remove="d-none" wire:loading wire:target="createAccountSite">
-        <div class="loader"></div>
-        <p class="display-3 display-md-1 text-center">A sua conta está a ser criada, aguarde...</p>
+    <!-- Loader -->
+    <div class="fixed inset-0 bg-black bg-opacity-75 flex-col items-center justify-center hidden"
+         wire:loading.class="flex" wire:loading.class.remove="hidden" wire:target="createAccountSite">
+        <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-6 text-gray-200 text-lg">A sua conta está a ser criada, aguarde...</p>
     </div>
-        
 </div>
