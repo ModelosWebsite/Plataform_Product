@@ -1,9 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="helpGoogle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
-      <div class="modal-header bg-primary text-white">
-        <h6 class="modal-title mb-0">Formulario de Ajuda</h6>
-      <div>
       <div class="modal-content">
         <div class="modal-body">
             <form>
