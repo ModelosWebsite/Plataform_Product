@@ -32,12 +32,12 @@
                                 <td><img src="{{ asset('wireframe/theme/portfolio/Hero.jpg') }}" width="400" height="100" alt=""></td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="d-flex flex-wrap justify-content-center gap-2">
                                     <a href="#" class="tablinks" onclick="openTab(event, 'hability')">
-                                        <img src="{{ asset('wireframe/theme/portfolio/Competencias.png') }}" width="200" height="100" />
+                                        <img src="{{ asset('wireframe/theme/portfolio/Competencias.png') }}" class="img-fluid" width="200" />
                                     </a>
                                     <a href="#" class="tablinks" onclick="openTab(event, 'about')">
-                                        <img src="{{ asset('wireframe/theme/portfolio/Sobre-mim.png') }}" width="200" height="100" />
+                                        <img src="{{ asset('wireframe/theme/portfolio/Sobre-mim.png') }}" class="img-fluid" width="200" />
                                     </a>
                                 </td>
                             </tr>
