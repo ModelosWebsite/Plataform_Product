@@ -3,7 +3,40 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
-          <iframe scrolling="no" src="https://docs.google.com/forms/d/e/1FAIpQLSe2Dgs4Ji2pw6rCiQnxzZISOnGSDp3o5MukgyFsmzXcBhVBIA/viewform?embedded=true" width="700" height="1466" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+            <div class="row justify-content-center">
+              <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg rounded-3">
+                  <div class="card-body p-4">
+                    <h4 class="card-title text-center mb-4">📩 Pedido de Ajuda</h4>
+
+                    <form>
+                      <!-- Tipo de Ajuda -->
+                      <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo de ajuda</label>
+                        <select class="form-select" id="tipo" required>
+                          <option value="">Selecione...</option>
+                          <option value="tecnica">Ajuda técnica</option>
+                        </select>
+                      </div>
+
+                      <!-- Mensagem -->
+                      <div class="mb-3">
+                        <label for="mensagem" class="form-label">Descreva o seu pedido</label>
+                        <textarea class="form-control" id="mensagem" rows="4" placeholder="Explique sua necessidade" required></textarea>
+                      </div>
+
+                      <!-- Botão -->
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                          Enviar pedido
+                        </button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
