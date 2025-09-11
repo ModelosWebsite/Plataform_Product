@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class AccountVerifyComponent extends Component
 {
-    public $one, $two, $three, $four, $five, $six;
+    public $one, $two, $three, $four, $five, $six, $emailVerify;
 
     use LivewireAlert;
     public function render()
@@ -22,10 +22,8 @@ class AccountVerifyComponent extends Component
     public function resendCode()
     {
         try {
-            $email = Request("email");
-
-            if ($email) {
-                $user = User::where('email',$email)->first();
+            if ($this->emailVerify != null) {
+                $user = User::where('email',$this->emailVerify)->first();
                 $newVerifyCode = rand(100000,500000);
                 $user->verification_token = $newVerifyCode;
                 $user->save();
@@ -36,7 +34,7 @@ class AccountVerifyComponent extends Component
                     "verification_token" => $newVerifyCode
                 ];  
 
-                Mail::to($email)->send(new CreatedAccountMail($emailInfo));
+                Mail::to($this->emailVerify)->send(new CreatedAccountMail($emailInfo));
 
                 $this->alert('success', 'SUCESSO', [
                     'position' => 'center',

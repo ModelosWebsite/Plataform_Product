@@ -19,9 +19,9 @@
       <!-- Menu desktop -->
       <nav class="hidden md:flex space-x-6">
         <a href="#inicio" class="hover:text-blue-300">Principal</a>
-        <a href="#produto" class="hover:text-blue-300">Produto</a>
+        <a href="#webproduct" class="hover:text-blue-300">Produto</a>
         <a href="#sobre" class="hover:text-blue-300">Sobre</a>
-        <a href="#contato" class="hover:text-blue-300">Contato</a>
+        <a href="#contact" class="hover:text-blue-300">Contato</a>
       </nav>
 
       <!-- Botão CTA (desktop) -->
@@ -132,7 +132,7 @@
     </div>
   </section>
 
-  <section class="flex flex-col items-center justify-center text-center px-4 py-8">
+  <section id="webproduct" class="flex flex-col items-center justify-center text-center px-4 py-8">
     <!-- Título -->
     <div class="text-center mb-12">
       <h3 class="text-3xl font-bold text-gray-900">Produto xZero</h3>
@@ -381,7 +381,7 @@
     </div>
   </section>
 
-  <footer class="bg-[#141a64] text-white py-8 px-6">
+  <footer class="bg-[#141a64] text-white py-8 px-6" id="contact">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
       <!-- Endereço -->

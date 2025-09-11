@@ -1,36 +1,54 @@
 <div>
-    <div class="w-full max-w-md bg-gray-900 text-gray-200 rounded-2xl shadow-xl p-8">
-        <!-- Header -->
-        <div class="text-center mb-6">
+<div 
+    x-data="{ showEmailForm: false }" 
+    class="w-full max-w-md bg-gray-900 text-gray-200 rounded-2xl shadow-xl p-8">
+
+    <!-- Header -->
+    <div class="text-center mb-6">
         <h2 class="text-2xl font-bold">Verificação de Conta</h2>
         <p class="text-gray-400 text-sm mt-2">Insira o código de 6 dígitos enviado para o seu email.</p>
+    </div>
+
+    <!-- OTP Form -->
+    <div class="space-y-6">
+        <div class="flex justify-between gap-2">
+            <input type="text" maxlength="1" wire:model="one" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" maxlength="1" wire:model="two" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" maxlength="1" wire:model="three" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" maxlength="1" wire:model="four" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" maxlength="1" wire:model="five" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" maxlength="1" wire:model="six" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
 
-        <!-- OTP Form -->
-        <div class="space-y-6">
-            <div class="flex justify-between gap-2">
-                <input type="text" maxlength="1" wire:model="one" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="text" maxlength="1" wire:model="two" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="text" maxlength="1" wire:model="three" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="text" maxlength="1" wire:model="four" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="text" maxlength="1" wire:model="five" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="text" maxlength="1" wire:model="six" class="otp w-12 h-14 text-center text-xl rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
-            </div>
+        <!-- Botão Verificar -->
+        <button wire:click="verifyAccount" class="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-semibold shadow-md transition">
+            <i class="fa fa-check"></i> Verificar Conta
+        </button>
+    </div>
 
-            <!-- Botão Verificar -->
-            <button wire:click="verifyAccount" class="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-semibold shadow-md transition">
-               <i class="fa fa-check"></i> Verificar Conta
-            </button>
-        </div>
-
-        <!-- Links -->
-        <div class="mt-6 text-center space-y-2">
+    <!-- Links -->
+    <div class="mt-6 text-center space-y-2">
         <p class="text-gray-400 text-sm">Não recebeu o código?</p>
-        <button wire:click="resendCode" class="bg-blue-600 text-white-400 p-2 rounded-lg font-medium">
+
+        <!-- Botão que mostra o input -->
+        <button 
+            @click="showEmailForm = !showEmailForm" 
+            class="bg-blue-600 text-white p-2 rounded-lg font-medium">
             Reenviar código
         </button>
+
+        <!-- Formulário escondido -->
+        <div x-show="showEmailForm" x-transition class="mt-4">
+            <input type="email" wire:model="emailVerify" placeholder="Digite seu email"
+                class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+            <button wire:click="resendCode" 
+                class="w-full mt-3 py-3 rounded-lg bg-green-600 hover:bg-green-700 font-semibold shadow-md transition">
+                Enviar novo código
+            </button>
         </div>
     </div>
+</div>
+
 
   <script>
     const inputs = document.querySelectorAll(".otp");
