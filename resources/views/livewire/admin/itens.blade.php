@@ -1,40 +1,40 @@
 <div class="container-fluid col-md-12">
     <!-- Ajustes de responsividade -->
-<style>
-/* Evita quebra de conteúdo */
-.nowrap-table th,
-.nowrap-table td {
-    white-space: nowrap;
-}
+    <style>
+        /* Evita quebra de conteúdo */
+        .nowrap-table th,
+        .nowrap-table td {
+            white-space: nowrap;
+        }
 
-/* Ajustes mobile */
-@media (max-width: 576px) {
+        /* Ajustes mobile */
+        @media (max-width: 576px) {
+            .no-items-message {
+                font-size: 16px;
+                text-align: center;
+            }
 
-    .no-items-message {
-        font-size: 16px;
-        text-align: center;
-    }
+            .card-header h5 {
+                font-size: 16px;
+            }
 
-    .card-header h5 {
-        font-size: 16px;
-    }
+            .card-header button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
 
-    .card-header button {
-        font-size: 14px;
-        padding: 6px 12px;
-    }
-}
-</style>
     <div class="">
         <!-- Card Header -->
         <div class="card-header flex-row align-items-center justify-content-between col-xl-12">
             <div class="col-xl-12 d-flex justify-content-between">
                 <div></div>
                 <div>
-                                <button class="btn btn-sm bg-primary" data-toggle="modal" data-target="#additem">
-                Adicionar
-            </button>
-                </div> 
+                    <button class="btn btn-sm bg-primary text-white" data-toggle="modal" data-target="#additem">
+                        Adicionar
+                    </button>
+                </div>
             </div>
         </div>
 

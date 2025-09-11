@@ -29,8 +29,8 @@
 
                   <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="card-body">
-                      @php  $nameCompany = $bankAccount["Company"]  @endphp
-                      @forelse($bankAccount['bankAccounts'] as $bankAccount)
+                      @php  $nameCompany = $bankAccount["Company"] ?? ""  @endphp
+                      @forelse($bankAccount['bankAccounts'] ?? [] as $bankAccount)
                         <div class="row">
                           <div class="col-6">
                             <h6 class="text-capitalize">Banco: {{ $bankAccount['bank'] }}  |  IBAN: AO06 {{ trim(chunk_split($bankAccount['ibam'], 4, ' ')) ?? ''}}</h6>
@@ -128,7 +128,7 @@
                   <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                 </div>
 
-                @if($paymentType === 'Transferência')
+                @if($package && $package->is_active)
                   <div class="form-group col-md-4 shadow-none">
                     <label for="image">Recibo de Pagamento <span class="text-danger">*</span></label>
                     <input id="receipt" type="file" class="form-control w-100" name="receipt" wire:model="receipt">

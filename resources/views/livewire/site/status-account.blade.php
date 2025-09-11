@@ -1,12 +1,16 @@
-<div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="col-9">
-        <div class="d-flex justify-content-center align-items-center flex-column text-white text-center p-4">
-            <h1 class="display-3 display-md-1 fw-bold">A sua conta foi criada com sucesso</h1>
-            <p class="fs-4 fs-md-2">
-                Receberá um email de verificação de web@on.xzero.live por favor vá ao seu email e termine a verificação. 
-                Se não estiver na sua caixa de entrada veja na sua caixa de spam.
-            </p>
-            <a href="{{route('plataform.product.login.view')}}" style="width: 150px" class="btn btn-primary">Entrar</a>
-        </div>
-    </div>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 p-6">
+  <div class="max-w-3xl text-center text-white">
+    
+    <h2 class="text-4xl md:text-4xl font-extrabold mb-6">
+      A sua conta foi criada com sucesso
+    </h2>
+    
+    <p class="text-lg md:text-2xl mb-8 leading-relaxed">
+      Receberá um email de verificação de 
+      <span class="font-semibold">web@on.xzero.live</span>.  
+      Por favor, vá ao seu email e conclua a verificação.  
+      Se não encontrar na sua caixa de entrada, confira também a pasta de <span class="underline">spam</span>.
+    </p>
+    
+  </div>
 </div>

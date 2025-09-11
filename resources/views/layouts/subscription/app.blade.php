@@ -7,6 +7,8 @@
 
   <title>@yield("title")</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href={{asset("sbadmin/vendor/fontawesome-free/css/all.min.css")}}" rel="stylesheet" type="text/css">
+
   @livewireStyles
 </head>
 

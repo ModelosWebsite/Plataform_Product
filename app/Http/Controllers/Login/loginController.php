@@ -24,7 +24,7 @@ class loginController extends Controller
             
                 $request->session()->regenerate();
                 if (Auth::user()-> role == "Administrador") {
-                    if (Auth::user()->email_verified_at != null) {
+                    if (Auth::user()->is_verified != 0) {
                         return redirect()->route("plataform.product.admin.index");
                     }else{
                         return redirect()->route("site.verify.email");

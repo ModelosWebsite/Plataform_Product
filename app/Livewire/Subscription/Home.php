@@ -3,9 +3,11 @@
 namespace App\Livewire\Subscription;
 
 use App\Models\{User, company};
+use App\Mail\CreatedAccountMail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\{DB, Hash, Http};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\Component;
 
@@ -97,6 +99,7 @@ class Home extends Component
             $user->password = Hash::make($this->password);
             $user->role = "Administrador";
             $user->company_id = $company->id;
+            $user->verification_token = rand(100000, 999999);
             $user->save();
 
             // Informações para a API kytutes
@@ -129,6 +132,12 @@ class Home extends Component
                 "companycountry" => "AOA"
             ];
 
+            $infoEmail = [
+                "name" => $this->name . " " . $this->lastname,
+                "email" => $this->email,
+                "verification_token" => $user->verification_token
+            ];
+
             //Chamada às APIs externas
             $response = Http::withHeaders($this->getHeaders())
             ->post("https://kytutes.com/api/create/company", $infoCompany)
@@ -144,7 +153,8 @@ class Home extends Component
             $company->update();
 
             // Disparar evento Registered
-            event(new Registered($user));
+            Mail::to($this->email)->send(new CreatedAccountMail($infoEmail));
+            //event(new Registered($user));
 
             //Limpar formulário
             $this->clearForm();

@@ -1,8 +1,8 @@
 <div class="container-fluid col-12">
     <div class="card">
-        <div class="card-header">
-            <h5 class="card-title text-center mb-3">Active Elementos Premium</h5>
-            <p class="text-center text-muted">Melhore o seu site com recursos avançados</p>
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0 text-center">Active Elementos Premiums</h5>
+            <p class="text-center mb-0">Melhore o seu site com recursos avançados</p>
         </div>
         
         <div class="card-body">
@@ -166,7 +166,7 @@
             </style>
 
 
-        <div class="package-list row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="package-list row row-cols-1 row-cols-lg-2">
             @forelse($packages as $package)
                 <div class="package-item col-6 mb-3">
                     <img src="{{ asset('storage/premium/'.$package->image) }}" class="package-img">

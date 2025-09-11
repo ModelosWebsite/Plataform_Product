@@ -5,7 +5,7 @@
             <div class="col-xl-12 d-flex justify-content-between">
                 <div></div>
                 <div>
-                    <button class="btn text-white btn-sm" style="background: rgb(0, 74, 222)" data-toggle="modal" data-target="#addcategory">Adicionar</button>
+                    <button class="btn text-white btn-sm" data-toggle="modal" data-target="#addcategory">Adicionar</button>
                 </div> 
             </div>
         </div>
