@@ -20,7 +20,7 @@
                 <!-- Conteúdo -->
                 <div class="p-4">
                     <div class="align-items-center">
-                        <span class="badge bg-success fs-6">
+                        <span class="badge bg-success text-white fs-5">
                              {{ number_format($selectedPackage->amount, 2, '.', ' ') }} kz
                         </span>
                         <span> Por mês </span>
