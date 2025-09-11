@@ -14,10 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('backup:run --only-db')
-        ->timezone('Africa/Luanda')
-        ->cron('0 9 * * *');
-
         $schedule->job(new InvoiceGenerateTransferece)->everyMinute();
         $schedule->job(new ActivePackages)->everyMinute();
         $schedule->job(new StoreVisitor(request()->header(
