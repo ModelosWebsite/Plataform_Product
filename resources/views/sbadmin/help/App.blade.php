@@ -12,7 +12,7 @@
             <form>
             <!-- Tipo de Ajuda -->
             <div class="mb-3">
-              <label for="tipo" class="form-label">Tipo de ajuda</label>
+              <h6 for="tipo" class="form-label">Tipo de ajuda</h6>
               <select class="form-control shadow-none" id="tipo" required>
                 <option value="">Selecione...</option>
                 <option value="tecnica">Ajuda técnica</option>
@@ -21,7 +21,7 @@
 
             <!-- Mensagem -->
             <div class="mb-3">
-              <label for="mensagem" class="form-label">Descreva o seu pedido</label>
+              <h6 for="mensagem" class="form-label">Descreva o seu pedido</h6>
               <textarea class="form-control shadow-none" id="mensagem" rows="4" placeholder="Explique sua necessidade" required></textarea>
             </div>
 
