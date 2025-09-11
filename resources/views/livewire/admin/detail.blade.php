@@ -2,8 +2,10 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title text-uppercase" id="exampleModalLabel">Detalhes de Encomenda</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes de Encomenda</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
         </div>
         <div class="modal-body">
           @if (isset($itens) and count($itens) > 0)
@@ -30,13 +32,13 @@
                     <tr>
                       <td scope="row">{{$itens->item}}</td>
                       <td scope="row">
-                        <div class="text-end">
+                        <div style="text-align: right !important;">
                           {{ str_replace(['.', ','], ['  ', '.'], $itens->price) }}
                         </div>
                       </td>
                       <td scope="row">{{$itens->quantity}}</td>
                       <td scope="row">
-                        <div class="text-end">
+                        <div style="text-align: right !important;">
                           {{ str_replace(['.', ','], ['  ', '.'], $itens->subtotal) }}
                         </div>
                       </td>

@@ -2,21 +2,22 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="exampleModalLabel">{{$editMode ?  "Editar" : "Cadastrar"}} Categoria</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <h6 class="modal-title mb-0" id="exampleModalLabel">{{$editMode ?  "Editar" : "Cadastrar"}} Categoria</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
         </div>
 
         <div class="modal-body">
           <div class="form-group">
-            <h5 for="" class="form-label">Categoria</h5>
-            <input class="form-control" type="text" placeholder="Insira o nome da categoria" wire:model="description">
+            <h6 class="form-label">Categoria</h6>
+            <input class="form-control form-control-sm" type="text" placeholder="Insira o nome da categoria" wire:model="description">
           </div>
-          
         </div>
 
         <div class="card-footer">
           <div class="form-group">
-            <button wire:click="createCategory()" class="btn btn-primary">Cadastrar</button>
+            <button wire:click="createCategory()" class="btn btn-sm btn-primary">Cadastrar</button>
           </div>
         </div>
 

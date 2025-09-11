@@ -1,29 +1,30 @@
 <div class="col-md-12">
     <style>
-/* Evita quebra de conteúdo */
-.nowrap-table th,
-.nowrap-table td {
-    white-space: nowrap;
-}
+        /* Evita quebra de conteúdo */
+        .nowrap-table th,
+        .nowrap-table td {
+            white-space: nowrap;
+        }
 
-/* Ajustes mobile */
-@media (max-width: 576px) {
+        /* Ajustes mobile */
+        @media (max-width: 576px) {
 
-    .no-items-message {
-        font-size: 16px;
-        text-align: center;
-    }
+            .no-items-message {
+                font-size: 16px;
+                text-align: center;
+            }
 
-    .card-header h5 {
-        font-size: 16px;
-    }
+            .card-header h5 {
+                font-size: 16px;
+            }
 
-    .card-header button {
-        font-size: 14px;
-        padding: 6px 12px;
-    }
-}
-</style>
+            .card-header button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+    
     <table class="table table-striped table-responsive-md align-middle nowrap-table">
         <thead class="bg-primary text-white">
             <tr>
@@ -67,30 +68,30 @@
                                         @break
 
                                 @case('EM PREPARAÇÃO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-warning p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-warning p-1" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-utensils"></i> {{ $data['status'] }}
                                         </span>
                                         @break
 
                                 @case('PRONTO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-info p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-info p-1" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-box-open"></i> {{ $data['status'] }}
                                         </span>
                                         @break
 
                                 @case('A CAMINHO')
-                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-primary p-2" style="cursor: pointer;font-size:15px; font-weight:bold">
+                                        <span wire:click="updateStatus('{{ $data['reference'] }}', 'estado', '{{$data['status']}}')" class="badge badge-primary p-1" style="cursor: pointer;font-size:15px; font-weight:bold">
                                             <i class="fa fa-truck"></i> {{ $data['status'] }}
                                         </span>
                                         @break
 
                                 @case('ENTREGUE')
-                                        <span class="badge badge-success p-2" style="font-size:15px; font-weight:bold">
+                                        <span class="badge badge-success p-1" style="font-size:15px; font-weight:bold">
                                             <i class="fa fa-handshake"></i> {{ $data['status'] }}
                                         </span>
                                         @break
                                 @default
-                                    <span class="badge badge-danger p-2" style="font-size:15px; font-weight:bold">
+                                    <span class="badge badge-danger p-1" style="font-size:15px; font-weight:bold">
                                         <i class="fa fa-exclamation-triangle"></i> Estado Nulo
                                     </span>
                             @endswitch

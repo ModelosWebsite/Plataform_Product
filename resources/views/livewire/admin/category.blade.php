@@ -5,7 +5,7 @@
             <div class="col-xl-12 d-flex justify-content-between">
                 <div></div>
                 <div>
-                    <button class="btn text-white btn-sm" data-toggle="modal" data-target="#addcategory">Adicionar</button>
+                    <button class="btn text-white btn-primary btn-sm" data-toggle="modal" data-target="#addcategory">Adicionar</button>
                 </div> 
             </div>
         </div>
@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{ $category['category'] }}</td>
                                     <td>
-                                        <button class="btn btn-outline-danger" wire:click="deleteCategory({{ $category['reference'] }})">
+                                        <button class="btn btn-outline-danger btn-sm" wire:click="deleteCategory({{ $category['reference'] }})">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
