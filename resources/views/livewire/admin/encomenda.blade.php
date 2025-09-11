@@ -44,7 +44,7 @@
                         <td>{{ $data['address'] ?? '-' }}</td>
                         <td>{{ $data['phone'] ?? '-' }}</td>
                         <td>
-                            <div class="text-end">
+                            <div style="text-align: right !important;">
                                 {{ str_replace(['.', ','], ['  ', '.'], $data['subtotal']) }}
                             </div>
                         </td>

@@ -62,7 +62,7 @@
                                     <td>{{ $item['category'] }}</td>
                                     <td>{{ $item['quantity'] }}</td>
                                     <td>
-                                        <div class="text-end">
+                                        <div style="text-align: right !important;">
                                             @if($item['tax'] > 0)
                                                 {{ number_format($item['priceWithTax'], 2, '.', ' ') }} kz </br>
                                                 <span class="badge badge-dark">Iva incluído</span>
