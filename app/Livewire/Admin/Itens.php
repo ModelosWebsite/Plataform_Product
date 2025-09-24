@@ -208,18 +208,25 @@ class Itens extends Component
         $this->category_id = "";
         $this->longdescription = "";
         $this->image = null;
+        $this->itemId = "" ;
     }
 
     public function updateItem()
     {
-            DB::beginTransaction();
+        DB::beginTransaction();
         try {
             
-            $fileName = null;
-            if ($this->image !== null && !is_string($this->image)) {
-                $fileName = rand(2000, 3000) . "." . $this->image->getClientOriginalExtension();
-                $this->image->storeAs("public/items", $fileName);
-            }            
+            $filename = null;
+            if ($this->image != null and !is_string($this->image)) {
+                $filename = rand(2000, 3000) .".".$this->image->getClientOriginalExtension();
+                $this->image->storeAs('items', $filename, 'public');
+                // $upload = new \App\Services\UploadGoogleDrive(
+                //     $this->company->companyname,
+                //     $this->company->companynif,
+                //     "Hero",
+                //     $this->image
+                // );
+            }          
 
             $infoItem = [
                 "iva" => 0,
@@ -229,17 +236,22 @@ class Itens extends Component
                 "description" => $this->description,
                 "category" => $this->category_id,
                 "longDescription" => $this->longdescription,
-                "image" => $fileName,
+                //"image" => $upload->sendFile()
+                "image" =>  $this->image ?  $this->image : $filename,
+                "reference" => $this->itemId
             ];
             
-            $response = Http::withHeaders($this->getToken())
-            ->put("https://kytutes.com/api/items", [
-                "reference" => $this->itemId,
-                "item" => $infoItem
-            ])->json();
+            $response = Http::withHeaders([
+                "Accept" => "application/json",
+                "Content-Type" => "application/json",
+                "Authorization" => "Bearer " . auth()->user()->company->companytokenapi
+            ])->put("https://kytutes.com/api/items", $infoItem)->json();
+            
+            $this->resetForm();
+            $this->editing = false;
 
             if ($response != null) {
-                $this->alert('success', 'Item Actualizado!', [
+                $this->alert('success', 'Produto Actualizado!', [
                     'toast' => false,
                     'position' => 'center',
                     'showConfirmButton' => false,

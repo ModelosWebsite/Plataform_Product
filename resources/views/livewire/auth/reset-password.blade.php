@@ -1,27 +1,29 @@
-<div>
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                        <div class="card-body p-4">
-                            <div class="">
-                                <h4 class="fw-bold text-center">Recuperar Senha</h4>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#6a11cb] to-[#2575fc]">
+    <div class="w-full max-w-md">
+        <div class="bg-gray-900 text-white rounded-2xl shadow-lg">
+            <div class="p-6">
+                <h4 class="text-xl font-bold text-center mb-6">Recuperar Senha</h4>
 
-                                <form wire:submit.prevent="resetPassword()">
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="typeEmailX">Email</label>
-                                        <input wire:model="email" name="email" type="email" class="form-control form-control-sm shadow-none" required />
-                                    </div>
-
-                                    <button class="btn btn-outline-light btn-sm px-5" type="submit">Recuperar</button>
-                                    <a href="/" class="btn btn-outline-light btn-sm px-5">Voltar</a>
-                                </form>
-                            </div>
-                        </div>
+                <form wire:submit.prevent="resetPassword()" class="space-y-4">
+                    <div>
+                        <label for="typeEmailX" class="block mb-1 text-sm">Email</label>
+                        <input wire:model="email" name="email" type="email"
+                            class="w-full rounded-md border border-gray-600 bg-gray-800 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6a11cb]"
+                            required />
                     </div>
-                </div>
+
+                    <div class="flex justify-center gap-3">
+                        <button type="submit"
+                            class="px-5 py-2 text-sm border border-white text-white rounded-md hover:bg-white hover:text-gray-900 transition">
+                            Recuperar
+                        </button>
+                        <a href="/"
+                            class="px-5 py-2 text-sm border border-white text-white rounded-md hover:bg-white hover:text-gray-900 transition">
+                            Voltar
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 </div>

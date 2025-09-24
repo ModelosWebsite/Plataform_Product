@@ -22,6 +22,16 @@ class pacote extends Model
         "is_active"
     ];
 
+    // Verifica se o premium vai expirar em 15 dias
+    public function isPremiumExpiringSoon(): bool
+    {
+        if (!$this->end_date) {
+            return false;
+        }
+
+        return now()->diffInDays($this->end_date, false) === 15;
+    }
+
     public function company()
     {
         return $this->belongsTo(company::class);

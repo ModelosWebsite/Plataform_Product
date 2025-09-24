@@ -79,7 +79,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editItem">
+                                            <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#additem" wire:click="editItem('{{ $item['reference'] }}')">
                                                 <i class="fa fa-pencil"></i>
                                             </button>
                                             <button class="btn btn-outline-danger btn-sm" wire:click="deleteItem('{{ $item['reference'] }}')">

@@ -1,5 +1,7 @@
-<div>
-    <div class="card">
+<div class="col-12">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+        <div class="card">
         <div class="card-header bg-primary text-white">
             <h6 class="card-title mb-0">Meu Perfil</h6>
         </div>
@@ -39,4 +41,52 @@
             </div>
         </div>
     </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            @if (auth()->user()->role === "Administrador")
+                <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Usuários</h6>
+                    <button class="btn btn-sm btn-light mb-0" data-toggle="modal" data-target="#addUser">Adicionar</button>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle nowrap-table">
+                            <thead class="text-white bg-primary">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Acções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name ?? "" }}</td>
+                                        <td>{{ $user->email ?? "" }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#additem" wire:click="editUser('{{ $user->id }}')">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm" wire:click="deleteUser('{{ $user->id }}')">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @else
+                
+            @endif
+        </div>
+    </div>
+    @include("modals.admin.create-user")
 </div>

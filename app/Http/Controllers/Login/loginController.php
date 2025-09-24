@@ -14,16 +14,16 @@ class loginController extends Controller
     }
 
     public function login(Request $request){
-       try {
+        try {
             $credentials = $this->validate($request, [
                 "email" => ["required"],
                 "password" => ["required"]
             ]);
-
-            if (Auth::attempt($credentials)) {
             
+            if (Auth::attempt($credentials)) {
+                            
                 $request->session()->regenerate();
-                if (Auth::user()-> role == "Administrador") {
+                if (Auth::user()-> role == "Administrador" || Auth::user()-> role == "ViceAdministrador") {
                     if (Auth::user()->is_verified != 0) {
                         return redirect()->route("plataform.product.admin.index");
                     }else{

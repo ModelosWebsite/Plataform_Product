@@ -15,23 +15,26 @@ class DisableExpiredPackages extends Command
     public function handle()
     {
         try {
-                DB::transaction(function () {
-                    $expiredPackages = pacote::where('is_active', true)
-                        ->whereDate('end_date', '<', Carbon::today())
-                        ->get();
+            DB::transaction(function () {
+                $expiredPackages = pacote::where('is_active', true)
+                ->whereDate('end_date', '<', Carbon::today())->get();
 
-                    foreach ($expiredPackages as $pacote) {
-                        $pacote->update(['is_active' => false]);
+                foreach ($expiredPackages as $pacote) {
+                    $pacote->update(['is_active' => false]);
 
-                        $company = company::find($pacote->company_id);
-                        if ($company->payment_type === "Transferência") {
-                            $company->update(['payment_type' => 'Referência']);
-                        }
+                    $company = company::find($pacote->company_id);
+                    if ($company->payment_type === "Transferência") {
+                        $company->update(['payment_type' => 'Referência']);
                     }
-                });
-                \Log::info("Pacotes expirados desativados com sucesso.");
+                }
+            });
+            \Log::info("Pacotes expirados desativados com sucesso.");
         } catch (\Throwable $th) {
-            \Log::error("Erro ao desativar pacotes expirados: " . $th->getMessage());
+            \Log::error("Erro ao desativar pacotes expirados: ", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine()
+            ]);
         }
     }
 }

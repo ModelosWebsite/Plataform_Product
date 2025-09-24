@@ -8,7 +8,8 @@ use Livewire\Component;
 
 class MyAccount extends Component
 {
-    public $name, $email, $password, $userId;
+    public $name, $email, $password, $userId,$users;
+    public $username, $useremail;
     public $isEditing = false; // Variável de estado para controle de edição
 
     use LivewireAlert;
@@ -24,6 +25,7 @@ class MyAccount extends Component
 
     public function render()
     {
+        $this->users = User::query()->where("company_id", auth()->user()->company_id)->orderBy("name", "asc")->get();
         return view('livewire.definition.my-account');
     }
 
@@ -66,7 +68,7 @@ class MyAccount extends Component
                 'text' => 'Credenciais atualizadas'
             ]);
             
-            $this->toggleEditMode(); // Desativa o modo de edição após salvar
+            $this->toggleEditMode();
         
         } catch (\Throwable $th) {
             $this->alert('error', 'ERRO', [
@@ -75,6 +77,43 @@ class MyAccount extends Component
                 'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
                 'text' => 'Falha na operação: ' . $th->getMessage()
+            ]);
+        }
+    }
+
+    public function saveUser()
+    {
+        try {
+
+            User::create([
+                "name" => $this->username,
+                "email" => $this->useremail,
+                "password" => bcrypt($this->useremail),
+                "company_id" => auth()->user()->company_id,
+                "role" => "ViceAdministrador",
+                "is_verified" => true
+            ]);
+
+            $this->alert('success', 'SUCESSO', [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => false,
+                'confirmButtonText' => 'OK',
+                'text' => 'Usuario Cadastrado'
+            ]);
+            
+        } catch (\Throwable $th) {
+            \Log::error("myAccount@createUser", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
+            $this->alert('error', 'ERRO', [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => false,
+                'confirmButtonText' => 'OK',
+                'text' => 'Falha na operação'
             ]);
         }
     }

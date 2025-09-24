@@ -22,7 +22,6 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         @include("sbadmin.includes.sidebar")
-        @include("sbadmin.help.App")
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include("sbadmin.includes.topbar")

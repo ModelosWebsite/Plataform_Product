@@ -21,7 +21,6 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         @yield("content")
-        @include("sbadmin.help.App")
     </div>
     <!-- End of Page Wrapper -->
 

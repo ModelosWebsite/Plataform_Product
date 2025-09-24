@@ -12,13 +12,13 @@ class UploadGoogleDrive
     public string $folder;
     public  $file;
     public string  $url;
+
     public function __construct($company, $companynif, $folder, $file)
     {
         $this->company = $company;
         $this->companynif = $companynif;
         $this->folder = $folder;
         $this->file = $file;
-
         $this->url = 'https://xzero.live/api/send/file';
     }
 
