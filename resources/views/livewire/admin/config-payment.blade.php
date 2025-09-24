@@ -29,11 +29,10 @@
         <p class="mb-2">Selecionado: <strong>{{ $company->delivery_method ?? "Não definido" }}</strong></p>
 
         @if($package)
-            <p class="text-muted">Entrega vinculada ao pacote selecionado.</p>
         @else
             <div class="form-group">
                 <label for="delivery_method" class="fw-semibold">Escolher Método de Entrega</label>
-                <select id="delivery_method" wire:change="updateDeliveryMethod" wire:model="delivery_method" class="form-select mt-1">
+                <select id="delivery_method" wire:change="updateDeliveryMethod" wire:model="delivery_method" class="form-control mt-1">
                     <option value="" selected>{{ __('Selecione um método de entrega') }}</option>
                     <option value="Meus Entregadores">{{ __('Meus Entregadores') }}</option>
                     <option value="Entregadores PB">{{ __('Entregadores PB') }}</option>
