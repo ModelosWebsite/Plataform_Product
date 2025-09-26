@@ -25,21 +25,6 @@ class LinkAccount extends Component
         try {
             $company = company::find(auth()->user()->company->id);
 
-            // Informações para a API kytutes
-            $infoCompany = [
-                "name" => $company->companyname,
-                "nif" => $company->companynif,
-                "phone" => 999999999,
-                "email" => $company->companyemail,
-                "province" => 'Luanda',
-                "municipality" => $this->mylocation ,
-                "address" => $this->mylocation,
-                "image" => "default.png",
-                "password" => $company->companyemail,
-                "myLocation" => $this->mylocation,
-                "isAxp" => 0
-            ];
-
             // Informações para a API Xzero
             $infoXzero = [
                 "companyname" => $company->companyname,
@@ -55,18 +40,12 @@ class LinkAccount extends Component
                 "companycountry" => "AOA"
             ];
 
-            // //Chamada às APIs externas
-            // $response = Http::withHeaders($this->getHeaders())
-            // ->post("https://kytutes.com/api/create/company", $infoCompany)
-            // ->json();
-
-
             if ($infoXzero != null) {
                 $xzeroResponse = Http::withHeaders($this->getHeaders())
                 ->post("https://xzero.live/api/create/account", $infoXzero)
                 ->json();
 
-                Log::info("xzero conta", [
+                \Log::info("xzero conta", [
                     "message" => $th->getMessage(),
                     "file" => $th->getFile(),
                     "line" => $th->getLine(),
@@ -90,7 +69,7 @@ class LinkAccount extends Component
 
         } catch (\Throwable $th) {
             // DB::rollBack();
-            Log::info("message". $th->getMessage());
+            \Log::info("message". $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
