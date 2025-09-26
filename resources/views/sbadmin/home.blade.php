@@ -29,6 +29,7 @@
                 <button id="copy-btn" class="btn btn-primary shadow-sm rounded-pill" onclick="copyToClipboard()">
                     Copiar Link
                 </button>
+                <livewire:admin.link-account/>
             </div>
 
             <!-- Coluna 1 -->
