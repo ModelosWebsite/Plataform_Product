@@ -66,6 +66,12 @@ class LinkAccount extends Component
                 ->post("https://xzero.live/api/create/account", $infoXzero)
                 ->json();
 
+                Log::info("xzero conta", [
+                    "message" => $th->getMessage(),
+                    "file" => $th->getFile(),
+                    "line" => $th->getLine(),
+                ]);
+
                 //Atualizar tokens da empresa
                 // $company->companytokenapi = $response['token'];
                 $company->token_xzero = $xzeroResponse['apiToken'];
@@ -84,7 +90,7 @@ class LinkAccount extends Component
 
         } catch (\Throwable $th) {
             // DB::rollBack();
-            Log::info("message");
+            Log::info("message". $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
