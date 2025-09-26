@@ -69,7 +69,12 @@ class LinkAccount extends Component
 
         } catch (\Throwable $th) {
             // DB::rollBack();
-            \Log::info("message". $th->getMessage());
+            \Log::info("message", 
+            [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
