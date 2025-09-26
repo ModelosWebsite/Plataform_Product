@@ -46,9 +46,7 @@ class LinkAccount extends Component
                 ->json();
 
                 \Log::info("xzero conta", [
-                    "message" => $th->getMessage(),
-                    "file" => $th->getFile(),
-                    "line" => $th->getLine(),
+                    "message" => $xzeroResponse,
                 ]);
 
                 //Atualizar tokens da empresa
