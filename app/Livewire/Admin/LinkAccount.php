@@ -63,7 +63,7 @@ class LinkAccount extends Component
 
             if ($infoXzero != null) {
                 $xzeroResponse = Http::withHeaders($this->getHeaders())
-                ->post("https://xzero.ao/api/create/account", $infoXzero)
+                ->post("https://xzero.live/api/create/account", $infoXzero)
                 ->json();
 
                 //Atualizar tokens da empresa
