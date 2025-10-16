@@ -1,0 +1,37 @@
+<div wire:ignore.self class="modal fade" id="addsubcategory"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h6 class="modal-title mb-0" id="exampleModalLabel">Subcategoria</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <h6 class="form-label">Categoria</h6>
+            <select class="form-control form-control-sm" wire:model="category_id">
+              <option >--- Selecione uma categoria ---</option>
+                @forelse ($categories as $category)
+                  <option value="{{ $category['reference'] ?? '' }}">{{ $category['category'] ?? '' }}</option>
+                @empty
+                  
+                @endforelse
+            </select>
+          </div>
+          <div class="form-group">
+            <h6 class="form-label">Subcategoria</h6>
+            <input class="form-control form-control-sm" type="text" placeholder="Insira o nome da subcategoria" wire:model="description">
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="form-group">
+            <button wire:click="save" class="btn btn-sm btn-primary">Cadastrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>

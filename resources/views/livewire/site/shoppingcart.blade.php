@@ -88,7 +88,7 @@
                                 <ul>
                                     <li>Subtotal <span id="subtotal">{{ number_format(abs($getSubTotal), 2, '.', ' ') }} Kz</span></li>
                                     <li>Entrega <span id="subtotal">{{ number_format(abs($localizacao), 2, '.', ' ') }} Kz</span></li>
-                                    <li>Taxa PB <span>{{ number_format($taxapb, 2, '.', ' ') }} Kz</span> </li>
+                                    <li>Taxa PB <span>{{ number_format($taxapb + $bankValue, 2, '.', ' ') }} Kz</span> </li>
                                     <li>Total <span id="total">{{number_format($totalFinal - session("discountvalue"), 2, '.', ' ')}} kz</span></li>
                                 </ul>
                             </div>

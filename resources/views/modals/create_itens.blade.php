@@ -1,7 +1,7 @@
 <div wire:ignore.self class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">
-          <div class="modal-header bg-primary text-white mb-0">
+          <div class="modal-header bg-primary text-white mb-0 p-2">
               <h5 class="modal-title mb-0" id="exampleModalLabel">
                   {{ $editing ? 'Editar Produto' : 'Cadastrar Produto' }}
               </h5>
@@ -16,22 +16,81 @@
                   <input class="form-control form-control-sm shadow-none" type="file" wire:model="image">
                   @error('image') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
+              
+              <div class="form-group">
+                  <h6 for="category_id" class="form-label">Categoria <span class="text-danger">*</span></h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idcat">
+                      <option>Selecione a categoria</option>
+                        @forelse($groupcategories as $category)
+                            <option value="{{ $category['id'] ?? '' }}">{{ $category['category'] ?? '' }}</option>
+                        @empty
+                        @endforelse
+                  </select>
+                  @error('category') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
 
               <div class="form-group">
-                  <h6 for="category_id" class="form-label">Categoria</h6>
-                  <select class="form-control form-control-sm shadow-none" wire:model="category_id">
-                      <option>Selecione a categoria</option>
-                      @if (isset($categories) and count($categories) > 0)
-                        @foreach ($categories as $category)
-                            <option value="{{ $category['category'] ?? '' }}">{{ $category['category'] ?? '' }}</option>
-                        @endforeach
-                      @endif
+                  <h6 for="category_id" class="form-label">Subcategoria</h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idsubcat">
+                      <option>Selecione a subcategoria</option>
+                        @forelse($subcategories as $category)
+                            <option value="{{ $category['reference'] ?? '' }}">{{ $category['subcategory'] ?? '' }}</option>
+                        @empty
+                        @endforelse
+                  </select>
+                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
+
+                <div class="form-group">
+                  <h6 for="category_id" class="form-label">Classificação</h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idclass">
+                      <option>Selecione a Classificação</option>
+                        @forelse($classifications as $classification)
+                            <option value="{{ $classification['reference'] ?? '' }}">{{ $classification['subcategory'] ?? '' }}</option>
+                        @empty
+                        @endforelse
                   </select>
                   @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
-                  <h6 for="description" class="form-label">Nome do Produto</h6>
+                  <h6 for="category_id" class="form-label">Subclassificação</h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idsubclass">
+                      <option>Selecione a Subclassificação</option>
+                        @forelse($subclassifications as $subclassification)
+                            <option value="{{ $subclassification['reference'] ?? '' }}">{{ $subclassification['subcategory'] ?? '' }}</option>
+                        @empty
+                        @endforelse
+                  </select>
+                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
+
+              <div class="form-group">
+                  <h6 for="category_id" class="form-label">Origem</h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idorigen">
+                      <option>Selecione a origem</option>
+                        @forelse($origins as $origin)
+                            <option value="{{ $origin['reference'] ?? '' }}">{{ $origin['subcategory'] ?? '' }}</option>
+                        @empty
+                        @endforelse
+                  </select>
+                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
+
+              <div class="form-group">
+                  <h6 for="category_id" class="form-label">Natureza</h6>
+                  <select class="form-control form-control-sm shadow-none" wire:model="idnatureza">
+                      <option>Selecione a natureza</option>
+                        @forelse($naturezas as $natureza)
+                            <option value="{{ $natureza['reference'] ?? '' }}">{{ $natureza['subcategory'] ?? '' }}</option>
+                        @empty
+                        @endforelse
+                  </select>
+                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
+
+              <div class="form-group">
+                  <h6 for="description" class="form-label">Nome do Produto <span class="text-danger">*</span></h6>
                   <input class="form-control form-control-sm shadow-none" type="text" placeholder="Insira o nome do produto" wire:model="description">
                   @error('description') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
@@ -43,24 +102,35 @@
               </div>
 
               <div class="form-group">
-                  <h6 for="price" class="form-label">Preço</h6>
+                  <h6 for="price" class="form-label">Preço <span class="text-danger">*</span></h6>
                   <input class="form-control form-control-sm shadow-none" min="1" type="number" placeholder="Insira o preço" wire:model="price">
                   @error('price') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
               <div class="form-group">
-                  <h6 for="qtd" class="form-label">Quantidade</h6>
+                  <h6 for="qtd" class="form-label">Quantidade <span class="text-danger">*</span></h6>
                   <input class="form-control form-control-sm shadow-none" min="1" type="number" placeholder="Quantidade" wire:model="qtd">
-                  @error('qtd') <span class="text-danger">{{ $message }}</span> @enderror
+                  @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
           </div>
 
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
-              <button wire:click.prevent="{{ $editing ? 'updateItem' : 'createItem' }}" type="button" class="btn btn-primary btn-sm">
-                  {{ $editing ? 'Salvar Alterações' : 'Salvar' }}
-              </button>
+                <button wire:click.prevent="{{ $editing ? 'updateItem' : 'createItem' }}"
+                    type="button" class="btn btn-primary btn-sm flex items-center justify-center gap-2"
+                    wire:loading.attr="disabled">
+                    <!-- Ícone de loading visível apenas enquanto o método está a executar -->
+                    <span wire:loading wire:target="{{ $editing ? 'updateItem' : 'createItem' }}">
+                        <i class="fas fa-spinner fa-spin"></i> A processar
+                    </span>
+
+                    <!-- Texto do botão -->
+                    <span wire:loading.remove wire:target="{{ $editing ? 'updateItem' : 'createItem' }}">
+                        {{ $editing ? 'Salvar Alterações' : 'Salvar' }}
+                    </span>
+                </button>
+
           </div>
 
       </div>

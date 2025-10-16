@@ -63,8 +63,6 @@ class LinkAccount extends Component
                     'confirmButtonText' => 'OK',
                 ]);
             }
-
-
         } catch (\Throwable $th) {
             // DB::rollBack();
             \Log::info("message", 
@@ -94,7 +92,6 @@ class LinkAccount extends Component
     public function getAllLocations()
     {
         try {
-
             $response = Http::withHeaders([
                     "Accept" => "application/json",
                     "Content-Type" => "application/json",
@@ -103,7 +100,6 @@ class LinkAccount extends Component
             if ($response != null) {
                 return $response;
             }
-            
             return [];
         } catch (\Throwable $th) {
             return response("Erro ao buscar localizações", 500);

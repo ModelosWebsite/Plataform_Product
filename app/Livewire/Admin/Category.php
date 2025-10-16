@@ -133,7 +133,6 @@ class Category extends Component
             Http::withHeaders($this->getHeaders())
             ->delete("https://kytutes.com/api/categories", ["reference" => $id]);
 
-            
             $this->alert('success', 'Eliminado', 
             [
                 'toast' => false,

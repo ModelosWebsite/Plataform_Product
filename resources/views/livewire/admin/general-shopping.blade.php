@@ -5,11 +5,9 @@
         <div class="row">
             <div class="col-xl-12 col-lg-6">
                 <div class="card mb-4">
-                    
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="row">
-                            
                             <main>
                                 <input id="tab2" type="radio" name="tabs">
                                 <label for="tab2">1. Categorias </label>
@@ -19,12 +17,15 @@
                                     
                                 <input id="tab3" type="radio" name="tabs">
                                 <label for="tab3">3. Controle de Encomenda</label>
+
+                                <input id="tab4" type="radio" name="tabs">
+                                <label for="tab4">4. Subcategoria</label>
                                     
                                 <section id="content2">@livewire("admin.category") </section>
                                 <section id="content1">@livewire("admin.itens")</section>
+                                <section id="content4"><livewire:admin.subcategory/></section>
                                 <section id="content3">@livewire("admin.encomenda")</section>
                             </main>
-
                         </div>
                     </div>
                 </div>
