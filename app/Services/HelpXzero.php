@@ -14,7 +14,7 @@ class HelpXzero
             $response = Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
-            ])->get("http://127.0.0.1:8000/api/help/category");
+            ])->get("https://xzero.live/api/help/category");
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -35,6 +35,7 @@ class HelpXzero
             Log::error('Erro em HelpXzero@getCategories', [
                 'exception' => $th->getMessage()
             ]);
+            return [];
         }
     }
 
@@ -44,7 +45,7 @@ class HelpXzero
             $response = Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
-            ])->post("http://127.0.0.1:8000/api/help/center", $payload);
+            ])->post("https://xzero.live/api/help/center", $payload);
 
             if ($response->successful()) {
 
@@ -62,6 +63,7 @@ class HelpXzero
                 'exception' => $th->getMessage(),
                 'payload' => $payload
             ]);
+            return [];
         }
     }
 }

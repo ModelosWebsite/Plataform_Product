@@ -24,7 +24,7 @@ class Shoppingcart extends Component
 
     /** dados da taxa cobrada pelo banco  */
     public $bankValue, $taxaBanco = 0.005, // 0.5%
-    $taxaMinBanco = 200; // valor mínimo;
+    $taxaMinBanco = 200, $jointaxpbank; // valor mínimo;
 
     // Guarda apenas o ID da empresa
     public $companyId, $cartQuantities = [], $companyType;
@@ -70,6 +70,16 @@ class Shoppingcart extends Component
             $this->finalCompra = $company->delivery_method === 'Entregadores PB' ? $this->getSubTotal + $this->localizacao : $this->getSubTotal;
 
             $this->taxapb = ($this->finalCompra * 14) / 100;
+            $this->jointaxpbank = $this->taxapb + $this->bankValue;
+
+            /** Verificação para aplicar a taxa minima pelo banco, se for verdadeiro */
+            if ($this->taxaMinBanco >= ($this->taxaBanco * ($this->finalCompra + $this->taxapb))) {
+                //aplicar a taxa minima aceitavel pelo banco no total de compra
+                $this->bankValue = $this->taxaMinBanco;
+            } else {
+                //aplicar a taxa do banco ao total de compra
+                $this->bankValue = round(($this->finalCompra + $this->taxapb) / (1 - $this->taxaBanco) - ($this->finalCompra + $this->taxapb), 2, PHP_ROUND_HALF_UP);
+            }
 
             $this->totalFinal = $company->payment_type === 'Referência' ? $this->finalCompra + $this->taxapb + $this->bankValue : $this->finalCompra;
 
@@ -83,15 +93,6 @@ class Shoppingcart extends Component
             foreach ($this->cartContent as $item) {
                 $this->cartQuantities[$item->id] = $item->quantity;
                 \Log::info('Shopping@mount', ['quantity' => $this->cartQuantities[$item->id]]);
-            }
-
-            /** Verificação para aplicar a taxa minima pelo banco, se for verdadeiro */
-            if ($this->taxaMinBanco >= ($this->taxaBanco * ($this->finalCompra + $this->taxapb))) {
-                //aplicar a taxa minima aceitavel pelo banco no total de compra
-                $this->bankValue = $this->taxaMinBanco;
-            } else {
-                //aplicar a taxa do banco ao total de compra
-                $this->bankValue = round(($this->finalCompra + $this->taxapb) / (1 - $this->taxaBanco) - ($this->finalCompra + $this->taxapb), 2, PHP_ROUND_HALF_UP);
             }
 
             return view('livewire.site.shoppingcart', ['locations' => $this->getAllLocations()]);
