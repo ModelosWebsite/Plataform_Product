@@ -181,23 +181,20 @@ class Adjust extends Component
         DB::beginTransaction();
         try {
             
-            $readMyterms = TermsCompany::find($this->readMyterms);
 
-            if ($readMyterms) {
-                $readMyterms->privacity = $this->privacity;
-                $readMyterms->term = $this->term;
-                $readMyterms->save();
-                DB::commit();
+            TermsCompany::whereIn('id', $this->readMyterms)
+            ->update(['privacity' => $this->privacity,'term' => $this->term]);
 
-                $this->alert('success', 'SUCESSO', 
-                [
-                    'toast' => false,
-                    'position' => 'center',
-                    'showConfirmButton' => false,
-                    'confirmButtonText' => 'OK',
-                    'text' => 'Termos Actualizados!'
-                ]);
-            }
+            DB::commit();
+
+            $this->alert('success', 'SUCESSO', 
+            [
+                'toast' => false,
+                'position' => 'center',
+                'showConfirmButton' => false,
+                'confirmButtonText' => 'OK',
+                'text' => 'Termos Actualizados!'
+            ]);
         } catch (\Throwable $th) {
             \Log::error('Error updating terms: ', [
                 'message' => $th->getMessage(),

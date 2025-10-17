@@ -70,7 +70,8 @@
     <i class="fas fa-question-circle me-2"></i>
     Ajuda
 </a>
-{{-- <livewire:admin.help /> --}}
+
+<livewire:admin.help />
 
 <style>
     .btn-flutuante {
