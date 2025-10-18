@@ -23,7 +23,7 @@ class CompanyContextService
     public function loadContext(?string $hash, Request $request, bool $registerVisit = false): ?Company
     {
         try {
-            $company = $this->companyService->getByHash($hash);
+            $company = $this->companyService->getByHash($hash ?? app('tenant'));
 
             if (!$company || $company->status !== 'active') {
                 return null;

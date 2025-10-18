@@ -25,7 +25,8 @@ class CheckCustomDomain
         $company = null;
         
         // 1️⃣ Verifica domínio personalizado
-        $company = CustomDomain::where('domain', $host)->first();
+        $tenant = CustomDomain::where('domain', $host)->first();
+        $companyTenant = company::where("id", $tenant->company_id)->select("companyhashtoken")->first();
         
         // 3️⃣ Se não tiver domínio personalizado, tenta path
         if (!$company && $path) {
@@ -33,7 +34,7 @@ class CheckCustomDomain
         }
 
         // Guarda o tenant atual em uma singleton
-        App::instance('tenant', $company);
+        App::instance('tenant', $company ?? $companyTenant);
 
         // Define o tenant na URL base (para links internos)
         URL::defaults(['tenant' => $company->companyhashtoken]);
