@@ -26,7 +26,7 @@ class SiteController extends Controller
         $this->viewBuilder = $viewBuilder;
     }
 
-    public function index(string $companyHash, Request $request)
+    public function index(string $companyHash = null, Request $request)
     {
         try {
             $company = $this->contextService->loadContext($companyHash, $request, registerVisit: true);
@@ -48,7 +48,7 @@ class SiteController extends Controller
         }
     }
 
-    public function getShopping(string $companyHash, Request $request)
+    public function getShopping(string $companyHash  = null, Request $request)
     {
         try {
             //code...
@@ -69,7 +69,7 @@ class SiteController extends Controller
         }
     }
 
-    public function getShoppingCart(string $companyHash, Request $request)
+    public function getShoppingCart(string $companyHash  = null, Request $request)
     {
         try {
             //code...
