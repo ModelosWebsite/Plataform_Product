@@ -25,8 +25,7 @@
     <li class="nav-item {{ Route::current()->getName() == 'definition.general' ? 'bg-white text-primary' : '' }}">
         <a class="nav-link d-flex align-items-center {{ Route::current()->getName() == 'definition.general' ? 'text-primary fw-bold' : '' }}"
             href="{{ route('definition.general') }}">
-            <i
-                class="fas fa-fw fa-cog me-2 {{ Route::current()->getName() == 'definition.general' ? 'text-primary' : '' }}"></i>
+            <i class="fas fa-fw fa-cog me-2 {{ Route::current()->getName() == 'definition.general' ? 'text-primary' : '' }}"></i>
             <span> Definições Gerais </span>
         </a>
     </li>
@@ -50,6 +49,14 @@
             <span>Elementos Premium</span>
         </a>
     </li>
+
+    <!-- Nav Item - shopping -->
+    <li class="nav-item {{ (Route::current()->getName() == 'admin.domain') ? 'bg-white' : '' }}">
+        <a class="nav-link {{ (Route::current()->getName() == 'admin.domain') ? 'text-primary' : '' }}" href="{{ route('admin.domain') }}">
+            <i class="fas fa-fw fa-star {{ (Route::current()->getName() == 'admin.domain') ? 'text-secondary' : '' }}"></i>
+            <span>Dominio</span>
+        </a>
+    </li>  
 
     <!-- Nav Item - Logout -->
     <li
