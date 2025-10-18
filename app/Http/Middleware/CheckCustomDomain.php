@@ -32,13 +32,6 @@ class CheckCustomDomain
             $company = company::where('companyhashtoken', $path)->first();
         }
 
-        if (!$company) {
-            // opcional: redirecionar para página de erro
-            dd("falha");
-            abort(404, 'Empresa não encontrada');
-
-        }
-
         // Guarda o tenant atual em uma singleton
         App::instance('tenant', $company);
 
