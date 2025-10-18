@@ -89,4 +89,8 @@ class company extends Model
     { 
         return $this->hasMany(ThemeHasCompany::class, 'company_id'); 
     }
+    public function customDomains()
+    {
+        return $this->hasMany(CustomDomain::class);
+    }
 }
