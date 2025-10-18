@@ -18,27 +18,25 @@ class CheckCustomDomain
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $host = $request->getHost(); // exemplo: cliente.meusaas.com ou lavandariadasilva.com
-        $path = $request->segment(1); // exemplo: "cliente" em meusaas.com/cliente
-        $mainDomain = config('app.main_domain'); // meusaas.com
+        $host = $request->getHost();
+        $path = $request->segment(1);
+        $mainDomain = config('app.main_domain'); // exemplo: on.xzero.live
 
-        $company = null;
-        
-        // 1️⃣ Verifica domínio personalizado
-        $tenant = CustomDomain::where('domain', $host)->first();
-        $companyTenant = company::where("id", $tenant->company_id)->select("companyhashtoken")->first();
-        
-        // 3️⃣ Se não tiver domínio personalizado, tenta path
-        if (!$company && $path) {
-            $company = company::where('companyhashtoken', $path)->first();
+        // 1️⃣ Se não for o domínio principal -> tente encontrar como domínio personalizado
+        if ($host !== $mainDomain) {
+            $tenantDomain = CustomDomain::where('domain', $host)->first();
+
+            if ($tenantDomain) {
+                $company = company::where('id', $tenantDomain->company_id)->pluck('companyhashtoken')->first();
+                App::instance('tenant', $company);
+                return $next($request);
+            }
+        }else {
+            $company = company::where('companyhashtoken', $path)->pluck('companyhashtoken')->first();
+            if ($company) {
+                App::instance('tenant', $company);
+                return $next($request);
+            }
         }
-
-        // Guarda o tenant atual em uma singleton
-        App::instance('tenant', $company ?? $companyTenant);
-
-        // Define o tenant na URL base (para links internos)
-        URL::defaults(['tenant' => $company->companyhashtoken]);
-
-        return $next($request);
     }
 }
