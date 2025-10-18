@@ -20,6 +20,7 @@ class CheckCustomDomain
     {
         $host = $request->getHost(); // exemplo: cliente.meusaas.com ou lavandariadasilva.com
         $path = $request->segment(1); // exemplo: "cliente" em meusaas.com/cliente
+        $mainDomain = config('app.main_domain'); // meusaas.com
 
         $company = null;
         

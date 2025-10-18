@@ -122,6 +122,8 @@ return [
     |
     */
 
+    'main_domain' => env('APP_MAIN_DOMAIN', 'https://on.xzero.live'),
+
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
