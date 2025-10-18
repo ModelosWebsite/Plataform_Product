@@ -20,7 +20,7 @@ class CompanyContextService
         $this->visitorService = $visitorService;
     }
 
-    public function loadContext(string $hash, Request $request, bool $registerVisit = false): ?Company
+    public function loadContext(?string $hash, Request $request, bool $registerVisit = false): ?Company
     {
         try {
             $company = $this->companyService->getByHash($hash);
