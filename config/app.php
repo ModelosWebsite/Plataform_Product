@@ -123,6 +123,7 @@ return [
     */
 
     'main_domain' => env('APP_MAIN_DOMAIN', 'https://on.xzero.live'),
+    'default_tenant' => env('APP_DEFAULT_TENANT', 'Fortcode'),
 
     'key' => env('APP_KEY'),
 
