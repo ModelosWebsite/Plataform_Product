@@ -43,12 +43,20 @@
                 </div>
 
                 <h5 class="mb-3">Habilitar Website</h5>
+                @php
+                    $request = request();
+                    $token = Str::lower(auth()->user()->company->companyhashtoken);
+                    
+                    $base = $request->getHost() !== "on.xzero.live"
+                    ? $request->getHost()
+                    : $request->getHost() . '/' . $token;
+                @endphp
                 {{-- Exibir link do site habilitado --}}
                 @if ($statusSite->status === 'active')
                     <p class="text-success mb-2">
                         Website ativo: 
-                        <a href="{{ url('/' . Str::lower(auth()->user()->company->companyhashtoken)) }}" target="_blank" class="text-decoration-underline">
-                            {{ url('/' . Str::lower(auth()->user()->company->companyhashtoken)) }}
+                        <a href="https://{{ $base }}" target="_blank" class="text-decoration-underline">
+                            https://{{ $base }}
                         </a>
                     </p>
                 @endif
