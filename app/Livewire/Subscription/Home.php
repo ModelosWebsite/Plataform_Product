@@ -140,7 +140,7 @@ class Home extends Component
 
             //Chamada às APIs externas
             $response = Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/create/company", $infoCompany)
+            ->post("https://shop.xzero.live/api/create/company", $infoCompany)
             ->json();
 
             $xzeroResponse = Http::withHeaders($this->getHeaders())
@@ -200,7 +200,7 @@ class Home extends Component
             $response = Http::withHeaders([
                     "Accept" => "application/json",
                     "Content-Type" => "application/json",
-                ])->get("https://kytutes.com/api/location/map")->json();
+                ])->get("https://shop.xzero.live/api/location/map")->json();
 
             if ($response != null) {
                 return $response;

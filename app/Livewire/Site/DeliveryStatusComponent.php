@@ -26,7 +26,7 @@ class DeliveryStatusComponent extends Component
         ];
 
         $response = Http::withHeaders($headers)
-        ->get("https://kytutes.com/api/deliveries?reference=$id");
+        ->get("https://shop.xzero.live/api/deliveries?reference=$id");
         return collect(json_decode($response));
     }
 }

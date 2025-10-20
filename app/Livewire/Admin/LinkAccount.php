@@ -95,7 +95,7 @@ class LinkAccount extends Component
             $response = Http::withHeaders([
                     "Accept" => "application/json",
                     "Content-Type" => "application/json",
-                ])->get("https://kytutes.com/api/location/map")->json();
+                ])->get("https://shop.xzero.live/api/location/map")->json();
 
             if ($response != null) {
                 return $response;

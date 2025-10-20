@@ -33,7 +33,7 @@ class Category extends Component
         try { 
             //Chamada a API
             $response =  Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/categories")->json();
+            ->get("https://shop.xzero.live/api/categories")->json();
 
             if ($response != null) {
                 return $response;
@@ -61,7 +61,7 @@ class Category extends Component
 
             //Chamada a API
             Http::withHeaders($this->getHeaders())
-            ->post("https://kytutes.com/api/categories", $infoCategory);
+            ->post("https://shop.xzero.live/api/categories", $infoCategory);
 
             $this->description = '';
             
@@ -99,7 +99,7 @@ class Category extends Component
 
             //Chamada a API
             Http::withHeaders($this->getHeaders())
-            ->put("https://kytutes.com/api/categories", $infoCategory);
+            ->put("https://shop.xzero.live/api/categories", $infoCategory);
 
             
             $this->alert('success', 'Cadastrado', 
@@ -131,7 +131,7 @@ class Category extends Component
 
             //Chamada a API
             Http::withHeaders($this->getHeaders())
-            ->delete("https://kytutes.com/api/categories", ["reference" => $id]);
+            ->delete("https://shop.xzero.live/api/categories", ["reference" => $id]);
 
             $this->alert('success', 'Eliminado', 
             [

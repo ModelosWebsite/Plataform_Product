@@ -43,7 +43,7 @@ class Shopping extends Component
         try {
             //Chamada a API
             $response = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/categories");
+            ->get("https://shop.xzero.live/api/categories");
 
             return json_decode($response, true);
         } catch (\Throwable $th) {
@@ -66,8 +66,8 @@ class Shopping extends Component
 
             // Define a URL com ou sem a categoria
             $url = $category 
-                ? "https://kytutes.com/api/items?category=$category"
-                : "https://kytutes.com/api/items";
+                ? "https://shop.xzero.live/api/items?category=$category"
+                : "https://shop.xzero.live/api/items";
 
             // Chamada à API
             $response = Http::withHeaders($this->getHeaders())->get($url);
@@ -95,7 +95,7 @@ class Shopping extends Component
     {
         try {
             $getItemCart = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/items?description=$itemid");
+            ->get("https://shop.xzero.live/api/items?description=$itemid");
 
             $product = Collect(json_decode($getItemCart,true));
 

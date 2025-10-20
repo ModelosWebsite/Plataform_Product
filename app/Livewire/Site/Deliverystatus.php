@@ -31,7 +31,7 @@ class DeliveryStatus extends Component
             ];
 
             $response = Http::withHeaders($headers)
-                ->get('https://kytutes.com/api/filter', [
+                ->get('https://shop.xzero.live/api/filter', [
                     'reference' => $deliveryNumber,
                     'phone' => $phoneNumber,
                 ])->json();

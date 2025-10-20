@@ -194,7 +194,7 @@ class Shoppingcart extends Component
                 'items' => $items,
             ];
 
-            $response = Http::withHeaders($this->getHeaders())->post('https://kytutes.com/api/deliveries', $data)->json();
+            $response = Http::withHeaders($this->getHeaders())->post('https://shop.xzero.live/api/deliveries', $data)->json();
 
             \Log::info('delivery', ['message' => $response]);
 
@@ -240,7 +240,7 @@ class Shoppingcart extends Component
     {
         try {
             $product = Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/items?description=$name")
+            ->get("https://shop.xzero.live/api/items?description=$name")
             ->json();
 
             if ((int) $quantity > (int) $product[0]['quantity']) {
@@ -281,7 +281,7 @@ class Shoppingcart extends Component
     public function getAllLocations()
     {
         try {
-            return collect(Http::withHeaders($this->getHeaders())->get('https://kytutes.com/api/locations')->json());
+            return collect(Http::withHeaders($this->getHeaders())->get('https://shop.xzero.live/api/locations')->json());
         } catch (\Throwable $th) {
             \Log::error('Erro ao carregar localizações: ' . $th->getMessage());
             return collect([]);

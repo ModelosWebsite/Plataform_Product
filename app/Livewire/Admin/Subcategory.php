@@ -33,7 +33,7 @@ class Subcategory extends Component
         try { 
             //Chamada a API
             return Http::withHeaders($this->getHeaders())
-            ->get("https://kytutes.com/api/categories")->json();
+            ->get("https://shop.xzero.live/api/categories")->json();
 
         } catch (\Throwable $th) {
             $this->alert('error', 'ERRO', [

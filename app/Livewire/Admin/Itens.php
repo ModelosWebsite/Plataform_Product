@@ -65,7 +65,7 @@ class Itens extends Component
     {
         try {
             $response = Http::withHeaders($this->getToken())
-            ->get("https://kytutes.com/api/items")->json();
+            ->get("https://shop.xzero.live/api/items")->json();
 
             if ($response != null) {
                 return $response;
@@ -85,7 +85,7 @@ class Itens extends Component
     {
         try {
             $response = collect(Http::withHeaders($this->getToken())
-            ->get("https://kytutes.com/api/categories")->json())->sortBy(function ($delivery) {return $delivery->name ?? ''; })->values()->all();
+            ->get("https://shop.xzero.live/api/categories")->json())->sortBy(function ($delivery) {return $delivery->name ?? ''; })->values()->all();
 
             if ($response != null) {
                 return $response;
@@ -137,7 +137,7 @@ class Itens extends Component
             \Log::info("Informações do item a ser criado", $infoItem);
 
             $response = Http::withHeaders($this->getToken())
-            ->post("https://kytutes.com/api/items", $infoItem);
+            ->post("https://shop.xzero.live/api/items", $infoItem);
 
             \Log::info("Resposta da API ao criar produto", $response->json());
 
@@ -220,7 +220,7 @@ class Itens extends Component
     {
         try {
             $response = Http::withHeaders($this->getToken())
-            ->delete("https://kytutes.com/api/items", ["reference" => $getId])->json();
+            ->delete("https://shop.xzero.live/api/items", ["reference" => $getId])->json();
 
             if ($response != null) {
                 $this->alert('success', 'Item Eliminado', [
@@ -294,7 +294,7 @@ class Itens extends Component
             \Log::info("Produto a actualizar", ["produto" => $infoItem]);
             
             $response = Http::withHeaders($this->getToken())
-            ->put("https://kytutes.com/api/items", $infoItem);
+            ->put("https://shop.xzero.live/api/items", $infoItem);
             
             \Log::info("Produtos@Update", $response->json());
             

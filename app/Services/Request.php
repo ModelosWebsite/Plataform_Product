@@ -16,7 +16,7 @@ class Request{
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
                 'Authorization' => 'Bearer ' .$tokenShopping,
-            ])->get("https://kytutes.com/api/deliveries", [
+            ])->get("https://shop.xzero.live/api/deliveries", [
                 'status' => $status
             ])->json();
 
@@ -37,7 +37,7 @@ class Request{
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
                 'Authorization' => 'Bearer ' .$tokenShopping,
-            ])->put("https://kytutes.com/api/deliveries?reference=$reference", [
+            ])->put("https://shop.xzero.live/api/deliveries?reference=$reference", [
                 'switch' => "estado"
             ])->json();
 
@@ -69,7 +69,7 @@ class Request{
             return Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            ])->post('https://kytutes.com/api/verify/nif', [
+            ])->post('https://shop.xzero.live/api/verify/nif', [
                 "nif" => $taxPayer,
             ])->json();
         } catch (\Throwable $th) {

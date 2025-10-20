@@ -33,7 +33,7 @@ class Encomenda extends Component
             ];
     
             //Chamada a API
-            $this->deliveries = collect(Http::withHeaders($headers)->get("https://kytutes.com/api/deliveries")
+            $this->deliveries = collect(Http::withHeaders($headers)->get("https://shop.xzero.live/api/deliveries")
             ->json())->sortBy(function ($delivery) {return $delivery['delivery']['client'] ?? ''; })->values()->all();
 
         } catch (\Throwable $th) {
@@ -72,7 +72,7 @@ class Encomenda extends Component
 
             // Chamada à API para obter a entrega
             $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
+            ->get("https://shop.xzero.live/api/deliveries?reference=$id");
 
             $delivery = collect(json_decode($response, true));
 
@@ -95,7 +95,7 @@ class Encomenda extends Component
 
                 if (in_array($estado, $estadosPendentes)) {
                     $updateResponse = Http::withHeaders($headers)
-                        ->put("https://kytutes.com/api/deliveries?reference=$id", [
+                        ->put("https://shop.xzero.live/api/deliveries?reference=$id", [
                             'switch' => $newStatus
                         ]);
 
@@ -144,7 +144,7 @@ class Encomenda extends Component
     
             //Chamada a API
             $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
+            ->get("https://shop.xzero.live/api/deliveries?reference=$id");
             
             $datas = collect(json_decode($response, true));
 
@@ -189,7 +189,7 @@ class Encomenda extends Component
     
             //Chamada a API
             $response = Http::withHeaders($headers)
-            ->get("https://kytutes.com/api/deliveries?reference=$id");
+            ->get("https://shop.xzero.live/api/deliveries?reference=$id");
             
             $this->itens = collect(json_decode($response));
         } catch (\Throwable $th) {
