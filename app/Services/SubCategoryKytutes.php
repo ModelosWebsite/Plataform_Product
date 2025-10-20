@@ -13,7 +13,7 @@ class SubCategoryKytutes
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
                 "Authorization" => "Bearer ". $token
-            ])->post("https://kytutes.com/api/subcategories",[
+            ])->post("https://shop.xzero.live/api/subcategories",[
                 "category_id" => $categoryId,
                 "name" => $subcategory
             ])->json();
@@ -35,7 +35,7 @@ class SubCategoryKytutes
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",
                 "Authorization" => "Bearer ". $token
-            ])->get("https://kytutes.com/api/subcategories")->json();
+            ])->get("https://shop.xzero.live/api/subcategories")->json();
 
         } catch (\Throwable $th) {
             \Log::error("saveSubcategory", [
