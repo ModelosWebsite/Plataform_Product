@@ -24,7 +24,6 @@ class company extends Model
     {
         return $this->hasOne(User::class, 'company_id', 'id');
     }
-
     public function heroes() 
     { 
         return $this->hasMany(hero::class, 'company_id'); 

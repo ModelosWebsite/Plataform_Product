@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\{CustomDomain, company};
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\{App, URL};
 
 class CheckCustomDomain
 {
@@ -20,7 +19,7 @@ class CheckCustomDomain
     {
         $host = $request->getHost();
         $path = $request->segment(1);
-        $mainDomain = config('app.main_domain'); // exemplo: on.xzero.live
+        $mainDomain = env('APP_MAIN_DOMAIN'); // exemplo: on.xzero.live
 
         // 1️⃣ Se não for o domínio principal -> tente encontrar como domínio personalizado
         if ($host !== $mainDomain) {
@@ -38,5 +37,6 @@ class CheckCustomDomain
                 return $next($request);
             }
         }
+        return $next($request);
     }
 }

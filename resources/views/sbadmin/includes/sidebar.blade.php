@@ -53,7 +53,7 @@
     <!-- Nav Item - shopping -->
     <li class="nav-item {{ (Route::current()->getName() == 'admin.domain') ? 'bg-white' : '' }}">
         <a class="nav-link {{ (Route::current()->getName() == 'admin.domain') ? 'text-primary' : '' }}" href="{{ route('admin.domain') }}">
-            <i class="fas fa-fw fa-star {{ (Route::current()->getName() == 'admin.domain') ? 'text-secondary' : '' }}"></i>
+            <i class="fas fa-globe {{ (Route::current()->getName() == 'admin.domain') ? 'text-secondary' : '' }}"></i>
             <span>Dominio</span>
         </a>
     </li>  

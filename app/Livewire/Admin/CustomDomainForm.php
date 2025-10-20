@@ -5,6 +5,8 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use App\Models\CustomDomain;
+use App\Mail\DomainProcessingMail;
+use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CustomDomainForm extends Component
@@ -32,17 +34,28 @@ class CustomDomainForm extends Component
                 'verification_token' => Str::random(12),
             ]);
 
+            //Enviar e-mail informando o usuário
+            Mail::to(auth()->user()->company->companyemail)
+            ->send(new DomainProcessingMail($record));
+
             $this->alert('success', 'Cadastrado', [
                 'toast' => false,
                 'position' => 'center',
-                'showConfirmButton' => false,
                 'confirmButtonText' => 'OK',
+                'showConfirmButton' => false,
             ]);
+
         } catch (\Throwable $th) {
             \Log::error('CustomDomain@save', [
                 'message' => $th->getMessage(),
                 'file' => $th->getFile(),
                 'line' => $th->getLine(),
+            ]);
+
+            $this->alert('error', 'Erro Interno', [
+                 'toast' => false,
+                 'position' => 'center',
+                 'text' => 'Ocorreu um erro ao verificar o domínio. Verifique os logs.',
             ]);
         }
     }
@@ -79,9 +92,9 @@ class CustomDomainForm extends Component
                          $foundTarget = strtolower(rtrim($record['target'], '.'));
                          $dnsChecked = true;
                          if ($foundTarget === strtolower($expectedTarget)) {
-                             $isValid = true;
-                             $statusMsg = "CNAME aponta corretamente para {$expectedTarget}";
-                             break;
+                            $isValid = true;
+                            $statusMsg = "CNAME aponta corretamente para {$expectedTarget}";
+                            break;
                          }
                      }
                  }
@@ -94,9 +107,9 @@ class CustomDomainForm extends Component
                          $foundTarget = $record['ip'];
                          $dnsChecked = true;
                          if ($record['ip'] === $expectedIp) {
-                             $isValid = true;
-                             $statusMsg = "A record aponta corretamente para o IP {$expectedIp}";
-                             break;
+                            $isValid = true;
+                            $statusMsg = "A record aponta corretamente para o IP {$expectedIp}";
+                            break;
                          }
                      }
                  }

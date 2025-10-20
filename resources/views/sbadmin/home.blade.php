@@ -21,9 +21,15 @@
                         </h3>
                         <p class="text-muted fs-5">
                             Link de acesso do seu site para partilhar nas redes sociais:
+                            @php
+                                $request = request();
+                                $base = $request->getHost() ?? $request->segment(1);
+                                $token = Str::lower(auth()->user()->company->companyhashtoken);
+                            @endphp
+
                             <a id="share-link" target="_blank" class="fw-semibold text-decoration-none text-primary"
-                                href="{{ env('APP_URL') }}/{{ Str::lower(auth()->user()->company->companyhashtoken) }}">
-                                {{ env('APP_URL') }}/{{ Str::lower(auth()->user()->company->companyhashtoken) }}
+                                href="https://{{ $base }}/{{ $token }}">
+                                https://{{ $base }}/{{ $token }}
                             </a>
                         </p>
                         <button id="copy-btn" class="btn btn-primary shadow-sm rounded-pill" onclick="copyToClipboard()">
