@@ -25,14 +25,11 @@
                                 $request = request();
                                 $token = Str::lower(auth()->user()->company->companyhashtoken);
                                 
-                                if ($request->getHost() !== "on.xzero.live") {
-                                    # code...
-                                    $base = $request->getHost();
-                                } else {
-                                    # code...
-                                    $base = $request->getHost().'/'.$token;
-                                }
+                                $base = $request->getHost() !== "on.xzero.live"
+                                ? $request->getHost()
+                                : $request->getHost() . '/' . $token;
                             @endphp
+
 
                             <a id="share-link" target="_blank" class="fw-semibold text-decoration-none text-primary"
                                 href="https://{{ $base }}">
