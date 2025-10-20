@@ -75,7 +75,7 @@
     <p class="mt-4 text-sm text-gray-400">
         Se o problema persistir, entre em contato com a nossa equipa de suporte através do e-mail:
         <a href="mailto:apoioaocliente@xzero.live" class="text-indigo-400 underline hover:text-indigo-300">
-            support@procode.com
+            apoioaocliente@xzero.live
         </a>
     </p>
     <a href="/" class="mt-6 inline-block px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition shadow-lg text-white">
