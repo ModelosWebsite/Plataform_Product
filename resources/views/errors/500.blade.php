@@ -64,7 +64,7 @@
   <div class="card">
     <div class="glitch">500</div>
     <h2 class="text-2xl mt-4 text-indigo-300 font-bold">Ocorreu um problema no servidor</h2>
-    <div class="text-center py-10">
+    <div class="text-center py-5">
     <p class="mt-3 text-gray-300 text-sm max-w-md mx-auto">
         Pedimos desculpas pelo inconveniente. Ocorreu um erro inesperado em nossos sistemas e os processos foram
         interrompidos para evitar falhas maiores. Nossa equipa técnica já foi notificada e está a analisar o incidente.
