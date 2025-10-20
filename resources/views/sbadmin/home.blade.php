@@ -23,13 +23,20 @@
                             Link de acesso do seu site para partilhar nas redes sociais:
                             @php
                                 $request = request();
-                                $base = $request->getHost() ?? $request->segment(1);
                                 $token = Str::lower(auth()->user()->company->companyhashtoken);
+                                
+                                if ($request->getHost() !== "https://on.xzero.live") {
+                                    # code...
+                                    $base = $request->getHost();
+                                } else {
+                                    # code...
+                                    $base = $request->getHost().'/'.$token;
+                                }
                             @endphp
 
                             <a id="share-link" target="_blank" class="fw-semibold text-decoration-none text-primary"
-                                href="https://{{ $base }}/{{ $token }}">
-                                https://{{ $base }}/{{ $token }}
+                                href="https://{{ $base }}">
+                                https://{{ $base }}
                             </a>
                         </p>
                         <button id="copy-btn" class="btn btn-primary shadow-sm rounded-pill" onclick="copyToClipboard()">
