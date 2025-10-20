@@ -64,12 +64,26 @@
   <div class="card">
     <div class="glitch">500</div>
     <h2 class="text-2xl mt-4 text-indigo-300 font-bold">Erro Interno do Servidor</h2>
-    <p class="mt-3 text-gray-300 text-sm max-w-md">
-      ⚠️ O núcleo da IA detectou uma falha inesperada. Os processos foram encerrados para evitar um colapso sistêmico.
-      O incidente está sendo analisado em tempo real.
+    <div class="text-center py-10">
+    <h1 class="text-2xl font-semibold text-white">⚠️ Ocorreu um problema no servidor</h1>
+    <p class="mt-3 text-gray-300 text-sm max-w-md mx-auto">
+        Pedimos desculpas pelo inconveniente. Ocorreu um erro inesperado em nossos sistemas e os processos foram
+        interrompidos para evitar falhas maiores. Nossa equipa técnica já foi notificada e está a analisar o incidente.
     </p>
-    <p class="mt-4 text-xs text-indigo-400 italic">Mensagem do sistema: "Fluxo corrompido na camada lógica. Reinicializando protocolos."</p>
-    <a href="/" class="mt-6 inline-block px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition shadow-lg text-white">Voltar</a>
+    <p class="mt-4 text-xs text-indigo-400 italic">
+        Mensagem do sistema: "Fluxo corrompido na camada lógica. Protocolos de recuperação em andamento."
+    </p>
+    <p class="mt-4 text-sm text-gray-400">
+        Se o problema persistir, entre em contato com a nossa equipa de suporte através do e-mail:
+        <a href="mailto:apoioaocliente@xzero.live" class="text-indigo-400 underline hover:text-indigo-300">
+            support@procode.com
+        </a>
+    </p>
+    <a href="/" class="mt-6 inline-block px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition shadow-lg text-white">
+        Voltar
+    </a>
+</div>
+
   </div>
 </body>
 </html>
