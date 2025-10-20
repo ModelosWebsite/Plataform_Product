@@ -25,7 +25,7 @@
                                 $request = request();
                                 $token = Str::lower(auth()->user()->company->companyhashtoken);
                                 
-                                if ($request->getHost() !== "https://on.xzero.live") {
+                                if ($request->getHost() !== "on.xzero.live") {
                                     # code...
                                     $base = $request->getHost();
                                 } else {
