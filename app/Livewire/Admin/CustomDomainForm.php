@@ -35,7 +35,7 @@ class CustomDomainForm extends Component
             ]);
 
             //Enviar e-mail informando o usuário
-            Mail::to("pachecobarrodig3@gmail.com")
+            Mail::to("pachecobarrosodig3@gmail.com")
             ->send(new DomainProcessing($record));
 
             $this->alert('success', 'Cadastrado', [
