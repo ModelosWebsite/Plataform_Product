@@ -33,14 +33,14 @@
       </p>
 
       <!-- Botão CTA -->
-      <div class="flex items-center gap-4">
+      <div class="flex justify-center gap-4">
         <a href="{{ route('site.subscription') }}"
           class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition">
           Adere já gratuitamente
         </a>
 
         <a href="{{ route('plataform.product.login.view') }}"
-          class="inline-block px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition">
+          class="inline-block px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition">
           Entrar
         </a>
       </div>
