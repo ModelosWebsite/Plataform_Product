@@ -30,7 +30,7 @@ class SiteController extends Controller
     {
         try {
             $company = $this->contextService->loadContext($companyHash, $request, registerVisit: true);
-            if (!$company) return view('disable.App');
+            if (!$company) return view('errors.404');
 
             $data = app(CompanyService::class)->getCompanyDataForHome($company);
             $dataView = $this->viewBuilder->buildViewData($company, $data);
