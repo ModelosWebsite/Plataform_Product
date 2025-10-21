@@ -90,7 +90,7 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center d-flex">
                                     <button wire:click="verify({{ $domain->id }})" wire:loading.attr="disabled"
                                         wire:target="verify({{ $domain->id }})"
                                         class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center">
@@ -98,7 +98,18 @@
                                             <i class="fa fa-search me-1"></i> Verificar
                                         </span>
                                         <span wire:loading wire:target="verify({{ $domain->id }})">
-                                            <i class="spinner-border spinner-border-sm me-1"></i> Verificando...
+                                            <i class="spinner-border spinner-border-sm me-1"></i>
+                                        </span>
+                                    </button>
+
+                                    <button wire:click="deleteDomain({{ $domain->id }})" wire:loading.attr="disabled"
+                                        wire:target="deleteDomain({{ $domain->id }})"
+                                        class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center">
+                                        <span wire:loading.remove wire:target="deleteDomain({{ $domain->id }})">
+                                            <i class="fa fa-trash me-1"></i>
+                                        </span>
+                                        <span wire:loading wire:target="deleteDomain({{ $domain->id }})">
+                                            <i class="spinner-border spinner-border-sm me-1"></i>
                                         </span>
                                     </button>
                                 </td>

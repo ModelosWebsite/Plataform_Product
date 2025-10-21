@@ -1,16 +1,24 @@
 @component('mail::message')
-# Solicitação Recebida
+# Novo Domínio Solicitado
 
-Olá **{{ auth()->user()->name }}**,  
-recebemos a sua solicitação para adicionar o domínio **{{ $domainRecord->domain }}** à sua conta.
+Olá,  
+um utilizador acaba de solicitar a configuração de um novo domínio na plataforma.
 
-Nossa equipa já está processando o pedido.  
-Por favor, aguarde enquanto os nossos servidores verificam e configuram o seu domínio.
+---
 
-Assim que o processo for concluído, você receberá outro e-mail com mais instruções.
+**Dados da Solicitação:**
 
-@component('mail::button', ['url' => config('app.url')])
-Acessar Plataforma
+- **Utilizador:** {{ auth()->user()->name }}
+- **Domínio Adicionado:** {{ $domainRecord->domain }}
+- **Data do Pedido:** {{ now()->format('d/m/Y H:i') }}
+
+---
+
+Aguardando revisão e validação técnica.  
+Assim que for aprovado ou configurado, o utilizador receberá uma notificação automática.
+
+@component('mail::button', ['url' => config('app.url') . '/login/view'])
+Aceder ao Painel Administrativo
 @endcomponent
 
 Obrigado,  

@@ -5,7 +5,7 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use App\Models\CustomDomain;
-use App\Mail\DomainProcessingMail;
+use App\Mail\DomainProcessing;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -35,8 +35,8 @@ class CustomDomainForm extends Component
             ]);
 
             //Enviar e-mail informando o usuário
-            Mail::to(auth()->user()->company->companyemail)
-            ->send(new DomainProcessingMail($record));
+            Mail::to("pachecobarrodig3@gmail.com")
+            ->send(new DomainProcessing($record));
 
             $this->alert('success', 'Cadastrado', [
                 'toast' => false,
@@ -56,6 +56,33 @@ class CustomDomainForm extends Component
                  'toast' => false,
                  'position' => 'center',
                  'text' => 'Ocorreu um erro ao verificar o domínio. Verifique os logs.',
+            ]);
+        }
+    }
+
+    public function deleteDomain($domainId)
+    {
+        try {
+            $domain = CustomDomain::findOrFail($domainId);
+
+            $domain->delete();
+
+            $this->alert('success', 'Domínio eliminado!', [
+                'toast' => false,
+                'position' => 'center',
+                'text' => "",
+            ]);
+        } catch (\Throwable $th) {
+            \Log::error('Erro ao eliminar dominio', [
+                 'erro' => $th->getMessage(),
+                 'file' => $th->getFile(),
+                 'line' => $th->getLine(),
+             ]);
+
+             $this->alert('error', 'Erro Interno', [
+                 'toast' => false,
+                 'position' => 'center',
+                 'text' => 'Ocorreu um erro. Verifique os logs.',
             ]);
         }
     }

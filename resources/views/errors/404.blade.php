@@ -40,8 +40,8 @@
         </a>
 
         <a href="{{ route('plataform.product.login.view') }}"
-          class="inline-block px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition">
-          Entrar
+          class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition">
+          Acessar meu painel
         </a>
       </div>
 
