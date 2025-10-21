@@ -39,7 +39,7 @@
           Adere já gratuitamente
         </a>
 
-        <a href="{{ route('login') }}"
+        <a href="{{ route('plataform.product.login.view') }}"
           class="inline-block px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition">
           Entrar
         </a>
