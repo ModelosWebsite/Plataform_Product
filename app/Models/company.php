@@ -46,7 +46,7 @@ class company extends Model
     }
     public function contacts() 
     { 
-        return $this->hasMany(contact::class, 'company_id'); 
+        return $this->hasOne(contact::class, 'company_id'); 
     }
     public function color() 
     { 

@@ -7,6 +7,7 @@ use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Shopping extends Component
 {
@@ -41,13 +42,10 @@ class Shopping extends Component
     public function getCategories()
     {
         try {
-            //Chamada a API
-            $response = Http::withHeaders($this->getHeaders())
-            ->get("https://shop.xzero.live/api/categories");
-
-            return json_decode($response, true);
+            return Http::withHeaders($this->getHeaders())
+            ->get("https://shop.xzero.live/api/categories")->json();
         } catch (\Throwable $th) {
-            \Log::error('Shopping@getCategories: ' . $th->getMessage());
+            Log::error('Shopping@getCategories: ' . $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',
@@ -65,9 +63,8 @@ class Shopping extends Component
             $this->category = $category;
 
             // Define a URL com ou sem a categoria
-            $url = $category 
-                ? "https://shop.xzero.live/api/items?category=$category"
-                : "https://shop.xzero.live/api/items";
+            $url = $category ? "https://shop.xzero.live/api/items?category=$category" 
+            : "https://shop.xzero.live/api/items";
 
             // Chamada à API
             $response = Http::withHeaders($this->getHeaders())->get($url);
@@ -77,7 +74,7 @@ class Shopping extends Component
                 return collect($response->json());
             } 
         } catch (\Throwable $th) {
-            \Log::error('Shopping@getItens: ' . $th->getMessage());
+            Log::error('Shopping@getItens: ' . $th->getMessage());
 
             // Mostra um alerta com uma mensagem de erro personalizada
             $this->alert('error', 'ERRO', [
@@ -119,7 +116,7 @@ class Shopping extends Component
 
             return;
         } catch (\Throwable $th) {
-            \Log::error('Shopping@AddCart: ' . $th->getMessage());
+            Log::error('Shopping@AddCart: ' . $th->getMessage());
             $this->alert('error', 'ERRO', [
                 'toast'=>false,
                 'position'=>'center',

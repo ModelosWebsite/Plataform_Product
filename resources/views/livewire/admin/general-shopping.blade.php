@@ -9,21 +9,13 @@
                     <div class="card-body">
                         <div class="row">
                             <main>
-                                <input id="tab2" type="radio" name="tabs">
-                                <label for="tab2">1. Categorias </label>
-
                                 <input id="tab1" type="radio" name="tabs" checked>
-                                <label for="tab1">2. Produtos </label>
+                                <label for="tab1">1. Produtos </label>
                                     
                                 <input id="tab3" type="radio" name="tabs">
-                                <label for="tab3">3. Controle de Encomenda</label>
-
-                                <input id="tab4" type="radio" name="tabs">
-                                <label for="tab4">4. Subcategoria</label>
+                                <label for="tab3">2. Controle de Encomenda</label>
                                     
-                                <section id="content2">@livewire("admin.category") </section>
                                 <section id="content1">@livewire("admin.itens")</section>
-                                <section id="content4"><livewire:admin.subcategory/></section>
                                 <section id="content3">@livewire("admin.encomenda")</section>
                             </main>
                         </div>

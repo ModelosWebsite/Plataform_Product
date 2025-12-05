@@ -8,8 +8,13 @@
           <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.index', ['company' => $companyName->companyhashtoken ?? ""]) }}#about">Sobre</a></li>
           <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.index', ['company' => $companyName->companyhashtoken ?? ""]) }}#services">Serviços</a></li>
           <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.index', ['company' => $companyName->companyhashtoken ?? ""]) }}#work">Trabalhos</a></li>
-          <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.shopping', ['company' => $companyName->companyhashtoken]) }}">Loja</a></li>
-          <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.delivery.status', ['company' => $companyName->companyhashtoken]) }}">Encomenda</a></li>
+          @if($shoppingValid['status'] === "validated")
+            <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.shopping', ['company' => $companyName->companyhashtoken]) }}">Loja</a></li>            
+          @endif
+          <li><a class="nav-link scrollto" href="{{ route('produto.appointment', ['company' => $companyName->companyhashtoken]) }}">Marcações</a></li>
+          @if($shoppingValid['status'] === "validated")
+            <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.delivery.status', ['company' => $companyName->companyhashtoken]) }}">Encomenda</a></li>
+          @endif
           <li><a class="nav-link scrollto" href="{{ route('plataforma.produto.index', ['company' => $companyName->companyhashtoken ?? ""]) }}#contact">Contacto</a></li>
         </ul>
 

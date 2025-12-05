@@ -3,7 +3,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\company;
-use Illuminate\Support\Facades\{DB, Http};
+use Illuminate\Support\Facades\{DB, Http, Log};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use App\Services\{Grouping, SubCategoryKytutes};
@@ -25,25 +25,13 @@ class Itens extends Component
     public function mount()
     {
         $this->company = company::find(auth()->user()->company_id);
-        // endpoint: api/categories
-        $this->groupcategories = array_merge(
-            Grouping::getGrouping("categories")['categories'], 
-            $this->getCategories()
-        );
-
         // endpoint: api/subcategories
         $this->subcategories = array_merge(
             Grouping::getGrouping("subcategories")['subcategories'], 
             SubCategoryKytutes::getSubcategory($this->company->companytokenapi)
         );
-        // endpoint: api/classifications
-        $this->classifications = Grouping::getGrouping("classifications")['classifications'];
-        // endpoint: api/subclassifications
-        $this->subclassifications = Grouping::getGrouping("subclassifications")['subclassifications'];
         // endpoint: api/origins
         $this->origins = Grouping::getGrouping("origins")['origins'];
-        // endpoint: api/origins
-        $this->naturezas = Grouping::getGrouping("naturezas")['naturezas'];
     }
 
     public function render()
@@ -66,6 +54,10 @@ class Itens extends Component
         try {
             $response = Http::withHeaders($this->getToken())
             ->get("https://shop.xzero.live/api/items")->json();
+
+            Log::info("Produtos@getProdutos", [
+                "message" => $response
+            ]);
 
             if ($response != null) {
                 return $response;
@@ -126,11 +118,7 @@ class Itens extends Component
                 "description" => $this->description,
                 "longDescription" => $this->longdescription,
                 "image" => $filename ?? null,
-                "category" => $this->idcat,
                 "subcategory" => $this->idsubcat,
-                "classificationId" => $this->idclass,
-                "subclassificationId" => $this->idsubclass,
-                "naturezaId" => $this->idnatureza,
                 "originId" => $this->idorigen,
             ];
 
@@ -138,6 +126,8 @@ class Itens extends Component
 
             $response = Http::withHeaders($this->getToken())
             ->post("https://shop.xzero.live/api/items", $infoItem);
+
+            dd($response->json());
 
             \Log::info("Resposta da API ao criar produto", $response->json());
 
@@ -197,11 +187,7 @@ class Itens extends Component
             $this->longdescription = $existingItem['description'];
             $this->price = $existingItem['price'];
             $this->qtd = $existingItem['quantity'];
-            $this->idcat = $existingItem['categoryId'];
             $this->idsubcat = $existingItem['subcategoryId'];
-            $this->idclass = $existingItem['classification_id'];
-            $this->idsubclass = $existingItem['subclassification_id'];
-            $this->idnatureza = $existingItem['natureza_id'];
             $this->idorigen = $existingItem['origin_id'];
             $this->image = $existingItem['image'];
             $this->editing = true;
@@ -291,12 +277,12 @@ class Itens extends Component
                 "reference" => $this->itemId
             ];
 
-            \Log::info("Produto a actualizar", ["produto" => $infoItem]);
+            Log::info("Produto a actualizar", ["produto" => $infoItem]);
             
             $response = Http::withHeaders($this->getToken())
             ->put("https://shop.xzero.live/api/items", $infoItem);
             
-            \Log::info("Produtos@Update", $response->json());
+            Log::info("Produtos@Update", $response->json());
             
             if ($response->failed()) {
                 $errors = $response->json('errors') ?? [];

@@ -4,7 +4,7 @@
 
             <div class="modal-header bg-primary text-white">
                 <h6 class="modal-title fw-bold" id="modalPaymentLabel">Processo de Pagamento</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="closepremium" data-dismiss="modal" aria-label="Close">
                     <span>&times;</span>
                 </button>
             </div>

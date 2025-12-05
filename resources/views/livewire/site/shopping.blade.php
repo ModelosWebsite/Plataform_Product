@@ -20,9 +20,10 @@
               @if ($categories && isset($categories) && count($categories) > 0)
                   @foreach ($categories as $item)
                       <li>
-                          @if (isset($item['reference']) && $item['category'] != "Pratos" && $item['category'] != "Prato do Dia" && $item['category'] != "Bebidas")
-                              <button class="category {{ $category === $item['category'] ? 'active' : '' }}" wire:click="getItems('{{ $item['category'] ?? '' }}')">
-                                  {{ $item['category'] ?? '' }}
+                          @if (isset($item['id']) && $item['nome'] != "Pratos" && $item['nome'] != "Prato do Dia" && $item['nome'] != "Bebidas")
+                              <button class="category {{ $category === $item['nome'] ? 'active' : '' }}" wire:click="getItems('{{ $item['id'] ?? '' }}')">
+                                  <i wire:loading wire:target="getItems('{{ $item['id'] ?? '' }}')" class="spinner-border spinner-border-sm text-white"></i>
+                                  {{ $item['nome'] ?? '' }}
                               </button>
                           @endif
                       </li>

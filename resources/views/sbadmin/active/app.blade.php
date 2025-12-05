@@ -24,23 +24,62 @@
         </div>
     </div>
 
-    <!-- Card Loja -->
+    @php
+        $status = $shoppingValid['status'] ?? null;
+
+        // Mapear cores
+        $colors = [
+            'validated' => 'bg-gradient-primary',
+            'pending'   => 'bg-gradient-warning',
+            'review'    => 'bg-gradient-info',
+            'rejected'  => 'bg-gradient-danger',
+            null        => 'bg-gradient-danger', // null = bloqueado
+        ];
+
+        // Condições de acesso
+        $canAccess = $status === 'validated';  // só validated libera
+        $openModal = is_null($status);         // null → abre modal
+    @endphp
+
     <div class="col-lg-4 col-md-6 mb-3">
-        <div class="card border-0 shadow-sm p-4 rounded-4 small-box 
-            {{ auth()->user()->company->status == 'active' ? 'bg-gradient-primary' : 'bg-gradient-danger' }} text-white">
+        <div class="card border-0 shadow-sm p-4 rounded-4 small-box
+            {{ $colors[$status] }} text-white"
+            style="{{ !$canAccess ? 'pointer-events: none; opacity: 0.6;' : '' }}">
 
             <div class="d-flex align-items-center">
                 <div class="me-3">
-                    <i class="fas fa-store fa-2x bg-opacity-25 p-2 rounded-circle fs-1"></i>
+                    @if(!$canAccess)
+                        <i class="fas fa-lock fa-2x bg-opacity-25 p-2 rounded-circle fs-1"></i>
+                    @else
+                        <i class="fas fa-store fa-2x bg-opacity-25 p-2 rounded-circle fs-1"></i>
+                    @endif
                 </div>
+
                 <div class="flex-grow-1">
-                    <a href="{{ route('admin.general.shopping') }}" class="stretched-link text-white text-decoration-none">
-                        @if (auth()->user()->company->status == "active")
+                    <a href="{{ $canAccess ? route('admin.general.shopping') : '#' }}"
+                        {{ $openModal ? 'data-toggle=modal data-target=#validarContaModal' : '' }}
+                        class="stretched-link text-white text-decoration-none">
+
+                        {{-- Mensagens por estado --}}
+                        @if($status === 'validated')
                             <h6 class="fw-bold mb-0">A sua loja está disponível</h6>
                             <small>Acesse a sua loja clicando aqui</small>
-                        @else
-                            <h6 class="fw-bold mb-0">A sua loja está inativa</h6>
-                            <small>Será ativada com o website</small>
+
+                        @elseif(is_null($status))
+                            <h6 class="fw-bold mb-0">Ativar loja — Verifique a sua conta</h6>
+                            <small>Para usar a loja valide a sua identidade</small>
+
+                        @elseif($status === 'pending')
+                            <h6 class="fw-bold mb-0">Conta em análise inicial</h6>
+                            <small>Aguardando verificação</small>
+
+                        @elseif($status === 'review')
+                            <h6 class="fw-bold mb-0">Documentos em revisão</h6>
+                            <small>O processo pode demorar 72h úteis</small>
+
+                        @elseif($status === 'rejected')
+                            <h6 class="fw-bold mb-0">Documentos recusados</h6>
+                            <small>Envie novos documentos para ativar a loja</small>
                         @endif
                     </a>
                 </div>

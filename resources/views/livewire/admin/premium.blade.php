@@ -207,7 +207,6 @@
         </div>
         @include("modals.premium")
         @include("modals.admin.details-premium")
-
     </div>
 </div>
 

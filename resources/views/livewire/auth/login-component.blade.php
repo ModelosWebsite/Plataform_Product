@@ -19,13 +19,13 @@
         </div>
 
         <!-- Formulário -->
-        <form wire:submit.prevent='login' class="flex flex-col gap-5">
+        <form  class="flex flex-col gap-5">
             <input class="h-10 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" wire:model='email' value="{{ old('email') }}" type="email" placeholder="E-mail" required />
             <input class="h-10 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" wire:model='password' value="{{ old('password') }}" type="password" placeholder="Senha de Acesso" required />
             <input id="phoneInput" min="1" class="h-10 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ old('phone') }}" type="number" placeholder="Número de telefone" />
 
             <div class="flex justify-center">
-                <button type="submit" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition">
+                <button wire:click="login" wire:loading.attr="disabled" wire:target="login" type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition">
                     <i class="fas fa-sign-in-alt"></i>
                     Entrar
                 </button>

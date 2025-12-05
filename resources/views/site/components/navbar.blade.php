@@ -27,6 +27,11 @@
           </a>
         </li>
         <li>
+          <a href="{{ route('produto.appointment', ['company' => $companyName->companyhashtoken]) }}">
+            Marcações
+          </a>
+        </li>
+        <li>
           <a href="{{ route('plataforma.produto.delivery.status', ['company' => $companyName->companyhashtoken]) }}">
             Encontrar Encomenda
           </a>

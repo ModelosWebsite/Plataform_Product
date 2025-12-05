@@ -273,7 +273,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="copyright-box">
-            <p class="copyright">&copy; Copyright <a href="https://fortcodedev.com" target="_blank" class="text-white"><strong>Fort-Code</strong></a>. Direitos autorais reservados</p>
+            <p class="copyright">&copy; Copyright {{$companyName->companyname}} | NIF: {{$companyName->companynif}}. Criado usando <a href="https://xzero.live" target="_blank" class="text-white"><strong>xZero</strong></a></p>
             <!-- Button trigger modal termos de cprivacidades e condições-->
             <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#privacity">
               Politicas de Privacidade |  

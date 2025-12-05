@@ -1,4 +1,4 @@
-<div class="container-fluid py-3">
+<div class="container-fluid py-3" wire:poll.200ms="checkPayment">
     <div class="card border-0 shadow-sm">
         <!-- Header -->
         <div class="card-header d-flex justify-content-between align-items-center bg-white border-0 pb-0">
@@ -44,14 +44,13 @@
                                         </small>
                                     @else
                                         <div class="alert alert-warning py-1 small mb-2" role="alert">
-                                            ⚠️ Antes de clicar em <strong>Verificar</strong>, siga as instruções. 
+                                            ⚠️ Antes de clicar em <strong>Verificar</strong>, siga as instruções.
                                             <button class="btn btn-outline-secondary btn-sm" type="button"
-                                            data-toggle="collapse" data-target="#instructions-{{ $domain->id }}"
-                                            aria-expanded="false">
-                                            <i class="fa fa-gear me-1"></i> Instruções
-                                        </button>
+                                                data-toggle="collapse" data-target="#instructions-{{ $domain->id }}"
+                                                aria-expanded="false">
+                                                <i class="fa fa-gear me-1"></i> Instruções
+                                            </button>
                                         </div>
-
                                         <div class="collapse mt-2" id="instructions-{{ $domain->id }}">
                                             <div class="card card-body bg-light border-0 small">
                                                 <p class="mb-1">
@@ -66,9 +65,12 @@
                                                         <ul class="list-unstyled mb-2 ms-3">
                                                             <li><strong>Tipo:</strong> CNAME</li>
                                                             <li><strong>Nome:</strong> www</li>
-                                                            <li><strong>Valor:</strong> {{ $domain->verification_token ?? 'seu_token' }}.{{ env('APP_URL') }}</li>
+                                                            <li><strong>Valor:</strong>
+                                                                {{ $domain->verification_token ?? 'seu_token' }}.{{ env('APP_URL') }}
+                                                            </li>
                                                         </ul>
-                                                        <button class="btn btn-outline-primary btn-sm copy-btn" data-copy="_on.{{ Str::before($domain->domain, '.') }} → {{ $domain->verification_token ?? 'seu_token' }}.port.fortcodedev.com">
+                                                        <button class="btn btn-outline-primary btn-sm copy-btn"
+                                                            data-copy="_on.{{ Str::before($domain->domain, '.') }} → {{ $domain->verification_token ?? 'seu_token' }}.port.fortcodedev.com">
                                                             Copiar CNAME
                                                         </button>
                                                     </div>
@@ -78,9 +80,11 @@
                                                         <ul class="list-unstyled mb-2 ms-3">
                                                             <li><strong>Tipo:</strong> A</li>
                                                             <li><strong>Nome:</strong> @</li>
-                                                            <li><strong>Valor:</strong> {{ gethostbyname(env('APP_URL') ?? "") }}</li>
+                                                            <li><strong>Valor:</strong>
+                                                                {{ gethostbyname(env('APP_URL') ?? '') }}</li>
                                                         </ul>
-                                                        <button class="btn btn-outline-success btn-sm copy-btn" data-copy="on={{ $domain->verification_token ?? 'seu_token' }}">
+                                                        <button class="btn btn-outline-success btn-sm copy-btn"
+                                                            data-copy="on={{ $domain->verification_token ?? 'seu_token' }}">
                                                             Copiar A
                                                         </button>
                                                     </div>
@@ -117,13 +121,15 @@
 
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center py-5 text-muted">
-                                    <i class="fa fa-inboxes display-5 d-block mb-2"></i>
-                                    <h6 class="fw-normal">Nenhum domínio cadastrado</h6>
-                                    <button class="btn btn-primary btn-sm mt-3" data-toggle="modal"
-                                        data-target="#addomain">
-                                        <i class="fa fa-plus-lg me-1"></i> Adicionar Agora
-                                    </button>
+                                <td colspan="12">
+                                    <div class="d-flex justify-content-center align-items-center flex-column" style="height: 30vh;">
+                                        <i class="bi bi-caret-down-fill" style="font-size: 2rem;"></i>
+                                        <h6 class="fw-normal">Nenhum domínio cadastrado</h6>
+                                        <button class="btn btn-primary btn-sm mt-3" data-toggle="modal"
+                                            data-target="#addomain">
+                                            <i class="fa fa-plus-lg me-1"></i> Adicionar Agora
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforelse
@@ -135,6 +141,9 @@
 
     {{-- Modal Start --}}
     @include('modals.domain')
+    @include('modals.premium')
+
+
     {{-- Modal End --}}
 </div>
 
@@ -146,11 +155,23 @@
             navigator.clipboard.writeText(text).then(() => {
                 button.textContent = '✅ Copiado!';
                 setTimeout(() => {
-                    button.textContent = button.classList.contains('btn-outline-primary') 
-                        ? 'Copiar CNAME' 
-                        : 'Copiar A';
+                    button.textContent = button.classList.contains(
+                            'btn-outline-primary') ?
+                        'Copiar CNAME' :
+                        'Copiar A';
                 }, 2000);
             });
         });
+    });
+
+    document.addEventListener('close-modals', (event)=> {
+        $("#closepremium").trigger('click')
+        $("#closedomain").trigger('click')
+    })
+</script>
+
+<script>
+    window.addEventListener('openModal', event => {
+        $('#modalPayment').modal('show');
     });
 </script>

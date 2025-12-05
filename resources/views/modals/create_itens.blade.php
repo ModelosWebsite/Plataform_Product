@@ -16,18 +16,6 @@
                   <input class="form-control form-control-sm shadow-none" type="file" wire:model="image">
                   @error('image') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
-              
-              <div class="form-group">
-                  <h6 for="category_id" class="form-label">Categoria <span class="text-danger">*</span></h6>
-                  <select class="form-control form-control-sm shadow-none" wire:model="idcat">
-                      <option>Selecione a categoria</option>
-                        @forelse($groupcategories as $category)
-                            <option value="{{ $category['id'] ?? '' }}">{{ $category['category'] ?? '' }}</option>
-                        @empty
-                        @endforelse
-                  </select>
-                  @error('category') <span class="text-danger">{{ $message }}</span> @enderror
-              </div>
 
               <div class="form-group">
                   <h6 for="category_id" class="form-label">Subcategoria</h6>
@@ -41,48 +29,12 @@
                   @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 
-                <div class="form-group">
-                  <h6 for="category_id" class="form-label">Classificação</h6>
-                  <select class="form-control form-control-sm shadow-none" wire:model="idclass">
-                      <option>Selecione a Classificação</option>
-                        @forelse($classifications as $classification)
-                            <option value="{{ $classification['reference'] ?? '' }}">{{ $classification['subcategory'] ?? '' }}</option>
-                        @empty
-                        @endforelse
-                  </select>
-                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
-              </div>
-
-              <div class="form-group">
-                  <h6 for="category_id" class="form-label">Subclassificação</h6>
-                  <select class="form-control form-control-sm shadow-none" wire:model="idsubclass">
-                      <option>Selecione a Subclassificação</option>
-                        @forelse($subclassifications as $subclassification)
-                            <option value="{{ $subclassification['reference'] ?? '' }}">{{ $subclassification['subcategory'] ?? '' }}</option>
-                        @empty
-                        @endforelse
-                  </select>
-                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
-              </div>
-
               <div class="form-group">
                   <h6 for="category_id" class="form-label">Origem</h6>
                   <select class="form-control form-control-sm shadow-none" wire:model="idorigen">
                       <option>Selecione a origem</option>
                         @forelse($origins as $origin)
                             <option value="{{ $origin['reference'] ?? '' }}">{{ $origin['subcategory'] ?? '' }}</option>
-                        @empty
-                        @endforelse
-                  </select>
-                  @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
-              </div>
-
-              <div class="form-group">
-                  <h6 for="category_id" class="form-label">Natureza</h6>
-                  <select class="form-control form-control-sm shadow-none" wire:model="idnatureza">
-                      <option>Selecione a natureza</option>
-                        @forelse($naturezas as $natureza)
-                            <option value="{{ $natureza['reference'] ?? '' }}">{{ $natureza['subcategory'] ?? '' }}</option>
                         @empty
                         @endforelse
                   </select>

@@ -4,27 +4,117 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
-use App\Models\CustomDomain;
+use App\Models\{CustomDomain, Payment, RequestDomainCompany};
 use App\Mail\DomainProcessing;
+use App\Services\PaymentService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CustomDomainForm extends Component
 {
-    public $domain;
+    public $domain, $code, $acceptTerms = false, $price, $paymentService, $payment, $domainName, $extension;
     use LivewireAlert;
 
-    protected $rules = [
-        'domain' => 'required'
-    ];
+    public function accept()
+    {
+        try {
+            $this->acceptTerms = true;
 
-    protected $messages = [
-        'domain.required' => 'Dominio é obrigatorio'
-    ];
+            if ($this->acceptTerms) {
+                $this->payment = PaymentService::processPayment(
+                    auth()->user(),
+                    "Dóminio Personalizado",
+                    $this->price,
+                    $this->code
+                );
+            }
+        } catch (\Throwable $th) {
+            Log::error('Erro ao chamar os pagamentos', [
+                 'erro' => $th->getMessage(),
+                 'file' => $th->getFile(),
+                 'line' => $th->getLine(),
+             ]);
+
+             $this->alert('error', 'Erro Interno', [
+                 'toast' => false,
+                 'position' => 'center',
+                 'text' => 'Ocorreu um erro. Verifique os logs.',
+            ]);
+        }
+    }
+
+    public function camePayment($type)
+    {
+        try{
+            $this->price = ($type === "vip") ? 45000 : 25000 ;
+            $this->code = PaymentService::generateReference();
+
+            if ($type === "vip") {
+                $this->joinDomain();
+            } else {
+                $this->validate([
+                    'domain' => 'required',
+                ], [
+                    'domain.required' => 'Domínio é obrigatório',
+                ]);
+            }
+            
+
+            $this->dispatch("openModal");
+
+        } catch (\Throwable $th) {
+            Log::error('Erro ao chamar os pagamentos', [
+                 'erro' => $th->getMessage(),
+                 'file' => $th->getFile(),
+                 'line' => $th->getLine(),
+             ]);
+
+             $this->alert('error', 'Erro Interno', [
+                 'toast' => false,
+                 'position' => 'center',
+                 'text' => 'Ocorreu um erro. Verifique os logs.',
+            ]);
+        }
+    }
+    
+    // Método para monitorar o pagamento
+    public function checkPayment()
+    {
+        try {
+            if (!$this->payment) return;
+            
+            $payment = Payment::find($this->payment->id);
+            
+            if ($payment && $payment->status === 'processado') {
+                $payment->update(['status' => 'expirado']);
+                if($this->domain){
+                    $this->save();
+                    $this->dispatch('close-modals');
+                }else{
+                }
+                // Pagamento foi processado
+                $this->alert('success', 'SUCESSO', [
+                    'position' => 'center',
+                    'toast' => false,
+                    'timer' => 2000,
+                    'text' => "Pagamento realizado com sucesso!",
+                ]);
+            }
+
+            return;
+        } catch (\Throwable $th) {
+            Log::error("Erro ao checar Pagamento", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine()
+            ]);
+            return;
+        }
+    }
 
     public function save()
     {
-        $this->validate();
         try {
             $parsed = parse_url($this->domain, PHP_URL_HOST) ?? $this->domain;
 
@@ -38,15 +128,10 @@ class CustomDomainForm extends Component
             Mail::to("pachecobarrosodig3@gmail.com")
             ->send(new DomainProcessing($record));
 
-            $this->alert('success', 'Cadastrado', [
-                'toast' => false,
-                'position' => 'center',
-                'confirmButtonText' => 'OK',
-                'showConfirmButton' => false,
-            ]);
+            $this->reset('domain');
 
         } catch (\Throwable $th) {
-            \Log::error('CustomDomain@save', [
+            Log::error('CustomDomain@save', [
                 'message' => $th->getMessage(),
                 'file' => $th->getFile(),
                 'line' => $th->getLine(),
@@ -73,7 +158,7 @@ class CustomDomainForm extends Component
                 'text' => "",
             ]);
         } catch (\Throwable $th) {
-            \Log::error('Erro ao eliminar dominio', [
+            Log::error('Erro ao eliminar dominio', [
                  'erro' => $th->getMessage(),
                  'file' => $th->getFile(),
                  'line' => $th->getLine(),
@@ -104,7 +189,7 @@ class CustomDomainForm extends Component
              $recordsCname = @dns_get_record($host, DNS_CNAME);
              $recordsA = @dns_get_record($host, DNS_A);
 
-             \Log::info('DNS Verify: Início', [
+             Log::info('DNS Verify: Início', [
                  'host' => $host,
                  'expectedTarget' => $expectedTarget,
                  'expectedIp' => $expectedIp,
@@ -146,7 +231,7 @@ class CustomDomainForm extends Component
              $domain->update(['verified' => $isValid]);
 
              //Log final e alerta visual
-             \Log::info('DNS Verify: Resultado Final', [
+             Log::info('DNS Verify: Resultado Final', [
                  'host' => $host,
                  'foundTarget' => $foundTarget,
                  'isValid' => $isValid,
@@ -167,7 +252,7 @@ class CustomDomainForm extends Component
                  ]);
              }
          } catch (\Throwable $th) {
-             \Log::error('Erro ao verificar domínio', [
+             Log::error('Erro ao verificar domínio', [
                  'erro' => $th->getMessage(),
                  'file' => $th->getFile(),
                  'line' => $th->getLine(),
@@ -177,6 +262,32 @@ class CustomDomainForm extends Component
                  'toast' => false,
                  'position' => 'center',
                  'text' => 'Ocorreu um erro ao verificar o domínio. Verifique os logs.',
+            ]);
+        }
+    }
+    /** Comprar dominio na fortcode */
+    public function joinDomain()
+    {
+        try {
+            RequestDomainCompany::query()->create([
+                "domain_name" => $this->domainName,
+                "extension" => $this->extension,
+                "company_id" => auth()->user()->company_id
+            ]);
+
+            $this->reset(['domainName', 'extension']);
+
+        } catch (\Throwable $th) {
+            Log::error("Error ao Comprar dominio", [
+                "message" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
+
+            $this->alert('error', 'Erro Interno', [
+                 'toast' => false,
+                 'position' => 'center',
+                 'text' => 'Ocorreu um erro.',
             ]);
         }
     }

@@ -30,15 +30,55 @@
         </a>
     </li>
 
-    <!-- Nav Item - Loja -->
-    <li class="nav-item {{ Route::current()->getName() == 'admin.general.shopping' ? 'bg-white text-primary' : '' }}">
-        <a class="nav-link d-flex align-items-center {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary fw-bold' : '' }}"
-            href="{{ route('admin.general.shopping') }}">
-            <i
-                class="fas fa-store me-2 {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary' : '' }}"></i>
-            <span>Loja/Produtos</span>
-        </a>
-    </li>
+
+    @php
+    // Buscar empresa e status
+    $company = \App\Models\company::where("id", auth()->user()->company_id)->first();
+
+    $shoppingValid = Http::withHeaders([
+        'Accept' => 'application/json',
+        'Authorization' => 'Bearer ' . ($company->token_xzero ?? ''),
+    ])->post("http://127.0.0.1:8000/api/validation/show")->json();
+
+    // Estado
+    $status = $shoppingValid['status'] ?? null;
+
+    // Condições de acesso
+    $canAccess = $status === 'validated';
+    $openModal = is_null($status);  // abre modal se null
+@endphp
+
+<!-- Nav Item - Loja -->
+<li class="nav-item 
+    {{ Route::current()->getName() == 'admin.general.shopping' ? 'bg-white text-primary' : '' }}"
+    style="{{ !$canAccess ? 'pointer-events: none; opacity: 0.6;' : '' }}">
+
+    <a class="nav-link d-flex align-items-center
+        {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary fw-bold' : '' }}"
+        
+        {{-- Se não pode acessar e é null, abrir modal --}}
+        @if($openModal)
+            href="#"
+            data-toggle="modal"
+            data-target="#validarContaModal"
+        @else
+            href="{{ $canAccess ? route('admin.general.shopping') : '#' }}"
+        @endif
+    >
+
+        {{-- Ícone --}}
+        @if(!$canAccess)
+            <i class="fas fa-lock me-2"></i>
+        @else
+            <i class="fas fa-store me-2 
+                {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary' : '' }}">
+            </i>
+        @endif
+
+        <span>Loja/Produtos</span>
+    </a>
+</li>
+
 
     <!-- Nav Item - Premium -->
     <li class="nav-item {{ Route::current()->getName() == 'admin.shopping.premium' ? 'bg-white text-primary' : '' }}">
@@ -47,6 +87,15 @@
             <i
                 class="fas fa-star me-2 {{ Route::current()->getName() == 'admin.shopping.premium' ? 'text-primary' : '' }}"></i>
             <span>Elementos Premium</span>
+        </a>
+    </li>
+
+        <!-- Nav Item - Premium -->
+    <li class="nav-item {{ Route::current()->getName() == 'admin.markings' ? 'bg-white text-primary' : '' }}">
+        <a class="nav-link d-flex align-items-center {{ Route::current()->getName() == 'admin.markings' ? 'text-primary fw-bold' : '' }}"
+            href="{{ route('admin.markings') }}">
+            <i class="fas fa-calendar-alt me-2 {{ Route::current()->getName() == 'admin.markings' ? 'text-primary' : '' }}"></i>
+            <span>Marcações</span>
         </a>
     </li>
 

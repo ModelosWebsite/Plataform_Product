@@ -39,7 +39,7 @@
                         <button id="copy-btn" class="btn btn-primary shadow-sm rounded-pill" onclick="copyToClipboard()">
                             Copiar Link
                         </button>
-                        {{-- <livewire:admin.link-account /> --}}
+
                     </div>
 
                     <!-- Coluna 1 -->
@@ -310,6 +310,8 @@
         </div>
         <!-- /.container-fluid -->
     </div>
+    <livewire:admin.identify-validator />
+
     <!-- End of Main Content -->
     </div>
     <!-- End of Content Wrapper -->

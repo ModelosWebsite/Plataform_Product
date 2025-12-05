@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\{AboutController, BackgroudImageController, ColorController, ConfigSiteController, DeliveryController, ElementController, HabilidadeController};
 use App\Http\Controllers\Admin\{DetailController, FooterController, HeroController, ConditionsController, ShoopingController};
 use App\Http\Controllers\Admin\{HomeController, PortalPbCOntroller, ProductsController, ProfileController, QuestionControll, QuestionController, StatusDeliveryController};
-use App\Livewire\Admin\{Category, Premium, GeneralShopping, Itens, VerifyDelivery, CustomDomainForm};
+use App\Livewire\Admin\{Category, Premium, GeneralShopping, Itens, VerifyDelivery, CustomDomainForm, MarkingsComponent};
 use App\Livewire\Config\Hero;
 use App\Livewire\Definition\DefinitionGeneral;
 use App\Livewire\Site\DeliveryStatusComponent;
@@ -140,4 +140,5 @@ Route::middleware("auth")->prefix("/painel/admin")->group(function()
     Route::get("/loja", GeneralShopping::class)->name("admin.general.shopping");
     Route::get("/loja/premium", Premium::class)->name("admin.shopping.premium");
     Route::get("personalized/domain", CustomDomainForm::class)->name('admin.domain');
+    Route::get("/marcações", MarkingsComponent::class)->name('admin.markings');
 });

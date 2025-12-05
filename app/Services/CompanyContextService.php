@@ -3,8 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\{Cache, Session};
 use App\Models\Company;
 use App\Services\VisitorService;
 use Illuminate\Support\Facades\Log;

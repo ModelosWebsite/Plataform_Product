@@ -46,6 +46,7 @@
                     <tr>
                         <th scope="col">Produto</th>
                         <th scope="col">Categoria</th>
+                        <th scope="col">Subcategoria</th>
                         <th scope="col">Qtd.</th>
                         <th scope="col">Preço</th>
                         <th scope="col">Taxa/Iva</th>
@@ -59,7 +60,8 @@
                             @if (is_array($item) && isset($item['reference']))
                                 <tr>
                                     <td>{{ $item['name'] }}</td>
-                                    <td>{{ $item['category'] }}</td>
+                                    <td>{{ $item['category']}}</td>
+                                    <td>{{ $item['subcategory']}}</td>
                                     <td>{{ $item['quantity'] }}</td>
                                     <td>
                                         <div style="text-align: right !important;">
