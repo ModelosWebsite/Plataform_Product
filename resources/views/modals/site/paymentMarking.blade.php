@@ -23,11 +23,11 @@
 
           @if(session('loadPayment'))
             <div class="d-flex flex-column justify-content-center align-items-center">
-                <div class="spinner-border text-primary" role="status" style="width: 10rem; height: 10rem; border-width: .45rem;">
+                <div class="spinner-border text-primary" role="status" style="width: 5rem; height: 5rem; border-width: .45rem;">
                     <span class="visually-hidden"></span>
                 </div>
 
-                <p class="mt-3 mb-0 text-center fw-semibold">
+                <p class="mt-3 mb-0 text-center fw-semibold fs-2">
                     Aguarde enquanto é processado o pagamento
                 </p>
             </div>
