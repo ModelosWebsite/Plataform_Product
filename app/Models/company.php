@@ -18,6 +18,11 @@ class company extends Model
         'companyhashtoken',
         'delivery_method',
         'payment_type',
+        'isAxp',
+    ];
+
+    protected $casts = [
+        'isAxp' => 'boolean',
     ];
     
     public function user()

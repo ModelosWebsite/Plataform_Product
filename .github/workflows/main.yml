@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - domain
+    - Documents
 name: 🚀 Deploy plataforma website clássico app on push
 jobs:
   web-deploy:

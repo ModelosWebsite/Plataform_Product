@@ -8,7 +8,6 @@ class SubCategoryKytutes
     public static function saveSubcategory($categoryId, $subcategory, $token)
     {
         try {
-
             return Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-Type" => "application/json",

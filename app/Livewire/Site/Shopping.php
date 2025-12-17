@@ -6,8 +6,7 @@ use App\Models\company;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{Http, Log};
 
 class Shopping extends Component
 {
@@ -106,6 +105,7 @@ class Shopping extends Component
                     'company_id' => $this->getCompany()->id
                 )
             ));
+            
             $this->dispatch("updateCartCounter");
             $this->alert('success', 'SUCESSO', [
                 'toast'=>false,

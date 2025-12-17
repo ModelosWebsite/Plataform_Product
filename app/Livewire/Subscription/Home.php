@@ -5,7 +5,7 @@ namespace App\Livewire\Subscription;
 use App\Models\{User, company};
 use App\Mail\CreatedAccountMail;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\{DB, Hash, Http};
+use Illuminate\Support\Facades\{DB, Hash, Http, Log, Request};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -19,7 +19,7 @@ class Home extends Component
     public $name, $infoCompanyToken, $password, $company, 
     $lastname, $companynif, $companybusiness, 
     $email, $confirmpassword, $image, $province, 
-    $municipality, $address, $phone, $mylocation;
+    $municipality, $address, $phone, $mylocation, $isAxp;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -61,7 +61,6 @@ class Home extends Component
     
     public function render()
     {
-        
         return view('livewire.subscription.home',
         ['locationMap' => $this->getAllLocations()]
         )->layout("layouts.subscription.app");
@@ -71,7 +70,6 @@ class Home extends Component
     {  
         $this->validate($this->rules, $this->messages);
         DB::beginTransaction();
-        
         try {
             // Manipulação da imagem
             $fileName = null;
@@ -84,13 +82,16 @@ class Home extends Component
             $tokenCompany = $this->name . rand(2000, 3000);
 
             // Criar registro da empresa
-            $company = new company();
-            $company->companyname = $this->name;
-            $company->companyemail = $this->email;
-            $company->companynif = $this->companynif;
-            $company->companybusiness = "Negócio Geral";
-            $company->companyhashtoken = $tokenCompany;
-            $company->save();
+            $company = company::create([
+                'companyname' => $this->name,
+                'companyemail' => $this->email,
+                'companynif' => $this->companynif,
+                'companybusiness' => "Negócio Geral",
+                'companyhashtoken' => $tokenCompany,
+                'isAxp' => (bool) request('isAxp')
+            ]);
+
+            dd($company);
 
             // Criar usuário administrador
             $user = new User();
@@ -114,7 +115,7 @@ class Home extends Component
                 "image" => $fileName,
                 "password" => $this->password,
                 "myLocation" => $this->mylocation,
-                "isAxp" => 0
+                "isAxp" => (bool) request('isAxp')
             ];
 
             // Informações para a API Xzero
@@ -139,13 +140,13 @@ class Home extends Component
             ];
 
             //Chamada às APIs externas
-            $response = Http::withHeaders($this->getHeaders())
-            ->post("https://shop.xzero.live/api/create/company", $infoCompany)
-            ->json();
+            // $response = Http::withHeaders($this->getHeaders())
+            // ->post("https://shop.xzero.live/api/create/company", $infoCompany)
+            // ->json();
 
-            $xzeroResponse = Http::withHeaders($this->getHeaders())
-            ->post("https://xzero.live/api/create/account", $infoXzero)
-            ->json();
+            // $xzeroResponse = Http::withHeaders($this->getHeaders())
+            // ->post("https://xzero.live/api/create/account", $infoXzero)
+            // ->json();
 
             //Atualizar tokens da empresa
             $company->companytokenapi = $response['token'] ?? null;
@@ -162,7 +163,12 @@ class Home extends Component
 
             return redirect()->route("site.status.account");
         } catch (\Throwable $th) {
-            \Log::info("Criar Website", ["message" => $th->getMessage()]);
+            Log::error("CriaçãoDeConta@createAccountSite",[
+                "message" => "Falha ao realizar operação",
+                "error" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
             DB::rollBack();
             $this->alert('error', 'ERRO', [
                 'toast' => false,
@@ -196,7 +202,6 @@ class Home extends Component
     public function getAllLocations()
     {
         try {
-
             $response = Http::withHeaders([
                     "Accept" => "application/json",
                     "Content-Type" => "application/json",
@@ -206,7 +211,13 @@ class Home extends Component
                 return $response;
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::error("CriaçãoDeConta@getAllLocations",[
+                "message" => "Falha ao realizar operação",
+                "error" => $th->getMessage(),
+                "file" => $th->getFile(),
+                "line" => $th->getLine(),
+            ]);
+            return[];
         }
     }
 }
