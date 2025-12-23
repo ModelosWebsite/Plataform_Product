@@ -52,6 +52,9 @@ class SiteController extends Controller
     {
         try {
             $company = $this->contextService->loadContext($companyHash, $request);
+            if($company->status === 'inactive'){
+                return view('disable.app');
+            }
             if (!$company) abort(404);
             
             $dataView = $this->viewBuilder->buildViewData($company);
