@@ -36,7 +36,6 @@ class Itens extends Component
 
     public function render()
     {
-        dd($this->getItens());
         $this->getItens = $this->getItens();
         return view('livewire.admin.itens')->layout('layouts.config.app');
     }
