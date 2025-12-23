@@ -21,11 +21,11 @@
                   <h6 for="category_id" class="form-label">Subcategoria</h6>
                   <select class="form-control form-control-sm shadow-none" wire:model="idsubcat">
                       <option>Selecione a subcategoria</option>
-                        @forelse($subcategories as $category)
-                            <option value="{{ $category['reference'] ?? '' }}">{{ $category['subcategory'] ?? '' }}</option>
-                        @empty
-                        @endforelse
-                  </select>
+                                @forelse($subcategories as $category)
+                                    <option value="{{ $category['reference'] ?? '' }}">{{ $category['subcategory'] ?? '' }}</option>
+                                @empty
+                                @endforelse
+                        </select>
                   @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
 

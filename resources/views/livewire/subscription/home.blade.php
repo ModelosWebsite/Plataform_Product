@@ -18,7 +18,7 @@
                 <div>
                     <label for="name" class="block text-sm font-medium mb-1">Nome<span class="text-red-500">*</span></label>
                     <input wire:model="name" type="text" id="name" placeholder="Informe o Nome"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('name') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -26,7 +26,7 @@
                 <div>
                     <label for="lastname" class="block text-sm font-medium mb-1">Sobrenome<span class="text-red-500">*</span></label>
                     <input wire:model="lastname" type="text" id="lastname" placeholder="Informe o Sobrenome"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('lastname') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -34,7 +34,7 @@
                 <div>
                     <label for="email" class="block text-sm font-medium mb-1">Email<span class="text-red-500">*</span></label>
                     <input wire:model="email" type="email" id="email" placeholder="Informe o Email"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('email') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -42,7 +42,7 @@
                 <div>
                     <label for="companynif" class="block text-sm font-medium mb-1">NIF<span class="text-red-500">*</span></label>
                     <input wire:model="companynif" type="text" id="companynif" placeholder="Informe o NIF"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('companynif') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -58,7 +58,7 @@
                 <div>
                     <label for="password" class="block text-sm font-medium mb-1">Crie uma senha<span class="text-red-500">*</span></label>
                     <input wire:model="password" type="password" id="password" placeholder="Crie uma senha"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('password') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -66,7 +66,7 @@
                 <div>
                     <label for="confirmpassword" class="block text-sm font-medium mb-1">Confirme a senha<span class="text-red-500">*</span></label>
                     <input wire:model="confirmpassword" type="password" id="confirmpassword" placeholder="Confirme a senha"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('confirmpassword') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -74,7 +74,7 @@
                 <div>
                     <label for="phone" class="block text-sm font-medium mb-1">Telefone<span class="text-red-500">*</span></label>
                     <input wire:model="phone" type="text" id="phone" placeholder="999999999"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('phone') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -82,7 +82,7 @@
                 <div>
                     <label for="province" class="block text-sm font-medium mb-1">Província<span class="text-red-500">*</span></label>
                     <input wire:model="province" type="text" id="province" placeholder="Província"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('province') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -90,7 +90,7 @@
                 <div>
                     <label for="municipality" class="block text-sm font-medium mb-1">Município<span class="text-red-500">*</span></label>
                     <input wire:model="municipality" type="text" id="municipality" placeholder="Município"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('municipality') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -98,7 +98,7 @@
                 <div>
                     <label for="address" class="block text-sm font-medium mb-1">Endereço<span class="text-red-500">*</span></label>
                     <input wire:model="address" type="text" id="address" placeholder="Endereço"
-                        class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                        class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                     @error('address') <span class="text-red-400 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -107,7 +107,7 @@
                     <label class="block text-sm font-medium mb-1">Localização da sua Loja</label>
                     @if (isset($locationMap) and count($locationMap) > 0)
                         <select wire:model="mylocation"
-                            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
+                            class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 outline-none">
                             <option value="">--Selecionar--</option>
                             @foreach ($locationMap as $locationValue)
                                 <option value="{{ $locationValue['location'] ?? '' }}">

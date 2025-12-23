@@ -4,7 +4,6 @@ namespace App\Livewire\Subscription;
 
 use App\Models\{User, company};
 use App\Mail\CreatedAccountMail;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\{DB, Hash, Http, Log, Request};
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Mail;
@@ -19,7 +18,9 @@ class Home extends Component
     public $name, $infoCompanyToken, $password, $company, 
     $lastname, $companynif, $companybusiness, 
     $email, $confirmpassword, $image, $province, 
-    $municipality, $address, $phone, $mylocation, $isAxp;
+    $municipality, $address, $phone, $mylocation;
+    public bool $isAxp = false;
+
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -58,6 +59,11 @@ class Home extends Component
         'image.mimes' => 'A imagem deve estar no formato jpeg, png, jpg ou gif.',
         'mylocation.required' => 'O campo Localização é obrigatório.',
     ];
+
+    public function mount($isAxp = null)
+    {
+        $this->isAxp = (bool) $isAxp;
+    }
     
     public function render()
     {
@@ -88,10 +94,8 @@ class Home extends Component
                 'companynif' => $this->companynif,
                 'companybusiness' => "Negócio Geral",
                 'companyhashtoken' => $tokenCompany,
-                'isAxp' => (bool) request('isAxp')
+                'isAxp' => $this->isAxp
             ]);
-
-            dd($company);
 
             // Criar usuário administrador
             $user = new User();
@@ -112,10 +116,10 @@ class Home extends Component
                 "province" => $this->province,
                 "municipality" => $this->municipality,
                 "address" => $this->address,
-                "image" => $fileName,
+                "image" => $path,
                 "password" => $this->password,
                 "myLocation" => $this->mylocation,
-                "isAxp" => (bool) request('isAxp')
+                "isAxp" => $this->isAxp 
             ];
 
             // Informações para a API Xzero
@@ -140,13 +144,13 @@ class Home extends Component
             ];
 
             //Chamada às APIs externas
-            // $response = Http::withHeaders($this->getHeaders())
-            // ->post("https://shop.xzero.live/api/create/company", $infoCompany)
-            // ->json();
+            $response = Http::withHeaders($this->getHeaders())
+            ->post("https://shop.xzero.live/api/create/company", $infoCompany)
+            ->json();
 
-            // $xzeroResponse = Http::withHeaders($this->getHeaders())
-            // ->post("https://xzero.live/api/create/account", $infoXzero)
-            // ->json();
+            $xzeroResponse = Http::withHeaders($this->getHeaders())
+            ->post("https://xzero.live/api/create/account", $infoXzero)
+            ->json();
 
             //Atualizar tokens da empresa
             $company->companytokenapi = $response['token'] ?? null;

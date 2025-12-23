@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class ValidationxZero
 {
-    protected static string $url = "http://127.0.0.1:8000/api/validation/";
+    protected static string $url = "https://xzero.live/api/validation/";
 
     public static function sendValidationIdentify(array $validationForm, string $token): array
     {

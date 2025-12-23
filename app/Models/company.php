@@ -11,6 +11,7 @@ class company extends Model
     use HasFactory;
     
     protected $fillable = [
+        'isAxp',
         'companyname',
         'companyemail',
         'companynif',
@@ -18,7 +19,6 @@ class company extends Model
         'companyhashtoken',
         'delivery_method',
         'payment_type',
-        'isAxp',
     ];
 
     protected $casts = [
@@ -35,7 +35,7 @@ class company extends Model
     }
     public function products() 
     { 
-        return $this->hasMany(Produt::class, 'company_id'); 
+        return $this->hasOne(Produt::class, 'company_id'); 
     }
     public function infoWhy() 
     { 
@@ -51,7 +51,7 @@ class company extends Model
     }
     public function contacts() 
     { 
-        return $this->hasOne(contact::class, 'company_id'); 
+        return $this->hasMany(contact::class, 'company_id'); 
     }
     public function color() 
     { 

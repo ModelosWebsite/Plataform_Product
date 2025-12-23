@@ -46,7 +46,7 @@
                         <td>{{ $data['phone'] ?? '-' }}</td>
                         <td>
                             <div style="text-align: right !important;">
-                                {{ str_replace(['.', ','], ['  ', '.'], $data['subtotal']) }}
+                                {{ str_replace(['.', ','], [' ', '.'], $data['subtotal']) }} kz
                             </div>
                         </td>
                         <td>

@@ -22,7 +22,6 @@
                       <li>
                           @if (isset($item['id']) && $item['nome'] != "Pratos" && $item['nome'] != "Prato do Dia" && $item['nome'] != "Bebidas")
                               <button class="category {{ $category === $item['nome'] ? 'active' : '' }}" wire:click="getItems('{{ $item['id'] ?? '' }}')">
-                                  <i wire:loading wire:target="getItems('{{ $item['id'] ?? '' }}')" class="spinner-border spinner-border-sm text-white"></i>
                                   {{ $item['nome'] ?? '' }}
                               </button>
                           @endif
