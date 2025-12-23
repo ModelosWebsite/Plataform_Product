@@ -28,7 +28,7 @@ class Itens extends Component
         // endpoint: api/subcategories
         $this->subcategories = array_merge(
             Grouping::getGrouping("subcategories")['subcategories'], 
-            SubCategoryKytutes::getSubcategory($this->company->companytokenapi)
+            SubCategoryKytutes::getSubcategory($this->company->companytokenapi) ?? []
         );
         // endpoint: api/origins
         $this->origins = Grouping::getGrouping("origins")['origins'];
