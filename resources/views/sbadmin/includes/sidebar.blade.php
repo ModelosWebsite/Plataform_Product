@@ -44,7 +44,8 @@
     $status = $shoppingValid['status'] ?? null;
 
     // Condições de acesso
-    $canAccess = $status === 'validated';
+    // $canAccess = $status === 'validated';
+    $canAccess = 'validated'  === 'validated';
     $openModal = is_null($status);  // abre modal se null
 @endphp
 
