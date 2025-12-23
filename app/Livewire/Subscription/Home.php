@@ -80,8 +80,8 @@ class Home extends Component
             // Manipulação da imagem
             $fileName = null;
             if ($this->image != null && $this->image instanceof \Illuminate\Http\UploadedFile) {
-                $fileName = uniqid(). "." . $this->image->getClientOriginalExtension();
-                $path = $this->image->storeAs("arquivos/company", $fileName);
+                $fileName = uniqid() . "." . $this->image->getClientOriginalExtension();
+                $path = $this->image->storeAs("public/company", $fileName);
             }
 
             // Criação de token único para a empresa
@@ -116,7 +116,7 @@ class Home extends Component
                 "province" => $this->province,
                 "municipality" => $this->municipality,
                 "address" => $this->address,
-                "image" => $path,
+                "image" => $fileName,
                 "password" => $this->password,
                 "myLocation" => $this->mylocation,
                 "isAxp" => $this->isAxp 
