@@ -77,7 +77,7 @@
                                         <div class="form-group">
                                             <label class="form-label fw-semibold">Telefone</label>
                                             <input type="text" class="form-control" disabled
-                                                placeholder="{{ auth()->user()->company->contacts->telefone ?? '' }}">
+                                                placeholder="{{ isset(auth()->user()->company->contacts->telefone) ?? '' }}">
                                         </div>
 
                                         <div class="form-group">
