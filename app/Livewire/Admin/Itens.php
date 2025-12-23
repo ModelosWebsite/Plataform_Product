@@ -122,14 +122,12 @@ class Itens extends Component
                 "originId" => $this->idorigen,
             ];
 
-            \Log::info("Informações do item a ser criado", $infoItem);
+            Log::info("Informações do item a ser criado", $infoItem);
 
             $response = Http::withHeaders($this->getToken())
             ->post("https://shop.xzero.live/api/items", $infoItem);
 
-            dd($response->json());
-
-            \Log::info("Resposta da API ao criar produto", $response->json());
+            Log::info("Resposta da API ao criar produto", $response->json());
 
             if ($response->failed()) {
                 $errors = $response->json('errors') ?? [];
@@ -158,7 +156,7 @@ class Itens extends Component
             }
 
         } catch (\Throwable $th) {
-            \Log::error("Erro ao criar item", [
+            Log::error("Erro ao criar item", [
                 "message" => $th->getMessage(),
                 "file" => $th->getFile(),
                 "line" => $th->getLine()
