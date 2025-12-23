@@ -52,9 +52,6 @@ class SiteController extends Controller
     {
         try {
             $company = $this->contextService->loadContext($companyHash, $request);
-            if($company->status === 'inactive'){
-                return view('disable.app');
-            }
             if (!$company) abort(404);
             
             $dataView = $this->viewBuilder->buildViewData($company);
@@ -62,6 +59,10 @@ class SiteController extends Controller
             
             $shoppingValid = ValidAccount::getValideted($company->token_xzero ?? "");
 
+            if($company->status != 'active'){
+                return view('disable.app');
+            }
+            
             return view($view, $dataView, ['shoppingValid' => $shoppingValid]);
         } catch (\Throwable $th) {
             Log::error("SiteController@getShopping", [
