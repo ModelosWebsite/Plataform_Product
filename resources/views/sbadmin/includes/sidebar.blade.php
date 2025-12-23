@@ -50,14 +50,12 @@
 @endphp
 
 <!-- Nav Item - Loja -->
-<li class="nav-item 
-    {{ Route::current()->getName() == 'admin.general.shopping' ? 'bg-white text-primary' : '' }}"
+{{-- <li class="nav-item {{ Route::current()->getName() == 'admin.general.shopping' ? 'bg-white text-primary' : '' }}"
     style="{{ !$canAccess ? 'pointer-events: none; opacity: 0.6;' : '' }}">
 
     <a class="nav-link d-flex align-items-center
         {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary fw-bold' : '' }}"
         
-        {{-- Se não pode acessar e é null, abrir modal --}}
         @if($openModal)
             href="#"
             data-toggle="modal"
@@ -66,8 +64,6 @@
             href="{{ $canAccess ? route('admin.general.shopping') : '#' }}"
         @endif
     >
-
-        {{-- Ícone --}}
         @if(!$canAccess)
             <i class="fas fa-lock me-2"></i>
         @else
@@ -76,6 +72,14 @@
             </i>
         @endif
 
+        <span>Loja/Produtos</span>
+    </a>
+</li> --}}
+
+<li class="nav-item {{ Route::current()->getName() == 'admin.general.shopping' ? 'bg-white text-primary' : '' }}">
+    <a class="nav-link d-flex align-items-center
+        {{ Route::current()->getName() == 'admin.general.shopping' ? 'text-primary fw-bold' : '' }}"
+        href="{{ route('admin.general.shopping') }}">
         <span>Loja/Produtos</span>
     </a>
 </li>
