@@ -38,7 +38,7 @@
     $shoppingValid = Http::withHeaders([
         'Accept' => 'application/json',
         'Authorization' => 'Bearer ' . ($company->token_xzero ?? ''),
-    ])->post("http://127.0.0.1:8000/api/validation/show")->json();
+    ])->post("https://xzero.live/api/validation/show")->json();
 
     // Estado
     $status = $shoppingValid['status'] ?? null;
