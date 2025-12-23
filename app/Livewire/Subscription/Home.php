@@ -153,7 +153,7 @@ class Home extends Component
             ->json();
 
             //Atualizar tokens da empresa
-            $company->companytokenapi = $response['token'] ?? null;
+            $company->companytokenapi = "Bearer ". $response['token'] ?? null;
             $company->token_xzero = $xzeroResponse['apiToken'] ?? null;
             $company->update();
 

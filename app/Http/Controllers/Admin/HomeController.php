@@ -18,7 +18,7 @@ class HomeController extends Controller
              $shoppingValid = Http::withHeaders([
                  'Accept' => 'application/json',
                  'Authorization' => 'Bearer ' . $company->token_xzero ?? '',
-             ])->post("http://127.0.0.2:8000/api/validation/show")->json();
+             ])->post("https://xzero.live/api/validation/show")->json();
             
             
         return view("sbadmin.home", compact("shopping", "shoppingValid"));
